@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="WinMain">
+      <UniqueIdentifier>{8106015c-9f97-45f3-9e1f-cdf3fdcc839c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework">
+      <UniqueIdentifier>{919c7f60-84c1-48bc-b367-3d4316233e69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HighResolutionTimer">
+      <UniqueIdentifier>{b8d064db-5853-452c-9248-5b8e6b3350b0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\SourceCode\WinMain.cpp">
+      <Filter>WinMain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SourceCode\HighResolutionTimer.cpp">
+      <Filter>HighResolutionTimer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SourceCode\Framework.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\SourceCode\OrcaCommon.h" />
+    <ClInclude Include="..\SourceCode\Framework.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SourceCode\HighResolutionTimer.h">
+      <Filter>HighResolutionTimer</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
