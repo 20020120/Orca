@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="LogWindow">
+      <UniqueIdentifier>{ab0e3821-d668-4610-846f-5752b5943b3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pch">
+      <UniqueIdentifier>{d399dd38-1bcf-4e7b-8810-d59eb2d18708}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SourceCode\LogWindow.cpp">
+      <Filter>LogWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\pch.cpp">
+      <Filter>Pch</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SourceCode\LogWindow.h">
+      <Filter>LogWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\pch.h">
+      <Filter>Pch</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\LogDefine.h">
+      <Filter>LogWindow</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

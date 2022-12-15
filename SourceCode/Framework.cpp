@@ -1,6 +1,6 @@
-#include"Framework.h"
-
 #include<sstream>
+#include"Framework.h"
+#include "LogWindow.h"
 FrameWork::FrameWork(HWND Hwnd_)
     :mHwnd(Hwnd_)
 {}
@@ -87,15 +87,20 @@ LRESULT FrameWork::HandleMessage(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lpar
 
 bool FrameWork::Initialize()
 {
+    // コンソールウィンドを開く
+    OrcaDebug::LogWindow::OpenWindow();
+
     return true;
 }
 
 void FrameWork::Update(float Dt_)
 {
+
 }
 
 void FrameWork::Render(float Dt_) const
 {
+
 }
 
 bool FrameWork::Finalize()
