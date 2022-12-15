@@ -9,7 +9,5 @@
 
 // プリコンパイルするヘッダーをここに追加します
 
-#include"LogWindow.h"
-#include"LogDefine.h"
 
 #endif //PCH_H

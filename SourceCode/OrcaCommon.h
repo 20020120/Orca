@@ -2,7 +2,7 @@
 
 namespace Orca
 {
-    constexpr long ScreenWidth{ 1920 };
-    constexpr long ScreenHeight{ 1080 };
+    constexpr long ScreenWidth{ 1280 };
+    constexpr long ScreenHeight{ 720 };
 
 }
