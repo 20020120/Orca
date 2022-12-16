@@ -16,10 +16,14 @@ namespace OrcaGraphics
 
 
     private:
-        void CreateDevice(); // デバイスの初期化
-
+        void CreateDevice();        // デバイスの初期化
+        void CreateCommandQueue();  // コマンドキューの初期化
+        void CreateSwapChain();     // スワップチェーンの作成
     private:
         // ----------------------------------- 変数 ----------------------------------
-        Microsoft::WRL::ComPtr<ID3D12Device> mpDevice{}; // デバイス
+        Microsoft::WRL::ComPtr<ID3D12Device> mpDevice{};             // デバイス
+        Microsoft::WRL::ComPtr<ID3D12CommandQueue> mpCommandQueue{}; // コマンドキュー
+
+
     };
 }

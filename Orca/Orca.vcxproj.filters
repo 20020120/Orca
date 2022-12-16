@@ -23,7 +23,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\SourceCode\OrcaCommon.h" />
     <ClInclude Include="..\SourceCode\Framework.h">
       <Filter>Framework</Filter>
     </ClInclude>

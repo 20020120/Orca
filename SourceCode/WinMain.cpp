@@ -4,7 +4,7 @@
 
 
 #include"Framework.h"
-#include"OrcaCommon.h"
+#include"ScreenConstants.h"
 
 LRESULT CALLBACK window_procedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
