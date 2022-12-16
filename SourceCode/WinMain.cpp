@@ -30,7 +30,7 @@ int WINAPI WinMain(_In_ HINSTANCE instance, _In_opt_  HINSTANCE prev_instance, _
 	wcex.hInstance = instance;
 	wcex.hIcon = 0;
 	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	wcex.hbrBackground = reinterpret_cast<HBRUSH>((COLOR_WINDOW + 1));
 	wcex.lpszMenuName = NULL;
 	wcex.lpszClassName = APPLICATION_NAME;
 	wcex.hIconSm = 0;

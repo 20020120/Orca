@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Simple">
+      <UniqueIdentifier>{d474251d-494e-4281-89e9-dc51f971e3ad}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="SourceCode\SimpleVs.hlsl">
+      <Filter>Simple</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SourceCode\Sample.hlsli">
+      <Filter>Simple</Filter>
+    </None>
+  </ItemGroup>
+</Project>
