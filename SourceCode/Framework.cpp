@@ -99,7 +99,7 @@ bool FrameWork::Initialize()
 
 
     // ------------------------------ ˆÈ‰ºA‰Šú‰»ŠÖ”‚ðŒÄ‚Ô ------------------------------
-    mpGraphics->Initialize();
+    mpGraphics->Initialize(mHwnd);
 
 
     return true;

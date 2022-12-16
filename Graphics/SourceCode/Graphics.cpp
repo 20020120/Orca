@@ -2,15 +2,18 @@
 #include"Graphics.h"
 #include"GraphicsLogger.h"
 #include<dxgi1_4.h>
+#include"ScreenConstants.h"
 OrcaGraphics::Graphics::Graphics()= default;
 OrcaGraphics::Graphics::~Graphics() = default;
 
 
-void OrcaGraphics::Graphics::Initialize()
+void OrcaGraphics::Graphics::Initialize(HWND hWnd_)
 {
     // ----------------------------- DirectX12の初期化 -----------------------------
     CreateDevice();
     CreateCommandQueue();
+    CreateSwapChain(hWnd_);
+
 }
 
 void OrcaGraphics::Graphics::CreateDevice()
@@ -37,14 +40,35 @@ void OrcaGraphics::Graphics::CreateCommandQueue()
 
 }
 
-void OrcaGraphics::Graphics::CreateSwapChain()
+void OrcaGraphics::Graphics::CreateSwapChain(HWND hWnd_)
 {
     IDXGIFactory4* pFactory{};
-    const auto hr = CreateDXGIFactory1(IID_PPV_ARGS(&pFactory));
+    auto hr = CreateDXGIFactory1(IID_PPV_ARGS(&pFactory));
     OrcaDebug::GraphicsLog("IDXGIFactory4を初期化", hr);
 
     // スワップチェーンの初期化
+    DXGI_SWAP_CHAIN_DESC desc{};
+    desc.BufferDesc.Width = Orca::ScreenWidth;
+    desc.BufferDesc.Height = Orca::ScreenHeight;
+    desc.BufferDesc.RefreshRate.Numerator = Orca::RefreshRate;
+    desc.BufferDesc.RefreshRate.Denominator = 1;
+    desc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+    desc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
+    desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 
+    desc.SampleDesc.Count = 1;
+    desc.SampleDesc.Quality = 0;
 
+    desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+    desc.BufferCount = Orca::FrameCount;
+    desc.OutputWindow = hWnd_;
+    desc.Windowed = TRUE;
+    desc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+    desc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+
+    // スワップチェーンを作成
+    IDXGISwapChain* pSwapChain{};
+    hr = pFactory->CreateSwapChain(mpCommandQueue.Get(), &desc, &pSwapChain);
+    OrcaDebug::GraphicsLog("スワップチェーンを作成", hr);
 
 }
