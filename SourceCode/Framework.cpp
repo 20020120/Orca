@@ -112,7 +112,7 @@ void FrameWork::Update(float Dt_)
 
 void FrameWork::Render(float Dt_) const
 {
-
+    mpGraphics->Render();
 }
 
 bool FrameWork::Finalize()
