@@ -14,6 +14,8 @@ OrcaGraphics::Graphics::~Graphics()
 
 void OrcaGraphics::Graphics::Initialize(HWND hWnd_)
 {
+    AddDebugFlag();
+
     // ----------------------------- DirectX12の初期化 -----------------------------
     CreateDevice();
     CreateCommandQueue();
@@ -27,7 +29,7 @@ void OrcaGraphics::Graphics::Initialize(HWND hWnd_)
 void OrcaGraphics::Graphics::Finalize()
 {
     // ---------------------------------- 終了処理 ---------------------------------
-
+    WaitGpu();
 }
 
 void OrcaGraphics::Graphics::Render()
@@ -252,4 +254,37 @@ void OrcaGraphics::Graphics::Present(uint32_t Interval_)
 
     // 次のフレームのカウンターを増やす
     mFenceCounter[mFrameIndex] = currentValue + 1;
+}
+
+void OrcaGraphics::Graphics::WaitGpu()
+{
+    Orca_NullExeption(mpCommandQueue)
+    Orca_NullExeption(mpFence)
+    Orca_NullExeption(mFenceEvent)
+
+    // シグナル処理
+    mpCommandQueue->Signal(mpFence.Get(), mFenceCounter[mFrameIndex]);
+    // 完了時にイベントを設定する
+    mpFence->SetEventOnCompletion(mFenceCounter[mFrameIndex], mFenceEvent);
+    // 待機処理
+    WaitForSingleObjectEx(mFenceEvent, INFINITE, FALSE);
+
+    // カウンターを増やす
+    mFenceCounter[mFrameIndex]++;
+
+}
+
+void OrcaGraphics::Graphics::AddDebugFlag() const
+{
+    // デバッグモードのみこの関数を有効にする
+#if defined(DEBUG)||defined(_DEBUG)
+    Microsoft::WRL::ComPtr<ID3D12Debug> pDebug{};
+    const auto hr = D3D12GetDebugInterface(IID_PPV_ARGS(pDebug.GetAddressOf()));
+
+    // デバッグレイヤーを有効化
+    if(SUCCEEDED(hr))
+    {
+        pDebug->EnableDebugLayer();
+    }
+#endif
 }

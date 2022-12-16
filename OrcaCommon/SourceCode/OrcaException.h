@@ -5,8 +5,6 @@
 // nullptr‚©‚Ç‚¤‚©‚ğ”»’è‚·‚éƒ}ƒNƒ
 #define Orca_NullExeption(Ptr)\
     if(!(Ptr))\
-    {\
-        assert(#Ptr##"Is Null");\
-    }
+        assert(#Ptr##"Is Null");
 
 

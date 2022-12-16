@@ -28,7 +28,8 @@ namespace OrcaGraphics
         void CreateFence();                   // フェンスオブジェクトを作成する
 
         void Present(uint32_t Interval_);   // 画面に表示し、次のフレームの準備をする
-
+        void WaitGpu();                     // GPUの実行を待つ
+        void AddDebugFlag() const;                // デバッグフラグを追加する
     private:
         // ----------------------------------- 変数 ----------------------------------
         Microsoft::WRL::ComPtr<ID3D12Device> mpDevice{};                                       // デバイス
