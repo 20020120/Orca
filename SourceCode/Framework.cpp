@@ -1,9 +1,13 @@
 #include<sstream>
 #include"Framework.h"
 #include "LogWindow.h"
+#include"Graphics.h"
+
 FrameWork::FrameWork(HWND Hwnd_)
     :mHwnd(Hwnd_)
 {}
+
+FrameWork::~FrameWork() = default;
 
 int FrameWork::Run()
 {
@@ -89,6 +93,14 @@ bool FrameWork::Initialize()
 {
     // コンソールウィンドを開く
     OrcaDebug::LogWindow::OpenWindow();
+    // 描画管理クラスの実体を生成
+    mpGraphics = std::make_unique<OrcaGraphics::Graphics>(); 
+
+
+
+    // ------------------------------ 以下、初期化関数を呼ぶ ------------------------------
+    mpGraphics->Initialize();
+
 
     return true;
 }

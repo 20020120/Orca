@@ -4,7 +4,7 @@
 #include <Windows.h>
 #include <Richedit.h>
 #include<wrl.h>
-
+#include<memory>
 
 #define  WM_DROPFILES    0x0233
 
@@ -18,6 +18,13 @@ extern LRESULT ImGui_ImplWin32_WndProcHandler(
 //extern ImWchar glyphRangesJapanese[];
 CONST LPCWSTR APPLICATION_NAME{ L"Orc" };
 
+// ---------------------------------- クラスの前方宣言 ---------------------------------
+namespace OrcaGraphics
+{
+	class Graphics;
+}
+
+
 class FrameWork
 {
 public:
@@ -25,7 +32,7 @@ public:
 
 
     explicit FrameWork(HWND Hwnd_);
-	~FrameWork() = default;
+	~FrameWork();
 
 	FrameWork(const FrameWork&) = delete;
 	FrameWork& operator=(const FrameWork&) = delete;
@@ -47,6 +54,7 @@ private:
 	uint32_t mFrames{ 0 };
 	float mDeltaTime{ 0.0f };
 	int hConsole = 0;
+	std::unique_ptr<OrcaGraphics::Graphics> mpGraphics{}; // 描画クラス
 
 	void CalculateFrameStats();
 };

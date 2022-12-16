@@ -12,10 +12,18 @@
     <ClCompile Include="SourceCode\pch.cpp">
       <Filter>Pch</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\Graphics.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\GraphicsLogger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\pch.h">
       <Filter>Pch</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\Graphics.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\GraphicsLogger.h" />
   </ItemGroup>
 </Project>

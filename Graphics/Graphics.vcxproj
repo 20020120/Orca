@@ -19,12 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SourceCode\Graphics.cpp" />
+    <ClCompile Include="SourceCode\GraphicsLogger.cpp" />
     <ClCompile Include="SourceCode\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SourceCode\Graphics.h" />
+    <ClInclude Include="SourceCode\GraphicsLogger.h" />
     <ClInclude Include="SourceCode\pch.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
