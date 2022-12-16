@@ -2,9 +2,13 @@
 #include"Graphics.h"
 #include"GraphicsLogger.h"
 #include<dxgi1_4.h>
+#include<d3d12.h>
 #include"ScreenConstants.h"
 OrcaGraphics::Graphics::Graphics()= default;
-OrcaGraphics::Graphics::~Graphics() = default;
+OrcaGraphics::Graphics::~Graphics()
+{
+    Finalize();
+}
 
 
 void OrcaGraphics::Graphics::Initialize(HWND hWnd_)
@@ -13,6 +17,12 @@ void OrcaGraphics::Graphics::Initialize(HWND hWnd_)
     CreateDevice();
     CreateCommandQueue();
     CreateSwapChain(hWnd_);
+
+}
+
+void OrcaGraphics::Graphics::Finalize()
+{
+    // ---------------------------------- 終了処理 ---------------------------------
 
 }
 
@@ -70,5 +80,16 @@ void OrcaGraphics::Graphics::CreateSwapChain(HWND hWnd_)
     IDXGISwapChain* pSwapChain{};
     hr = pFactory->CreateSwapChain(mpCommandQueue.Get(), &desc, &pSwapChain);
     OrcaDebug::GraphicsLog("スワップチェーンを作成", hr);
+
+    // スワップチェーンを取得
+    hr = pSwapChain->QueryInterface(IID_PPV_ARGS(mpSwapChain.ReleaseAndGetAddressOf()));
+    OrcaDebug::GraphicsLog("スワップチェーンを取得", hr);
+
+    // バックバッファの番号を取得
+    mFrameIndex = mpSwapChain->GetCurrentBackBufferIndex();
+
+    // 要素を解放
+    pFactory->Release();
+    pSwapChain->Release();
 
 }
