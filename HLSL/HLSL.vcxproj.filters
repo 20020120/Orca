@@ -4,15 +4,24 @@
     <Filter Include="Simple">
       <UniqueIdentifier>{d474251d-494e-4281-89e9-dc51f971e3ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{e154667b-6d5c-4662-b748-2a2dc5735153}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SourceCode\SimpleVs.hlsl">
       <Filter>Simple</Filter>
     </FxCompile>
+    <FxCompile Include="SourceCode\SimplePs.hlsl">
+      <Filter>Simple</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SourceCode\Sample.hlsli">
+    <None Include="SourceCode\Simple.hlsli">
       <Filter>Simple</Filter>
+    </None>
+    <None Include="SourceCode\Camera.hlsli">
+      <Filter>Common</Filter>
     </None>
   </ItemGroup>
 </Project>

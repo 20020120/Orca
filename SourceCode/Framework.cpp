@@ -122,7 +122,7 @@ bool FrameWork::Finalize()
 
 void FrameWork::CalculateFrameStats()
 {
-    if (++mFrames, (mTictoc.TimeStamp() - mDeltaTime) >= 1.0f)
+    if (++mFrames, mTictoc.TimeStamp() - mDeltaTime >= 1.0f)
     {
         const auto fps = static_cast<float>(mFrames);
         std::wostringstream outs;
