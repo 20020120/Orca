@@ -288,3 +288,141 @@ void OrcaGraphics::Graphics::AddDebugFlag() const
     }
 #endif
 }
+
+void OrcaGraphics::Graphics::CreateVertexBuffer()
+{
+    constexpr Vertex vertices[] = {
+        {DirectX::XMFLOAT3(-1.0f,-1.0f,0.0f),DirectX::XMFLOAT4(0.0f,0.0f,1.0f,1.0f)},
+        {DirectX::XMFLOAT3(-1.0f,-1.0f,0.0f),DirectX::XMFLOAT4(0.0f,1.0f,0.0f,1.0f)},
+        {DirectX::XMFLOAT3(-1.0f,-1.0f,0.0f),DirectX::XMFLOAT4(1.0f,0.0f,0.0f,1.0f)}
+    };
+
+    // ヒーププロパティの設定
+    D3D12_HEAP_PROPERTIES prp{};
+    prp.Type = D3D12_HEAP_TYPE_UPLOAD;
+    prp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+    prp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+    prp.CreationNodeMask = 1;
+    prp.VisibleNodeMask = 1;
+
+    // リソースの設定
+    D3D12_RESOURCE_DESC desc{};
+    desc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+    desc.Alignment = 0;
+    desc.Width = sizeof(vertices);
+    desc.Height = 1;
+    desc.DepthOrArraySize = 1;
+    desc.MipLevels = 1;
+    desc.Format = DXGI_FORMAT_UNKNOWN;
+    desc.SampleDesc.Count = 1;
+    desc.SampleDesc.Quality = 1;
+    desc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+    desc.Flags = D3D12_RESOURCE_FLAG_NONE;
+
+    auto hr = mpDevice->CreateCommittedResource(
+        &prp,
+        D3D12_HEAP_FLAG_NONE,
+        &desc,
+        D3D12_RESOURCE_STATE_GENERIC_READ,
+        nullptr,
+        IID_PPV_ARGS(mpVertexBuffer.ReleaseAndGetAddressOf())
+    );
+
+    OrcaDebug::GraphicsLog("頂点バッファを作成", hr);
+
+    // マッピングする
+    void* ptr{};
+    hr = mpVertexBuffer->Map(0, nullptr, &ptr);
+    OrcaDebug::GraphicsLog("マッピング", hr);
+
+    // 頂点データをマッピング先に指定
+    memcpy(ptr, vertices, sizeof(vertices));
+
+    // マッピング解除
+    mpVertexBuffer->Unmap(0, nullptr);
+
+    // ビューの設定
+    mVbView.BufferLocation = mpVertexBuffer->GetGPUVirtualAddress();
+    mVbView.SizeInBytes = static_cast<UINT>(sizeof(vertices));
+    mVbView.StrideInBytes = sizeof(Vertex);
+}
+
+void OrcaGraphics::Graphics::CreateConstantBuffer()
+{
+    {
+        D3D12_DESCRIPTOR_HEAP_DESC desc{};
+        desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+        desc.NumDescriptors = 1 * Orca::FrameCount;
+        desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+        desc.NodeMask = 0;
+
+        auto hr = mpDevice->CreateDescriptorHeap(
+            &desc,
+            IID_PPV_ARGS(mpHeapCbV.ReleaseAndGetAddressOf()));
+
+        OrcaDebug::GraphicsLog("定数バッファを作成", hr);
+    }
+
+    {
+        // ヒーププロパティの設定
+        D3D12_HEAP_PROPERTIES prp{};
+        prp.Type = D3D12_HEAP_TYPE_UPLOAD;
+        prp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+        prp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+        prp.CreationNodeMask = 1;
+        prp.VisibleNodeMask = 1;
+
+        // リソースの設定
+        D3D12_RESOURCE_DESC desc{};
+        desc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+        desc.Alignment = 0;
+        desc.Width = sizeof(CB_Simple);
+        desc.Height = 1;
+        desc.DepthOrArraySize = 1;
+        desc.MipLevels = 1;
+        desc.Format = DXGI_FORMAT_UNKNOWN;
+        desc.SampleDesc.Count = 1;
+        desc.SampleDesc.Quality = 0;
+        desc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+        desc.Flags = D3D12_RESOURCE_FLAG_NONE;
+        const auto incrementSize = mpDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);;
+
+        for(int i=0;i<Orca::FrameCount;++i)
+        {
+            // リソース生成
+            auto hr = mpDevice->CreateCommittedResource(
+                &prp,
+                D3D12_HEAP_FLAG_NONE,
+                &desc,
+                D3D12_RESOURCE_STATE_GENERIC_READ,
+                nullptr,
+                IID_PPV_ARGS(mpColorBuffer[i].ReleaseAndGetAddressOf())
+            );
+            OrcaDebug::GraphicsLog("定数バッファを作成", hr);
+
+            auto address = mpColorBuffer[i]->GetGPUVirtualAddress();
+            auto handleCPU = mpHeapCbV->GetCPUDescriptorHandleForHeapStart();
+            auto handleGPU = mpHeapCbV->GetGPUDescriptorHandleForHeapStart();
+            handleCPU.ptr += incrementSize * i;
+            handleGPU.ptr += incrementSize * i;
+
+            // 定数バッファヴューの設定
+            mCbV[i].mHandleCPU = handleCPU;
+            mCbV[i].mHandleGPU = handleGPU;
+            mCbV[i].mDesc.BufferLocation = address;
+            mCbV[i].mDesc.SizeInBytes = sizeof(CB_Simple);
+
+            // 定数バッファビューを作成
+            mpDevice->CreateConstantBufferView(&mCbV->mDesc, handleCPU);
+
+            // マッピング
+            hr = mpConstantBuffer[i]->Map(0, nullptr,
+                reinterpret_cast<void**>(&mCbV[i].mpBuffer));
+
+            OrcaDebug::GraphicsLog("定数バッファをマッピング", hr);
+
+
+        }
+
+    }
+}
