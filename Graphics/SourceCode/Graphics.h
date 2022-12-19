@@ -89,8 +89,8 @@ namespace OrcaGraphics
         D3D12_VERTEX_BUFFER_VIEW mVbView{};
 
         Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mpHeapCbV{};
-        Microsoft::WRL::ComPtr<ID3D12Resource> mpConstantBuffer[Orca::FrameCount]{};
-        ConstantBufferView<CB_Simple> mCbV[Orca::FrameCount]{};
+        Microsoft::WRL::ComPtr<ID3D12Resource> mpConstantBuffer[Orca::FrameCount*2]{};
+        ConstantBufferView<CB_Simple> mCbV[Orca::FrameCount*2]{};
 
         Microsoft::WRL::ComPtr<ID3D12Resource> mpIndexBuffer{};
         D3D12_INDEX_BUFFER_VIEW mIbView{};

@@ -84,20 +84,28 @@ void OrcaGraphics::Graphics::Render()
     // 更新処理
     {
         mRotateAngle += 0.025f;
-        mCbV[mFrameIndex].mpBuffer->World = DirectX::XMMatrixRotationY(mRotateAngle);
+        mCbV[mFrameIndex * 2 + 0].mpBuffer->World =
+            DirectX::XMMatrixRotationX(mRotateAngle + DirectX::XMConvertToRadians(45.0f));
+        mCbV[mFrameIndex * 2 + 1].mpBuffer->World = 
+            DirectX::XMMatrixRotationY(mRotateAngle)*DirectX::XMMatrixScaling(2.0f, 0.5f, 1.0f);
+
     }
 
     // 描画処理
     {
         mpCommandList->SetGraphicsRootSignature(mpRootSignature.Get());
         mpCommandList->SetDescriptorHeaps(1, mpHeapCbV.GetAddressOf());
-        mpCommandList->SetGraphicsRootConstantBufferView(0, mCbV[mFrameIndex].mDesc.BufferLocation);
         mpCommandList->SetPipelineState(mpPSO.Get());
         mpCommandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
         mpCommandList->IASetVertexBuffers(0, 1, &mVbView);
         mpCommandList->IASetIndexBuffer(&mIbView);
         mpCommandList->RSSetViewports(1, &mViewPort);
         mpCommandList->RSSetScissorRects(1, &mScissor);
+
+        mpCommandList->SetGraphicsRootConstantBufferView(0, mCbV[mFrameIndex * 2 + 0].mDesc.BufferLocation);
+        mpCommandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
+
+        mpCommandList->SetGraphicsRootConstantBufferView(0, mCbV[mFrameIndex * 2 + 1].mDesc.BufferLocation);
         mpCommandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
     }
 
@@ -443,7 +451,7 @@ void OrcaGraphics::Graphics::CreateConstantBuffer()
     {
         D3D12_DESCRIPTOR_HEAP_DESC desc{};
         desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-        desc.NumDescriptors = 1 * Orca::FrameCount;
+        desc.NumDescriptors = 2 * Orca::FrameCount;
         desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
         desc.NodeMask = 0;
 
@@ -478,7 +486,7 @@ void OrcaGraphics::Graphics::CreateConstantBuffer()
         desc.Flags = D3D12_RESOURCE_FLAG_NONE;
         const auto incrementSize = mpDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);;
 
-        for (int i = 0; i < Orca::FrameCount; ++i)
+        for (int i = 0; i < Orca::FrameCount*2; ++i)
         {
             // リソース生成
             auto hr = mpDevice->CreateCommittedResource(
