@@ -76,7 +76,7 @@ void OrcaGraphics::Graphics::Render()
     mpCommandList->OMSetRenderTargets(1, &mHandleRTV[mFrameIndex], FALSE, nullptr);
 
     // クリアカラーの設定
-    constexpr  float clearColor[] = { 0.0f,0.0f,1.0f,1.0f };
+    constexpr  float clearColor[] = { 0.3f,0.3f,0.3f,1.0f };
     // レンダーターゲットをクリア
     mpCommandList->ClearRenderTargetView(mHandleRTV[mFrameIndex], clearColor, 0, nullptr);
 
@@ -330,7 +330,7 @@ void OrcaGraphics::Graphics::CreateVertexBuffer()
 {
     constexpr Vertex vertices[] = {
         {DirectX::XMFLOAT3(-1.0f,-1.0f,0.0f),DirectX::XMFLOAT4(1.0f,0.0f,0.0f,1.0f)},
-        {DirectX::XMFLOAT3(1.0f,-1.0f,0.0f),DirectX::XMFLOAT4(1.0f,1.0f,0.0f,1.0f)},
+        {DirectX::XMFLOAT3(1.0f,-1.0f,0.0f),DirectX::XMFLOAT4(0.0f,1.0f,0.0f,1.0f)},
         {DirectX::XMFLOAT3(0.0f,1.0f,0.0f),DirectX::XMFLOAT4(0.0f,0.0f,1.0f,1.0f)}
     };
 
@@ -523,7 +523,7 @@ void OrcaGraphics::Graphics::CreateGPS()
     D3D12_INPUT_ELEMENT_DESC elements[2]{};
     elements[0].SemanticName = "POSITION";
     elements[0].SemanticIndex = 0;
-    elements[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+    elements[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;
     elements[0].InputSlot = 0;
     elements[0].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
     elements[0].InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
