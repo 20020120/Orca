@@ -249,7 +249,7 @@ void OrcaGraphics::Graphics::CreateRenderTargetView()
 
     // レンダーターゲットビューの設定
     D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
-    rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+    rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
     rtvDesc.Texture2D.MipSlice = 0;
     rtvDesc.Texture2D.PlaneSlice = 0;
@@ -760,7 +760,7 @@ void OrcaGraphics::Graphics::CreateGPS()
     descGps.SampleMask = UINT_MAX;
     descGps.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
     descGps.NumRenderTargets = 1;
-    descGps.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+    descGps.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
     descGps.DSVFormat = DXGI_FORMAT_D32_FLOAT;
     descGps.SampleDesc = { 1,0 };
 
