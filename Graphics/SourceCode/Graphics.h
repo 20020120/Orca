@@ -34,7 +34,7 @@ namespace OrcaGraphics
         void CreateRenderTargetView();        // レンダーターゲットビューを作成
         void CreateFence();                   // フェンスオブジェクトを作成する
         void CreateIndexBuffer();             // インデックスバッファを作成
-
+        void CreateDepthBuffer();             // デプスバッファを作成
         // ----------------------------------- 変数 ----------------------------------
         Microsoft::WRL::ComPtr<ID3D12Device> mpDevice{};                                       // デバイス
         Microsoft::WRL::ComPtr<ID3D12CommandQueue> mpCommandQueue{};                           // コマンドキュー
@@ -96,15 +96,15 @@ namespace OrcaGraphics
         D3D12_INDEX_BUFFER_VIEW mIbView{};
 
         Microsoft::WRL::ComPtr<ID3D12RootSignature> mpRootSignature{};
-
         Microsoft::WRL::ComPtr<ID3D12PipelineState> mpPSO{};
 
-        D3D12_VIEWPORT mViewPort{};
-
-
+        Microsoft::WRL::ComPtr<ID3D12Resource> mpDepthBuffer{};
+        Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mpHeapDSV{};
+        D3D12_CPU_DESCRIPTOR_HANDLE mHandleDsV{};
     private:
         float mRotateAngle{};
         D3D12_RECT mScissor{};
+        D3D12_VIEWPORT mViewPort{};
 
     };
 }
