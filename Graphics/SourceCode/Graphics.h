@@ -33,6 +33,7 @@ namespace OrcaGraphics
         void CreateCommandList();             // コマンドリストを作成
         void CreateRenderTargetView();        // レンダーターゲットビューを作成
         void CreateFence();                   // フェンスオブジェクトを作成する
+        void CreateIndexBuffer();             // インデックスバッファを作成
 
         // ----------------------------------- 変数 ----------------------------------
         Microsoft::WRL::ComPtr<ID3D12Device> mpDevice{};                                       // デバイス
@@ -90,6 +91,9 @@ namespace OrcaGraphics
         Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mpHeapCbV{};
         Microsoft::WRL::ComPtr<ID3D12Resource> mpConstantBuffer[Orca::FrameCount]{};
         ConstantBufferView<CB_Simple> mCbV[Orca::FrameCount]{};
+
+        Microsoft::WRL::ComPtr<ID3D12Resource> mpIndexBuffer{};
+        D3D12_INDEX_BUFFER_VIEW mIbView{};
 
         Microsoft::WRL::ComPtr<ID3D12RootSignature> mpRootSignature{};
 

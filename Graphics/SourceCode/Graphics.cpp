@@ -32,6 +32,7 @@ void OrcaGraphics::Graphics::Initialize(HWND hWnd_)
     CreateGPS();
     CreateViewport();
     CreateScissor();
+    CreateIndexBuffer();
 }
 
 void OrcaGraphics::Graphics::Finalize()
@@ -94,9 +95,10 @@ void OrcaGraphics::Graphics::Render()
         mpCommandList->SetPipelineState(mpPSO.Get());
         mpCommandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
         mpCommandList->IASetVertexBuffers(0, 1, &mVbView);
+        mpCommandList->IASetIndexBuffer(&mIbView);
         mpCommandList->RSSetViewports(1, &mViewPort);
         mpCommandList->RSSetScissorRects(1, &mScissor);
-        mpCommandList->DrawInstanced(3, 1, 0, 0);
+        mpCommandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
     }
 
     // リソースバリアの設定
@@ -270,6 +272,57 @@ void OrcaGraphics::Graphics::CreateFence()
 
 }
 
+void OrcaGraphics::Graphics::CreateIndexBuffer()
+{
+    // インデックスデータを用意
+    const uint32_t indices[] = { 0,1,2,0,2,3 };
+
+    // ヒーププロパティを設定
+    D3D12_HEAP_PROPERTIES prp{};
+    prp.Type = D3D12_HEAP_TYPE_UPLOAD;
+    prp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+    prp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+    prp.CreationNodeMask = 1;
+    prp.VisibleNodeMask = 1;
+
+    // リソースの設定
+    D3D12_RESOURCE_DESC desc{};
+    desc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+    desc.Alignment = 0;
+    desc.Width = sizeof(indices);
+    desc.Height = 1;
+    desc.DepthOrArraySize = 1;
+    desc.MipLevels = 1;
+    desc.Format = DXGI_FORMAT_UNKNOWN;
+    desc.SampleDesc.Count = 1;
+    desc.SampleDesc.Quality = 0;
+    desc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+    desc.Flags = D3D12_RESOURCE_FLAG_NONE;
+
+    // リソースを生成
+    auto hr = mpDevice->CreateCommittedResource(
+        &prp,
+        D3D12_HEAP_FLAG_NONE,
+        &desc,
+        D3D12_RESOURCE_STATE_GENERIC_READ,
+        nullptr,
+        IID_PPV_ARGS(mpIndexBuffer.ReleaseAndGetAddressOf())
+    );
+    OrcaDebug::GraphicsLog("インデックスバッファを作成", hr);
+
+    // マッピング
+    void* ptr = nullptr;
+    hr = mpIndexBuffer->Map(0, nullptr, &ptr);
+    OrcaDebug::GraphicsLog("マッピング", hr);
+    memcpy(ptr, indices, sizeof(indices));
+    mpIndexBuffer->Unmap(0, nullptr);
+
+    // インデックスバッファビューを作成
+    mIbView.BufferLocation = mpIndexBuffer->GetGPUVirtualAddress();
+    mIbView.Format = DXGI_FORMAT_R32_UINT;
+    mIbView.SizeInBytes = sizeof(indices);
+}
+
 void OrcaGraphics::Graphics::Present(uint32_t Interval_)
 {
     // 画面に表示
@@ -329,9 +382,10 @@ void OrcaGraphics::Graphics::AddDebugFlag() const
 void OrcaGraphics::Graphics::CreateVertexBuffer()
 {
     constexpr Vertex vertices[] = {
-        {DirectX::XMFLOAT3(-1.0f,-1.0f,0.0f),DirectX::XMFLOAT4(1.0f,0.0f,0.0f,1.0f)},
-        {DirectX::XMFLOAT3(1.0f,-1.0f,0.0f),DirectX::XMFLOAT4(0.0f,1.0f,0.0f,1.0f)},
-        {DirectX::XMFLOAT3(0.0f,1.0f,0.0f),DirectX::XMFLOAT4(0.0f,0.0f,1.0f,1.0f)}
+        {DirectX::XMFLOAT3(-1.0f,1.0f,0.0f),DirectX::XMFLOAT4(1.0f,0.0f,0.0f,1.0f)},
+        {DirectX::XMFLOAT3(1.0f,1.0f,0.0f),DirectX::XMFLOAT4(0.0f,1.0f,0.0f,1.0f)},
+        {DirectX::XMFLOAT3(1.0f,-1.0f,0.0f),DirectX::XMFLOAT4(0.0f,0.0f,1.0f,1.0f)},
+        {DirectX::XMFLOAT3(-1.0f,-1.0f,0.0f),DirectX::XMFLOAT4(1.0f,1.0f,1.0f,1.0f)}
     };
 
     // ヒーププロパティの設定
