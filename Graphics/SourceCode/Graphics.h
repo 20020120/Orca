@@ -21,6 +21,7 @@ namespace OrcaGraphics
 
         void Initialize(HWND hWnd_);  // 初期化
         void Finalize(); // 終了処理
+        void OnTerm();  // 終了時の処理
 
         void Render();  // 描画処理
 
@@ -78,6 +79,10 @@ namespace OrcaGraphics
 
         void CreateVertexBuffer(); // 頂点バッファを作成する
         void CreateConstantBuffer(); // 定数バッファを作成する
+        void CreateRootSignature(); // ルートシグネチャを作成する
+        void CreateGPS();// グラフィックステートオブジェクトを作成する
+        void CreateViewport(); // ビューポートを作成する
+        void CreateScissor(); // シザー矩形を作成する
 
         Microsoft::WRL::ComPtr<ID3D12Resource> mpVertexBuffer{};
         D3D12_VERTEX_BUFFER_VIEW mVbView{};
@@ -86,6 +91,16 @@ namespace OrcaGraphics
         Microsoft::WRL::ComPtr<ID3D12Resource> mpConstantBuffer[Orca::FrameCount]{};
         ConstantBufferView<CB_Simple> mCbV[Orca::FrameCount]{};
 
+        Microsoft::WRL::ComPtr<ID3D12RootSignature> mpRootSignature{};
+
+        Microsoft::WRL::ComPtr<ID3D12PipelineState> mpPSO{};
+
         D3D12_VIEWPORT mViewPort{};
+
+
+    private:
+        float mRotateAngle{};
+        D3D12_RECT mScissor{};
+
     };
 }

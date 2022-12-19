@@ -4,7 +4,7 @@
 struct SimpleVsInput
 {
 	float3 Position : POSITION;	// à íu
-	float4 Color : COLOT;		// êF
+	float4 Color : COLOR;		// êF
 };
 struct SimpleVsOutput
 {
