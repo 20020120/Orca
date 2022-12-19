@@ -29,11 +29,11 @@ void OrcaGraphics::Graphics::Initialize(HWND hWnd_)
     CreateVertexBuffer();
     CreateConstantBuffer();
     CreateRootSignature();
+    CreateDepthBuffer();
     CreateGPS();
     CreateViewport();
     CreateScissor();
     CreateIndexBuffer();
-    CreateDepthBuffer();
 }
 
 void OrcaGraphics::Graphics::Finalize()
@@ -75,12 +75,13 @@ void OrcaGraphics::Graphics::Render()
     barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
 
     mpCommandList->ResourceBarrier(1, &barrier);
-    mpCommandList->OMSetRenderTargets(1, &mHandleRTV[mFrameIndex], FALSE, nullptr);
+    mpCommandList->OMSetRenderTargets(1, &mHandleRTV[mFrameIndex], FALSE, &mHandleDsV);
 
     // クリアカラーの設定
     constexpr  float clearColor[] = { 0.3f,0.3f,0.3f,1.0f };
     // レンダーターゲットをクリア
     mpCommandList->ClearRenderTargetView(mHandleRTV[mFrameIndex], clearColor, 0, nullptr);
+    mpCommandList->ClearDepthStencilView(mHandleDsV, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // 更新処理
     {
@@ -383,7 +384,7 @@ void OrcaGraphics::Graphics::CreateDepthBuffer()
     );
     OrcaDebug::GraphicsLog("ディスクリプタヒープを作成", hr);
 
-    auto handle = mpHeapDSV->GetCPUDescriptorHandleForHeapStart();
+    const auto handle = mpHeapDSV->GetCPUDescriptorHandleForHeapStart();
     auto incrementSize = mpDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
     D3D12_DEPTH_STENCIL_VIEW_DESC viewDesc{};
     viewDesc.Format = DXGI_FORMAT_D32_FLOAT;
@@ -688,7 +689,7 @@ void OrcaGraphics::Graphics::CreateGPS()
     };
 
 
-    // ブレンド ステートの設定.
+    // ブレンドステートの設定.
     D3D12_BLEND_DESC descBS;
     descBS.AlphaToCoverageEnable = FALSE;
     descBS.IndependentBlendEnable = FALSE;
@@ -696,6 +697,14 @@ void OrcaGraphics::Graphics::CreateGPS()
     {
         i = descRTBS;
     }
+    // デプスステンシルステートを設定
+    D3D12_DEPTH_STENCIL_DESC descDSS{};
+    descDSS.DepthEnable = TRUE;
+    descDSS.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+    descDSS.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
+    descDSS.StencilEnable = FALSE;
+
+
 
     // 頂点シェーダー読み込み
     Microsoft::WRL::ComPtr<ID3DBlob> pVsBlob{};
@@ -716,13 +725,12 @@ void OrcaGraphics::Graphics::CreateGPS()
     descGps.PS = { pPsBlob->GetBufferPointer(),pPsBlob->GetBufferSize() };
     descGps.RasterizerState = descRS;
     descGps.BlendState = descBS;
-    descGps.DepthStencilState.DepthEnable = FALSE;
-    descGps.DepthStencilState.StencilEnable = FALSE;
+    descGps.DepthStencilState = descDSS;
     descGps.SampleMask = UINT_MAX;
     descGps.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
     descGps.NumRenderTargets = 1;
     descGps.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-    descGps.DSVFormat = DXGI_FORMAT_UNKNOWN;
+    descGps.DSVFormat = DXGI_FORMAT_D32_FLOAT;
     descGps.SampleDesc = { 1,0 };
 
     // パイプラインステートを設定
