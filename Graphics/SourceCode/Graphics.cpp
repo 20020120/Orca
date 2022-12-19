@@ -4,6 +4,9 @@
 #include<dxgi1_4.h>
 #include<d3d12.h>
 #include<d3dcompiler.h>
+#include"ResourceUploadBatch.h"
+#include"DDSTextureLoader.h"
+
 
 #include"ScreenConstants.h"
 #include"OrcaException.h"
@@ -34,6 +37,7 @@ void OrcaGraphics::Graphics::Initialize(HWND hWnd_)
     CreateViewport();
     CreateScissor();
     CreateIndexBuffer();
+    CreateTexture();
 }
 
 void OrcaGraphics::Graphics::Finalize()
@@ -85,9 +89,9 @@ void OrcaGraphics::Graphics::Render()
 
     // 更新処理
     {
-        mRotateAngle += 0.025f;
+        mRotateAngle -= 0.025f;
         mCbV[mFrameIndex * 2 + 0].mpBuffer->World =
-            DirectX::XMMatrixRotationX(mRotateAngle + DirectX::XMConvertToRadians(45.0f));
+            DirectX::XMMatrixRotationY(mRotateAngle + DirectX::XMConvertToRadians(45.0f));
         mCbV[mFrameIndex * 2 + 1].mpBuffer->World = 
             DirectX::XMMatrixRotationY(mRotateAngle)*DirectX::XMMatrixScaling(2.0f, 0.5f, 1.0f);
 
@@ -96,7 +100,7 @@ void OrcaGraphics::Graphics::Render()
     // 描画処理
     {
         mpCommandList->SetGraphicsRootSignature(mpRootSignature.Get());
-        mpCommandList->SetDescriptorHeaps(1, mpHeapCbV.GetAddressOf());
+        mpCommandList->SetDescriptorHeaps(1, mpHeapCbV_SRV_UAV.GetAddressOf());
         mpCommandList->SetPipelineState(mpPSO.Get());
         mpCommandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
         mpCommandList->IASetVertexBuffers(0, 1, &mVbView);
@@ -105,9 +109,7 @@ void OrcaGraphics::Graphics::Render()
         mpCommandList->RSSetScissorRects(1, &mScissor);
 
         mpCommandList->SetGraphicsRootConstantBufferView(0, mCbV[mFrameIndex * 2 + 0].mDesc.BufferLocation);
-        mpCommandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
-
-        mpCommandList->SetGraphicsRootConstantBufferView(0, mCbV[mFrameIndex * 2 + 1].mDesc.BufferLocation);
+        mpCommandList->SetGraphicsRootDescriptorTable(1, mTexture.mHandleGPU);
         mpCommandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
     }
 
@@ -360,7 +362,7 @@ void OrcaGraphics::Graphics::CreateDepthBuffer()
     D3D12_CLEAR_VALUE clearValue{};
     clearValue.Format = DXGI_FORMAT_D32_FLOAT;
     clearValue.DepthStencil.Depth = 1.0;
-    clearValue.DepthStencil.Stencil = 0.0;
+    clearValue.DepthStencil.Stencil = 0;
 
     auto hr = mpDevice->CreateCommittedResource(
         &prp,
@@ -455,10 +457,10 @@ void OrcaGraphics::Graphics::AddDebugFlag() const
 void OrcaGraphics::Graphics::CreateVertexBuffer()
 {
     constexpr Vertex vertices[] = {
-        {DirectX::XMFLOAT3(-1.0f,1.0f,0.0f),DirectX::XMFLOAT4(1.0f,0.0f,0.0f,1.0f)},
-        {DirectX::XMFLOAT3(1.0f,1.0f,0.0f),DirectX::XMFLOAT4(0.0f,1.0f,0.0f,1.0f)},
-        {DirectX::XMFLOAT3(1.0f,-1.0f,0.0f),DirectX::XMFLOAT4(0.0f,0.0f,1.0f,1.0f)},
-        {DirectX::XMFLOAT3(-1.0f,-1.0f,0.0f),DirectX::XMFLOAT4(1.0f,1.0f,1.0f,1.0f)}
+        {DirectX::XMFLOAT3(-1.0f,1.0f,0.0f),DirectX::XMFLOAT2(0.0f,0.0f)},
+        {DirectX::XMFLOAT3(1.0f,1.0f,0.0f),DirectX::XMFLOAT2(1.0f,0.0f)},
+        {DirectX::XMFLOAT3(1.0f,-1.0f,0.0f),DirectX::XMFLOAT2(1.0f,1.0f)},
+        {DirectX::XMFLOAT3(-1.0f,-1.0f,0.0f),DirectX::XMFLOAT2(0.0f,1.0f)}
     };
 
     // ヒーププロパティの設定
@@ -522,7 +524,7 @@ void OrcaGraphics::Graphics::CreateConstantBuffer()
 
         const auto hr = mpDevice->CreateDescriptorHeap(
             &desc,
-            IID_PPV_ARGS(mpHeapCbV.ReleaseAndGetAddressOf()));
+            IID_PPV_ARGS(mpHeapCbV_SRV_UAV.ReleaseAndGetAddressOf()));
 
         OrcaDebug::GraphicsLog("ディスクリプタヒープを作成", hr);
     }
@@ -565,8 +567,8 @@ void OrcaGraphics::Graphics::CreateConstantBuffer()
             OrcaDebug::GraphicsLog("定数バッファを作成", hr);
 
             const auto address = mpConstantBuffer[i]->GetGPUVirtualAddress();
-            auto handleCPU = mpHeapCbV->GetCPUDescriptorHandleForHeapStart();
-            auto handleGPU = mpHeapCbV->GetGPUDescriptorHandleForHeapStart();
+            auto handleCPU = mpHeapCbV_SRV_UAV->GetCPUDescriptorHandleForHeapStart();
+            auto handleGPU = mpHeapCbV_SRV_UAV->GetGPUDescriptorHandleForHeapStart();
             handleCPU.ptr += incrementSize * i;
             handleGPU.ptr += incrementSize * i;
 
@@ -609,18 +611,47 @@ void OrcaGraphics::Graphics::CreateRootSignature()
         flag |= D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS;
 
         // ルートパラメータの設定
-        D3D12_ROOT_PARAMETER param{};
-        param.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
-        param.Descriptor.ShaderRegister = 0;
-        param.Descriptor.RegisterSpace = 0;
-        param.ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+        D3D12_ROOT_PARAMETER param[2]{};
+        param[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+        param[0].Descriptor.ShaderRegister = 0;
+        param[0].Descriptor.RegisterSpace = 0;
+        param[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+
+        D3D12_DESCRIPTOR_RANGE range{};
+        range.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+        range.NumDescriptors = 1;
+        range.BaseShaderRegister = 0;
+        range.RegisterSpace = 0;
+        range.OffsetInDescriptorsFromTableStart = 0;
+
+        param[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+        param[1].DescriptorTable.NumDescriptorRanges = 1;
+        param[1].DescriptorTable.pDescriptorRanges = &range;
+        param[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+
+        // スタティックサンプラーの設定
+        D3D12_STATIC_SAMPLER_DESC descSSD{};
+        descSSD.Filter = D3D12_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
+        descSSD.AddressU = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+        descSSD.AddressV = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+        descSSD.AddressW = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+        descSSD.MipLODBias = D3D12_DEFAULT_MIP_LOD_BIAS;
+        descSSD.MaxAnisotropy = 1;
+        descSSD.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+        descSSD.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
+        descSSD.MinLOD = -D3D12_FLOAT32_MAX;
+        descSSD.MaxLOD = +D3D12_FLOAT32_MAX;
+        descSSD.ShaderRegister = 0;
+        descSSD.RegisterSpace = 0;
+        descSSD.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+
 
         // ルートシグネチャの設定
         D3D12_ROOT_SIGNATURE_DESC desc{};
-        desc.NumParameters = 1;
-        desc.NumStaticSamplers = 0;
-        desc.pParameters = &param;
-        desc.pStaticSamplers = nullptr;
+        desc.NumParameters = 2;
+        desc.NumStaticSamplers = 1;
+        desc.pParameters = param;
+        desc.pStaticSamplers = &descSSD;
         desc.Flags = flag;
 
         Microsoft::WRL::ComPtr<ID3DBlob> pBlob{};
@@ -656,9 +687,9 @@ void OrcaGraphics::Graphics::CreateGPS()
     elements[0].InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
     elements[0].InstanceDataStepRate = 0;
 
-    elements[1].SemanticName = "COLOR";
+    elements[1].SemanticName = "TEXCOORD";
     elements[1].SemanticIndex = 0;
-    elements[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+    elements[1].Format = DXGI_FORMAT_R32G32_FLOAT;
     elements[1].InputSlot = 0;
     elements[1].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
     elements[1].InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
@@ -708,12 +739,12 @@ void OrcaGraphics::Graphics::CreateGPS()
 
     // 頂点シェーダー読み込み
     Microsoft::WRL::ComPtr<ID3DBlob> pVsBlob{};
-    auto hr = D3DReadFileToBlob(L"../Resource/Shader/SimpleVs.cso", pVsBlob.ReleaseAndGetAddressOf());
+    auto hr = D3DReadFileToBlob(L"../Resource/Shader/SimpleTexVs.cso", pVsBlob.ReleaseAndGetAddressOf());
     OrcaDebug::GraphicsLog("頂点シェーダーを読み込み", hr);
 
     // ピクセルシェーダー読み込み
     Microsoft::WRL::ComPtr<ID3DBlob> pPsBlob{};
-    hr = D3DReadFileToBlob(L"../Resource/Shader/SimplePs.cso", pPsBlob.ReleaseAndGetAddressOf());
+    hr = D3DReadFileToBlob(L"../Resource/Shader/SimpleTexPs.cso", pPsBlob.ReleaseAndGetAddressOf());
     OrcaDebug::GraphicsLog("ピクセルシェーダーを読み込み", hr);
 
 
@@ -758,4 +789,48 @@ void OrcaGraphics::Graphics::CreateScissor()
     mScissor.right = Orca::ScreenWidth;
     mScissor.top = 0;
     mScissor.bottom = Orca::ScreenHeight;
+}
+
+void OrcaGraphics::Graphics::CreateTexture()
+{
+    DirectX::ResourceUploadBatch batch(mpDevice.Get());
+    batch.Begin();
+    // リソースを生成
+
+    const auto hr = DirectX::CreateDDSTextureFromFile(
+        mpDevice.Get(),
+        batch,
+        L"../Resource/Sprite/Test.dds",
+        mTexture.mpResource.ReleaseAndGetAddressOf()
+    );
+    OrcaDebug::GraphicsLog("テクスチャを生成", hr);
+
+    // コマンドを実行
+    const auto future = batch.End(mpCommandQueue.Get());
+    future.wait();
+
+    const auto incrementSize = mpDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+    // ＣＰＵハンドルを取得
+    auto handleCPU = mpHeapCbV_SRV_UAV->GetCPUDescriptorHandleForHeapStart();
+    auto handleGPU = mpHeapCbV_SRV_UAV->GetGPUDescriptorHandleForHeapStart();
+    handleCPU.ptr += incrementSize * 2;
+    handleGPU.ptr += incrementSize * 2;
+    mTexture.mHandleCPU = handleCPU;
+    mTexture.mHandleGPU = handleGPU;
+
+    auto textureDesc = mTexture.mpResource->GetDesc();
+    // シェーダーリソースビューを設定
+    D3D12_SHADER_RESOURCE_VIEW_DESC descSRV{};
+    descSRV.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+    descSRV.Format = textureDesc.Format;
+    descSRV.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+    descSRV.Texture2D.MostDetailedMip = 0;
+    descSRV.Texture2D.MipLevels = textureDesc.MipLevels;
+    descSRV.Texture2D.PlaneSlice = 0;
+    descSRV.Texture2D.ResourceMinLODClamp = 0.0f;
+
+    // シェーダーリソースビューを作成
+    mpDevice->CreateShaderResourceView(mTexture.mpResource.Get(), &descSRV, handleCPU);
+
+
 }

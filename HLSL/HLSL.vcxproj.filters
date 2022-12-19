@@ -7,6 +7,9 @@
     <Filter Include="Common">
       <UniqueIdentifier>{e154667b-6d5c-4662-b748-2a2dc5735153}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SimpleTex">
+      <UniqueIdentifier>{76993bfb-d267-4016-8409-7005c21cc3c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SourceCode\SimpleVs.hlsl">
@@ -15,6 +18,12 @@
     <FxCompile Include="SourceCode\SimplePs.hlsl">
       <Filter>Simple</Filter>
     </FxCompile>
+    <FxCompile Include="SourceCode\SimpleTexPs.hlsl">
+      <Filter>SimpleTex</Filter>
+    </FxCompile>
+    <FxCompile Include="SourceCode\SimpleTexVs.hlsl">
+      <Filter>SimpleTex</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="SourceCode\Simple.hlsli">
@@ -22,6 +31,9 @@
     </None>
     <None Include="SourceCode\Camera.hlsli">
       <Filter>Common</Filter>
+    </None>
+    <None Include="SourceCode\SimpleTex.hlsli">
+      <Filter>SimpleTex</Filter>
     </None>
   </ItemGroup>
 </Project>

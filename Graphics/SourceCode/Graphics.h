@@ -7,9 +7,12 @@
 #include"ScreenConstants.h"
 namespace OrcaGraphics
 {
-
-    // ---------------------------------- 前方宣言 ---------------------------------
-
+    struct Texture
+    {
+        Microsoft::WRL::ComPtr<ID3D12Resource> mpResource{};
+        D3D12_CPU_DESCRIPTOR_HANDLE mHandleCPU{};
+        D3D12_GPU_DESCRIPTOR_HANDLE mHandleGPU{};
+    };
 
 
     // DirectX12の描画クラス
@@ -35,6 +38,8 @@ namespace OrcaGraphics
         void CreateFence();                   // フェンスオブジェクトを作成する
         void CreateIndexBuffer();             // インデックスバッファを作成
         void CreateDepthBuffer();             // デプスバッファを作成
+
+
         // ----------------------------------- 変数 ----------------------------------
         Microsoft::WRL::ComPtr<ID3D12Device> mpDevice{};                                       // デバイス
         Microsoft::WRL::ComPtr<ID3D12CommandQueue> mpCommandQueue{};                           // コマンドキュー
@@ -60,7 +65,7 @@ namespace OrcaGraphics
         struct Vertex
         {
             DirectX::XMFLOAT3 Position{};
-            DirectX::XMFLOAT4 Color{};
+            DirectX::XMFLOAT2 TexCoord{};
         };
 
         struct alignas(256)CB_Simple
@@ -69,6 +74,7 @@ namespace OrcaGraphics
             DirectX::XMMATRIX ViewMat{};
             DirectX::XMMATRIX ProjMat{};
         };
+
         template<class T>
         struct ConstantBufferView
         {
@@ -88,7 +94,7 @@ namespace OrcaGraphics
         Microsoft::WRL::ComPtr<ID3D12Resource> mpVertexBuffer{};
         D3D12_VERTEX_BUFFER_VIEW mVbView{};
 
-        Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mpHeapCbV{};
+        Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mpHeapCbV_SRV_UAV{};
         Microsoft::WRL::ComPtr<ID3D12Resource> mpConstantBuffer[Orca::FrameCount*2]{};
         ConstantBufferView<CB_Simple> mCbV[Orca::FrameCount*2]{};
 
@@ -102,9 +108,12 @@ namespace OrcaGraphics
         Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mpHeapDSV{};
         D3D12_CPU_DESCRIPTOR_HANDLE mHandleDsV{};
     private:
+        void CreateTexture();   // テクスチャを生成
+        Texture mTexture{};
+
+    private:
         float mRotateAngle{};
         D3D12_RECT mScissor{};
         D3D12_VIEWPORT mViewPort{};
-
     };
 }
