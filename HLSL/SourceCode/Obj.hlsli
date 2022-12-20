@@ -13,9 +13,9 @@ struct ObjVsOut
 };
 cbuffer Obj : register(b0)
 {
-	float4x4 World : packoffset(c0);
-	float4x4 ViewMatrix : packoffset(c4);
-	float4x4 ProjMatrix : packoffset(c8);
+	row_major float4x4 World : packoffset(c0);
+	row_major float4x4 ViewMatrix : packoffset(c4);
+	row_major float4x4 ProjMatrix : packoffset(c8);
 }
 
 #endif
