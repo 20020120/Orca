@@ -27,13 +27,13 @@ void Model::Obj::Update(float Dt_)
 {
     static float angle = 0.0f;
     angle += DirectX::XMConvertToRadians(60.0f) * Dt_;
-    mCbView.mpBuffer->World = DirectX::XMMatrixRotationX(angle) * DirectX::XMMatrixRotationY(angle);
+    mCbView.mpBuffer->World = DirectX::XMMatrixRotationX(45.0f) * DirectX::XMMatrixRotationY(45.0f) *
+        DirectX::XMMatrixTranslation(0.0f, 0.0f, -10.0f);
 }
 
 void Model::Obj::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_)
 {
     // -------------------------------- コマンドを積む --------------------------------
-    pCmdList_->SetDescriptorHeaps(1, mpHeapCbV.GetAddressOf());
     pCmdList_->SetGraphicsRootConstantBufferView(0, mCbView.mDesc.BufferLocation);
     pCmdList_->IASetVertexBuffers(0, 1, &mVbView);
     pCmdList_->IASetIndexBuffer(&mIbView);

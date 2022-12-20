@@ -136,8 +136,8 @@ void OrcaGraphics::Graphics::StackCmdList()
         mpCommandList->RSSetViewports(1, &mViewPort);
         mpCommandList->RSSetScissorRects(1, &mScissor);
 
-        mpCommandList->SetGraphicsRootConstantBufferView(0, mCbV[mFrameIndex * 2 + 0].mDesc.BufferLocation);
-        mpCommandList->SetGraphicsRootDescriptorTable(1, mTexture.mHandleGPU);
+        //mpCommandList->SetGraphicsRootConstantBufferView(0, mCbV[mFrameIndex * 2 + 0].mDesc.BufferLocation);
+        //mpCommandList->SetGraphicsRootDescriptorTable(1, mTexture.mHandleGPU);
         //mpCommandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
 
         // Obj用のPsoをセットする

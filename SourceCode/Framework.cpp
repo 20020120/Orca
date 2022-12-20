@@ -98,7 +98,7 @@ bool FrameWork::Initialize()
 
     // ------------------------------ ˆÈ‰ºA‰Šú‰»ŠÖ”‚ðŒÄ‚Ô ------------------------------
     mpGraphics->Initialize(mHwnd);
-    m_Obj.Initialize(mpGraphics->GetDevice(), L"../Resource/Obj/torus.obj");
+    m_Obj.Initialize(mpGraphics->GetDevice(), L"../Resource/Obj/cube.obj");
     return true;
 }
 
