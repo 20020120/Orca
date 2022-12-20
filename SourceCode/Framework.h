@@ -5,6 +5,7 @@
 #include <Richedit.h>
 #include<wrl.h>
 #include<memory>
+#include"Obj.h"
 
 #define  WM_DROPFILES    0x0233
 
@@ -46,7 +47,7 @@ public:
 private:
 	[[nodiscard]] bool Initialize();
 	void Update(float Dt_/*Elapsed seconds from last frame*/);
-	void Render(float Dt_/*Elapsed seconds from last frame*/) const;
+	void Render(float Dt_/*Elapsed seconds from last frame*/);
 	bool Finalize();
 
 private:
@@ -55,6 +56,7 @@ private:
 	float mDeltaTime{ 0.0f };
 	int hConsole = 0;
 	std::unique_ptr<OrcaGraphics::Graphics> mpGraphics{}; // •`‰æƒNƒ‰ƒX
+	Model::Obj m_Obj{};
 
 	void CalculateFrameStats();
 };

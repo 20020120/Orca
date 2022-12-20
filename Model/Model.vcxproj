@@ -134,6 +134,8 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>../SourceCode/pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\OrcaCommon\SourceCode;..\Graphics\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -151,6 +153,8 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>../SourceCode/pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\OrcaCommon\SourceCode;..\Graphics\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>

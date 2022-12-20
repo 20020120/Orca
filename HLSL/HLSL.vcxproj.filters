@@ -10,6 +10,9 @@
     <Filter Include="SimpleTex">
       <UniqueIdentifier>{76993bfb-d267-4016-8409-7005c21cc3c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Obj">
+      <UniqueIdentifier>{90e06b44-0079-48c0-a4b1-d298100d7aac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SourceCode\SimpleVs.hlsl">
@@ -24,6 +27,12 @@
     <FxCompile Include="SourceCode\SimpleTexVs.hlsl">
       <Filter>SimpleTex</Filter>
     </FxCompile>
+    <FxCompile Include="SourceCode\ObjVs.hlsl">
+      <Filter>Obj</Filter>
+    </FxCompile>
+    <FxCompile Include="SourceCode\ObjPs.hlsl">
+      <Filter>Obj</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="SourceCode\Simple.hlsli">
@@ -34,6 +43,9 @@
     </None>
     <None Include="SourceCode\SimpleTex.hlsli">
       <Filter>SimpleTex</Filter>
+    </None>
+    <None Include="SourceCode\Obj.hlsli">
+      <Filter>Obj</Filter>
     </None>
   </ItemGroup>
 </Project>

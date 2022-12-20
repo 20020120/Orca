@@ -34,6 +34,7 @@ void OrcaGraphics::Graphics::Initialize(HWND hWnd_)
     CreateRootSignature();
     CreateDepthBuffer();
     CreateGPS();
+    CreateGPS_Obj();
     CreateViewport();
     CreateScissor();
     CreateIndexBuffer();
@@ -61,7 +62,7 @@ void OrcaGraphics::Graphics::OnTerm()
     mpPSO.Reset();
 }
 
-void OrcaGraphics::Graphics::Render()
+void OrcaGraphics::Graphics::OpenCmdList()
 {
     // ---------------------------------- 描画処理 ---------------------------------
 
@@ -70,7 +71,7 @@ void OrcaGraphics::Graphics::Render()
     mpCommandList->Reset(mpCommandAllocator[mFrameIndex].Get(), nullptr);
 
     // リソースバリアの設定
-    D3D12_RESOURCE_BARRIER barrier{};
+    D3D12_RESOURCE_BARRIER barrier;
     barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
     barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
     barrier.Transition.pResource = mpColorBuffer[mFrameIndex].Get();
@@ -87,32 +88,11 @@ void OrcaGraphics::Graphics::Render()
     mpCommandList->ClearRenderTargetView(mHandleRTV[mFrameIndex], clearColor, 0, nullptr);
     mpCommandList->ClearDepthStencilView(mHandleDsV, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
-    // 更新処理
-    {
-        mRotateAngle -= 0.025f;
-        mCbV[mFrameIndex * 2 + 0].mpBuffer->World =
-            DirectX::XMMatrixRotationY(mRotateAngle + DirectX::XMConvertToRadians(45.0f));
-        mCbV[mFrameIndex * 2 + 1].mpBuffer->World = 
-            DirectX::XMMatrixRotationY(mRotateAngle)*DirectX::XMMatrixScaling(2.0f, 0.5f, 1.0f);
+}
 
-    }
-
-    // 描画処理
-    {
-        mpCommandList->SetGraphicsRootSignature(mpRootSignature.Get());
-        mpCommandList->SetDescriptorHeaps(1, mpHeapCbV_SRV_UAV.GetAddressOf());
-        mpCommandList->SetPipelineState(mpPSO.Get());
-        mpCommandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-        mpCommandList->IASetVertexBuffers(0, 1, &mVbView);
-        mpCommandList->IASetIndexBuffer(&mIbView);
-        mpCommandList->RSSetViewports(1, &mViewPort);
-        mpCommandList->RSSetScissorRects(1, &mScissor);
-
-        mpCommandList->SetGraphicsRootConstantBufferView(0, mCbV[mFrameIndex * 2 + 0].mDesc.BufferLocation);
-        mpCommandList->SetGraphicsRootDescriptorTable(1, mTexture.mHandleGPU);
-        mpCommandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
-    }
-
+void OrcaGraphics::Graphics::CloseCmdList()
+{
+    D3D12_RESOURCE_BARRIER barrier;
     // リソースバリアの設定
     barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
     barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
@@ -133,6 +113,47 @@ void OrcaGraphics::Graphics::Render()
 
     // 画面に表示
     Present(1);
+}
+
+void OrcaGraphics::Graphics::StackCmdList()
+{
+    // 更新処理
+    {
+        mRotateAngle -= 0.025f;
+        mCbV[mFrameIndex * 2 + 0].mpBuffer->World =
+            DirectX::XMMatrixRotationY(mRotateAngle + DirectX::XMConvertToRadians(45.0f));
+        mCbV[mFrameIndex * 2 + 1].mpBuffer->World =
+            DirectX::XMMatrixRotationY(mRotateAngle) * DirectX::XMMatrixScaling(2.0f, 0.5f, 1.0f);
+    }
+    // 描画処理
+    {
+        mpCommandList->SetGraphicsRootSignature(mpRootSignature.Get());
+        mpCommandList->SetDescriptorHeaps(1, mpHeapCbV_SRV_UAV.GetAddressOf());
+        mpCommandList->SetPipelineState(mpPSO.Get());
+        mpCommandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+        mpCommandList->IASetVertexBuffers(0, 1, &mVbView);
+        mpCommandList->IASetIndexBuffer(&mIbView);
+        mpCommandList->RSSetViewports(1, &mViewPort);
+        mpCommandList->RSSetScissorRects(1, &mScissor);
+
+        mpCommandList->SetGraphicsRootConstantBufferView(0, mCbV[mFrameIndex * 2 + 0].mDesc.BufferLocation);
+        mpCommandList->SetGraphicsRootDescriptorTable(1, mTexture.mHandleGPU);
+        //mpCommandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
+
+        // Obj用のPsoをセットする
+        mpCommandList->SetPipelineState(mpPSO_Obj.Get());
+    }
+}
+
+
+Microsoft::WRL::ComPtr<ID3D12Device> OrcaGraphics::Graphics::GetDevice() const
+{
+    return mpDevice;
+}
+
+Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> OrcaGraphics::Graphics::GetCmdList() const
+{
+    return mpCommandList;
 }
 
 void OrcaGraphics::Graphics::CreateDevice()
@@ -767,6 +788,102 @@ void OrcaGraphics::Graphics::CreateGPS()
     // パイプラインステートを設定
     hr = mpDevice->CreateGraphicsPipelineState(
         &descGps, IID_PPV_ARGS(mpPSO.GetAddressOf()));
+
+    OrcaDebug::GraphicsLog("パイプラインステートを作成", hr);
+}
+
+void OrcaGraphics::Graphics::CreateGPS_Obj()
+{
+    // インプットレイアウトを作成
+    D3D12_INPUT_ELEMENT_DESC elements[2]{};
+    elements[0].SemanticName = "POSITION";
+    elements[0].SemanticIndex = 0;
+    elements[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;
+    elements[0].InputSlot = 0;
+    elements[0].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+    elements[0].InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
+    elements[0].InstanceDataStepRate = 0;
+
+    elements[1].SemanticName = "NORMAL";
+    elements[1].SemanticIndex = 0;
+    elements[1].Format = DXGI_FORMAT_R32G32B32_FLOAT;
+    elements[1].InputSlot = 0;
+    elements[1].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+    elements[1].InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
+    elements[1].InstanceDataStepRate = 0;
+
+
+    // ラスタライザーステートの設定
+    D3D12_RASTERIZER_DESC descRS{};
+    descRS.FillMode = D3D12_FILL_MODE_SOLID;
+    descRS.CullMode = D3D12_CULL_MODE_NONE;
+    descRS.FrontCounterClockwise = FALSE;
+    descRS.DepthBias = D3D12_DEFAULT_DEPTH_BIAS;
+    descRS.DepthBiasClamp = D3D12_DEFAULT_DEPTH_BIAS_CLAMP;
+    descRS.SlopeScaledDepthBias = D3D12_DEFAULT_SLOPE_SCALED_DEPTH_BIAS;
+    descRS.DepthClipEnable = FALSE;
+    descRS.MultisampleEnable = FALSE;
+    descRS.AntialiasedLineEnable = FALSE;
+    descRS.ForcedSampleCount = 0;
+    descRS.ConservativeRaster = D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF;
+
+    // レンダーターゲットのブレンド設定.
+    D3D12_RENDER_TARGET_BLEND_DESC descRTBS = {
+        FALSE, FALSE,
+        D3D12_BLEND_ONE, D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD,
+        D3D12_BLEND_ONE, D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD,
+        D3D12_LOGIC_OP_NOOP,
+        D3D12_COLOR_WRITE_ENABLE_ALL
+    };
+
+
+    // ブレンドステートの設定.
+    D3D12_BLEND_DESC descBS;
+    descBS.AlphaToCoverageEnable = FALSE;
+    descBS.IndependentBlendEnable = FALSE;
+    for (auto& i : descBS.RenderTarget)
+    {
+        i = descRTBS;
+    }
+    // デプスステンシルステートを設定
+    D3D12_DEPTH_STENCIL_DESC descDSS{};
+    descDSS.DepthEnable = TRUE;
+    descDSS.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+    descDSS.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
+    descDSS.StencilEnable = FALSE;
+
+
+
+    // 頂点シェーダー読み込み
+    Microsoft::WRL::ComPtr<ID3DBlob> pVsBlob{};
+    auto hr = D3DReadFileToBlob(L"../Resource/Shader/ObjVs.cso", pVsBlob.ReleaseAndGetAddressOf());
+    OrcaDebug::GraphicsLog("頂点シェーダーを読み込み", hr);
+
+    // ピクセルシェーダー読み込み
+    Microsoft::WRL::ComPtr<ID3DBlob> pPsBlob{};
+    hr = D3DReadFileToBlob(L"../Resource/Shader/ObjPs.cso", pPsBlob.ReleaseAndGetAddressOf());
+    OrcaDebug::GraphicsLog("ピクセルシェーダーを読み込み", hr);
+
+
+    // グラフィックスパイプラインオブジェクトを生成
+    D3D12_GRAPHICS_PIPELINE_STATE_DESC descGps{};
+    descGps.InputLayout = { elements, _countof(elements) };
+    descGps.pRootSignature = mpRootSignature.Get();
+    descGps.VS = { pVsBlob->GetBufferPointer(),pVsBlob->GetBufferSize() };
+    descGps.PS = { pPsBlob->GetBufferPointer(),pPsBlob->GetBufferSize() };
+    descGps.RasterizerState = descRS;
+    descGps.BlendState = descBS;
+    descGps.DepthStencilState = descDSS;
+    descGps.SampleMask = UINT_MAX;
+    descGps.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+    descGps.NumRenderTargets = 1;
+    descGps.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
+    descGps.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+    descGps.SampleDesc = { 1,0 };
+
+    // パイプラインステートを設定
+    hr = mpDevice->CreateGraphicsPipelineState(
+        &descGps, IID_PPV_ARGS(mpPSO_Obj.GetAddressOf()));
 
     OrcaDebug::GraphicsLog("パイプラインステートを作成", hr);
 }

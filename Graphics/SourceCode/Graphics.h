@@ -13,6 +13,15 @@ namespace OrcaGraphics
         D3D12_CPU_DESCRIPTOR_HANDLE mHandleCPU{};
         D3D12_GPU_DESCRIPTOR_HANDLE mHandleGPU{};
     };
+    template<class T>
+    struct ConstantBufferView
+    {
+        D3D12_CONSTANT_BUFFER_VIEW_DESC mDesc{};
+        D3D12_CPU_DESCRIPTOR_HANDLE mHandleCPU{};
+        D3D12_GPU_DESCRIPTOR_HANDLE mHandleGPU{};
+        T* mpBuffer{};
+    };
+
 
 
     // DirectX12の描画クラス
@@ -26,7 +35,13 @@ namespace OrcaGraphics
         void Finalize(); // 終了処理
         void OnTerm();  // 終了時の処理
 
-        void Render();  // 描画処理
+        void OpenCmdList();
+        void CloseCmdList();
+
+        void StackCmdList();
+
+        [[nodiscard]] Microsoft::WRL::ComPtr<ID3D12Device> GetDevice()const;
+        [[nodiscard]] Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> GetCmdList()const;
 
     private:
         void CreateDevice();                  // デバイスの初期化
@@ -75,19 +90,12 @@ namespace OrcaGraphics
             DirectX::XMMATRIX ProjMat{};
         };
 
-        template<class T>
-        struct ConstantBufferView
-        {
-            D3D12_CONSTANT_BUFFER_VIEW_DESC mDesc{};
-            D3D12_CPU_DESCRIPTOR_HANDLE mHandleCPU{};
-            D3D12_GPU_DESCRIPTOR_HANDLE mHandleGPU{};
-            T* mpBuffer{};
-        };
-
+   
         void CreateVertexBuffer(); // 頂点バッファを作成する
         void CreateConstantBuffer(); // 定数バッファを作成する
         void CreateRootSignature(); // ルートシグネチャを作成する
         void CreateGPS();// グラフィックステートオブジェクトを作成する
+        void CreateGPS_Obj();// Obj用のグラフィックステートオブジェクトを作成する
         void CreateViewport(); // ビューポートを作成する
         void CreateScissor(); // シザー矩形を作成する
 
@@ -103,6 +111,7 @@ namespace OrcaGraphics
 
         Microsoft::WRL::ComPtr<ID3D12RootSignature> mpRootSignature{};
         Microsoft::WRL::ComPtr<ID3D12PipelineState> mpPSO{};
+        Microsoft::WRL::ComPtr<ID3D12PipelineState> mpPSO_Obj{};
 
         Microsoft::WRL::ComPtr<ID3D12Resource> mpDepthBuffer{};
         Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mpHeapDSV{};

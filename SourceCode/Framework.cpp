@@ -96,23 +96,26 @@ bool FrameWork::Initialize()
     // 描画管理クラスの実体を生成
     mpGraphics = std::make_unique<OrcaGraphics::Graphics>(); 
 
-
-
     // ------------------------------ 以下、初期化関数を呼ぶ ------------------------------
     mpGraphics->Initialize(mHwnd);
-
-
+    m_Obj.Initialize(mpGraphics->GetDevice(), L"../Resource/Obj/cube.obj");
     return true;
 }
 
 void FrameWork::Update(float Dt_)
 {
-
+    m_Obj.Update(Dt_);
 }
 
-void FrameWork::Render(float Dt_) const
+void FrameWork::Render(float Dt_)
 {
-    mpGraphics->Render();
+    // コマンドリスト開放
+    mpGraphics->OpenCmdList();
+    // コマンドリストにテストコマンドを積む
+    mpGraphics->StackCmdList();
+    m_Obj.StackGraphicsCmd(mpGraphics->GetCmdList());
+    // コマンドリストを閉じる
+    mpGraphics->CloseCmdList();
 }
 
 bool FrameWork::Finalize()
