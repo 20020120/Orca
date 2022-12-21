@@ -7,6 +7,18 @@
     <Filter Include="Pch">
       <UniqueIdentifier>{33f9eaae-c227-4fc3-804d-029bd421a3dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{c1ed2b76-c4f8-4650-aeb3-f714569380fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ConstantBuffer">
+      <UniqueIdentifier>{48b5cdc0-db7d-4480-9870-db80099b2ed6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DescriptorPool">
+      <UniqueIdentifier>{ff214b0d-bcde-49c0-b333-67836f591ce0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{00fda5b7-5e90-40a5-82cb-fb8be6eaaba2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\pch.cpp">
@@ -16,6 +28,21 @@
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\GraphicsLogger.cpp" />
+    <ClCompile Include="SourceCode\Camera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\ConstantBuffer.cpp">
+      <Filter>ConstantBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\DescriptorPool.cpp">
+      <Filter>DescriptorPool</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\DescriptorHandle.cpp">
+      <Filter>DescriptorPool</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Texture.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\pch.h">
@@ -25,6 +52,25 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\GraphicsLogger.h" />
+    <ClInclude Include="SourceCode\Camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\ConstantBuffer.h">
+      <Filter>ConstantBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\DescriptorPool.h">
+      <Filter>DescriptorPool</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Pool.h">
+      <Filter>DescriptorPool</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\DescriptorHandle.h">
+      <Filter>DescriptorPool</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Texture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\GraphicsMacro.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

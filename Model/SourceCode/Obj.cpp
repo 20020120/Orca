@@ -27,7 +27,7 @@ void Model::Obj::Update(float Dt_)
 {
     static float angle = 0.0f;
     angle += DirectX::XMConvertToRadians(60.0f) * Dt_;
-    mCbView.mpBuffer->World = DirectX::XMMatrixRotationX(45.0f) * DirectX::XMMatrixRotationY(45.0f) *
+    mCbView.mpBuffer->World = DirectX::XMMatrixRotationX(45.0f) * DirectX::XMMatrixRotationY(angle) *
         DirectX::XMMatrixTranslation(0.0f, 0.0f, -10.0f);
 }
 
@@ -285,7 +285,7 @@ void Model::Obj::CreateConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevi
         const auto eyePos = DirectX::XMVectorSet(0.0f, 0.0f, 5.0f, 0.0f);
         const auto targetPos = DirectX::XMVectorZero();
         const auto upward = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-        constexpr auto fovY = DirectX::XMConvertToRadians(37.5f);
+        constexpr auto fovY = DirectX::XMConvertToRadians(30.0f);
         constexpr auto aspect = Orca::ScreenWidth / Orca::ScreenHeight;
 
         // 変換行列の設定

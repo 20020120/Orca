@@ -301,7 +301,7 @@ void OrcaGraphics::Graphics::CreateFence()
 
     // フェンスイベントを作成
     mFenceEvent = CreateEvent(nullptr, FALSE, FALSE, nullptr);
-    Orca_NullExeption(mFenceEvent)
+    Orca_NullException(mFenceEvent)
 
 }
 
@@ -444,9 +444,9 @@ void OrcaGraphics::Graphics::Present(uint32_t Interval_)
 
 void OrcaGraphics::Graphics::WaitGpu()
 {
-    Orca_NullExeption(mpCommandQueue)
-    Orca_NullExeption(mpFence)
-    Orca_NullExeption(mFenceEvent)
+    Orca_NullException(mpCommandQueue)
+    Orca_NullException(mpFence)
+    Orca_NullException(mFenceEvent)
 
     // シグナル処理
     mpCommandQueue->Signal(mpFence.Get(), mFenceCounter[mFrameIndex]);
@@ -913,6 +913,7 @@ void OrcaGraphics::Graphics::CreateTexture()
     DirectX::ResourceUploadBatch batch(mpDevice.Get());
     batch.Begin();
     // リソースを生成
+    mTexture.Initialize(mpDevice,)
 
     const auto hr = DirectX::CreateDDSTextureFromFile(
         mpDevice.Get(),

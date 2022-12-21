@@ -4,29 +4,24 @@
 #include<wrl.h>
 #include<dxgi1_4.h>
 #include<DirectXMath.h>
+
+#include "ConstantBuffer.h"
 #include"ScreenConstants.h"
+#include "Texture.h"
+
 namespace OrcaGraphics
 {
-    struct Texture
-    {
-        Microsoft::WRL::ComPtr<ID3D12Resource> mpResource{};
-        D3D12_CPU_DESCRIPTOR_HANDLE mHandleCPU{};
-        D3D12_GPU_DESCRIPTOR_HANDLE mHandleGPU{};
-    };
-    template<class T>
-    struct ConstantBufferView
-    {
-        D3D12_CONSTANT_BUFFER_VIEW_DESC mDesc{};
-        D3D12_CPU_DESCRIPTOR_HANDLE mHandleCPU{};
-        D3D12_GPU_DESCRIPTOR_HANDLE mHandleGPU{};
-        T* mpBuffer{};
-    };
-
-
-
     // DirectX12の描画クラス
     class Graphics
     {
+        enum POOL_TYPE
+        {
+            POOL_TYPE_RES = 0,     // CBV / SRV / UAV
+            POOL_TYPE_SMP = 1,     // Sampler
+            POOL_TYPE_RTV = 2,     // RTV
+            POOL_TYPE_DSV = 3,     // DSV
+            POOL_COUNT = 4,
+        };
     public:
         Graphics();
         ~Graphics();
@@ -119,6 +114,8 @@ namespace OrcaGraphics
     private:
         void CreateTexture();   // テクスチャを生成
         Texture mTexture{};
+
+        DescriptorPool* mpPool[POOL_COUNT];         // ディスクリプタプールです.
 
     private:
         float mRotateAngle{};

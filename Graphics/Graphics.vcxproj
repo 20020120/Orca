@@ -19,17 +19,29 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SourceCode\Camera.cpp" />
+    <ClCompile Include="SourceCode\ConstantBuffer.cpp" />
+    <ClCompile Include="SourceCode\DescriptorHandle.cpp" />
+    <ClCompile Include="SourceCode\DescriptorPool.cpp" />
     <ClCompile Include="SourceCode\Graphics.cpp" />
     <ClCompile Include="SourceCode\GraphicsLogger.cpp" />
     <ClCompile Include="SourceCode\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SourceCode\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SourceCode\Camera.h" />
+    <ClInclude Include="SourceCode\ConstantBuffer.h" />
+    <ClInclude Include="SourceCode\DescriptorHandle.h" />
+    <ClInclude Include="SourceCode\DescriptorPool.h" />
     <ClInclude Include="SourceCode\Graphics.h" />
     <ClInclude Include="SourceCode\GraphicsLogger.h" />
+    <ClInclude Include="SourceCode\GraphicsMacro.h" />
     <ClInclude Include="SourceCode\pch.h" />
+    <ClInclude Include="SourceCode\Pool.h" />
+    <ClInclude Include="SourceCode\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

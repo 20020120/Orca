@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SourceCode\MacroMinmam.h" />
     <ClInclude Include="SourceCode\OrcaException.h" />
     <ClInclude Include="SourceCode\ScreenConstants.h" />
   </ItemGroup>
