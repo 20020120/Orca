@@ -1,5 +1,6 @@
 #include "pch.h"
 #include<DDSTextureLoader.h>
+#include<ResourceUploadBatch.h>
 
 #include"Texture.h"
 #include "DescriptorPool.h"
@@ -9,11 +10,6 @@
 OrcaGraphics::Texture::Texture()
 {}
 
-OrcaGraphics::Texture::Texture(const Texture&)
-{}
-
-void OrcaGraphics::Texture::operator=(const Texture&)
-{}
 
 bool OrcaGraphics::Texture::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_,
     const D3D12_RESOURCE_DESC* pDesc_, bool IsCube_)

@@ -73,25 +73,57 @@ bool OrcaGraphics::ConstantBuffer::Initialize(Microsoft::WRL::ComPtr<ID3D12Devic
 
 void OrcaGraphics::ConstantBuffer::Finalize()
 {
+    // メモリマッピングを解除して，定数バッファを解放します.
+    if (mpCb != nullptr)
+    {
+        mpCb->Unmap(0, nullptr);
+        mpCb.Reset();
+    }
+
+    // ビューを破棄.
+    if (mpPool != nullptr)
+    {
+        mpPool->FreeHandle(mpHandle);
+        mpHandle = nullptr;
+    }
+
+    // ディスクリプタプールを解放.
+    if (mpPool != nullptr)
+    {
+        mpPool->Release();
+        mpPool = nullptr;
+    }
+
+    mpMappedPtr = nullptr;
 }
 
 D3D12_GPU_VIRTUAL_ADDRESS OrcaGraphics::ConstantBuffer::GetAddress() const
 {
+    return mDesc.BufferLocation;
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE OrcaGraphics::ConstantBuffer::GetCPU() const
 {
+    if (mpHandle == nullptr)
+    {
+        return D3D12_CPU_DESCRIPTOR_HANDLE();
+    }
+
+    return mpHandle->HandleCPU;
 }
 
 D3D12_GPU_DESCRIPTOR_HANDLE OrcaGraphics::ConstantBuffer::GetGPU() const
 {
+    if (mpHandle == nullptr)
+    {
+        return D3D12_GPU_DESCRIPTOR_HANDLE();
+    }
+
+    return mpHandle->HandleGPU;
 }
 
-void* OrcaGraphics::ConstantBuffer::GetPtr()
+void* OrcaGraphics::ConstantBuffer::GetPtr() const
 {
+    return mpMappedPtr;
 }
 
-template <class T>
-T* OrcaGraphics::ConstantBuffer::GetPtr()
-{
-}

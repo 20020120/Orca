@@ -22,7 +22,7 @@ namespace OrcaGraphics
         OrcaNodiscard D3D12_GPU_VIRTUAL_ADDRESS GetAddress()const;
         OrcaNodiscard D3D12_CPU_DESCRIPTOR_HANDLE GetCPU()const;
         OrcaNodiscard D3D12_GPU_DESCRIPTOR_HANDLE GetGPU()const;
-        void* GetPtr();
+        void* GetPtr() const;
         template<class T>
         T* GetPtr();
 
@@ -34,5 +34,14 @@ namespace OrcaGraphics
         void* mpMappedPtr{};
     };
 
-    
 }
+
+template <class T>
+T* OrcaGraphics::ConstantBuffer::GetPtr()
+{
+    auto p = GetPtr();
+   
+    T* castP = static_cast<T*>(p);
+    return castP;
+}
+

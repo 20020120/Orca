@@ -9,11 +9,13 @@
 #include"ScreenConstants.h"
 #include "Texture.h"
 
+
 namespace OrcaGraphics
 {
     // DirectX12の描画クラス
     class Graphics
     {
+    public:
         enum POOL_TYPE
         {
             POOL_TYPE_RES = 0,     // CBV / SRV / UAV
@@ -37,7 +39,7 @@ namespace OrcaGraphics
 
         [[nodiscard]] Microsoft::WRL::ComPtr<ID3D12Device> GetDevice()const;
         [[nodiscard]] Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> GetCmdList()const;
-
+        [[nodiscard]] OrcaGraphics::DescriptorPool* GetDescriptorPool(POOL_TYPE Type_)const;
     private:
         void CreateDevice();                  // デバイスの初期化
         void CreateCommandQueue();            // コマンドキューの初期化
@@ -48,7 +50,6 @@ namespace OrcaGraphics
         void CreateFence();                   // フェンスオブジェクトを作成する
         void CreateIndexBuffer();             // インデックスバッファを作成
         void CreateDepthBuffer();             // デプスバッファを作成
-
 
         // ----------------------------------- 変数 ----------------------------------
         Microsoft::WRL::ComPtr<ID3D12Device> mpDevice{};                                       // デバイス
@@ -87,6 +88,7 @@ namespace OrcaGraphics
 
    
         void CreateVertexBuffer(); // 頂点バッファを作成する
+        bool CreateDescriptorPool();
         void CreateConstantBuffer(); // 定数バッファを作成する
         void CreateRootSignature(); // ルートシグネチャを作成する
         void CreateGPS();// グラフィックステートオブジェクトを作成する
@@ -97,9 +99,7 @@ namespace OrcaGraphics
         Microsoft::WRL::ComPtr<ID3D12Resource> mpVertexBuffer{};
         D3D12_VERTEX_BUFFER_VIEW mVbView{};
 
-        Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mpHeapCbV_SRV_UAV{};
-        Microsoft::WRL::ComPtr<ID3D12Resource> mpConstantBuffer[Orca::FrameCount*2]{};
-        ConstantBufferView<CB_Simple> mCbV[Orca::FrameCount*2]{};
+        ConstantBuffer mpConstantBuffer[Orca::FrameCount*2]{};
 
         Microsoft::WRL::ComPtr<ID3D12Resource> mpIndexBuffer{};
         D3D12_INDEX_BUFFER_VIEW mIbView{};

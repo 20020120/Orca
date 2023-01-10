@@ -2,7 +2,7 @@
 #include"Framework.h"
 #include "LogWindow.h"
 #include"Graphics.h"
-
+#include"DescriptorPool.h"
 FrameWork::FrameWork(HWND Hwnd_)
     :mHwnd(Hwnd_)
 {}
@@ -98,7 +98,8 @@ bool FrameWork::Initialize()
 
     // ------------------------------ ˆÈ‰ºA‰Šú‰»ŠÖ”‚ðŒÄ‚Ô ------------------------------
     mpGraphics->Initialize(mHwnd);
-    m_Obj.Initialize(mpGraphics->GetDevice(), L"../Resource/Obj/cube.obj");
+    m_Obj.Initialize(mpGraphics->GetDevice(),mpGraphics->GetDescriptorPool(OrcaGraphics::Graphics::POOL_TYPE_RES),
+        L"../Resource/Obj/cube.obj");
     return true;
 }
 

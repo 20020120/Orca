@@ -5,8 +5,9 @@
 #include<fstream>
 #include<d3d12.h>
 #include"GraphicsLogger.h"
+#include"DescriptorPool.h"
 
-void Model::Obj::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* ObjPath_)
+void Model::Obj::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, OrcaGraphics::DescriptorPool* pPool_, const wchar_t* ObjPath_)
 {
     std::vector<VertexData> vertices{};
     std::vector<uint32_t> indices{};
@@ -17,7 +18,7 @@ void Model::Obj::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const
     // インデックスバッファを作成する
     CreateIndexBuffer(pDevice_, indices);
     // 定数バッファを作成
-    CreateConstantBuffer(pDevice_);
+    CreateConstantBuffer(pDevice_, pPool_);
 
     // -------------------------------- 変数を初期化する -------------------------------
     m_VertexCounts = static_cast<UINT>(vertices.size());
@@ -27,14 +28,15 @@ void Model::Obj::Update(float Dt_)
 {
     static float angle = 0.0f;
     angle += DirectX::XMConvertToRadians(60.0f) * Dt_;
-    mCbView.mpBuffer->World = DirectX::XMMatrixRotationX(45.0f) * DirectX::XMMatrixRotationY(angle) *
+    const auto ptr = mCb.GetPtr<Cb_Obj>();
+    ptr->World = DirectX::XMMatrixRotationX(45.0f) * DirectX::XMMatrixRotationY(angle) *
         DirectX::XMMatrixTranslation(0.0f, 0.0f, -10.0f);
 }
 
 void Model::Obj::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_)
 {
     // -------------------------------- コマンドを積む --------------------------------
-    pCmdList_->SetGraphicsRootConstantBufferView(0, mCbView.mDesc.BufferLocation);
+    pCmdList_->SetGraphicsRootConstantBufferView(0, mCb.GetAddress());
     pCmdList_->IASetVertexBuffers(0, 1, &mVbView);
     pCmdList_->IASetIndexBuffer(&mIbView);
     pCmdList_->DrawIndexedInstanced(m_VertexCounts, 1, 0, 0, 0);
@@ -211,86 +213,18 @@ void Model::Obj::CreateIndexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_
     mIbView.SizeInBytes = static_cast<UINT>(sizeof(uint32_t)*Indices_.size());
 }
 
-void Model::Obj::CreateConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_)
+void Model::Obj::CreateConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, OrcaGraphics::DescriptorPool* pPool_)
 {
-    {
-        D3D12_DESCRIPTOR_HEAP_DESC desc{};
-        desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-        desc.NumDescriptors = 2 * Orca::FrameCount;
-        desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-        desc.NodeMask = 0;
+    mCb.Initialize(pDevice_, pPool_, sizeof(Cb_Obj));
+    const auto eyePos = DirectX::XMVectorSet(0.0f, 0.0f, 5.0f, 0.0f);
+    const auto targetPos = DirectX::XMVectorZero();
+    const auto upward = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+    constexpr auto fovY = DirectX::XMConvertToRadians(30.0f);
+    constexpr auto aspect = Orca::ScreenWidth / Orca::ScreenHeight;
 
-        const auto hr = pDevice_->CreateDescriptorHeap(
-            &desc,
-            IID_PPV_ARGS(mpHeapCbV.ReleaseAndGetAddressOf()));
-        OrcaDebug::GraphicsLog("ディスクリプタヒープを作成", hr);
-    }
-
-    {
-        // ヒーププロパティの設定
-        D3D12_HEAP_PROPERTIES prp{};
-        prp.Type = D3D12_HEAP_TYPE_UPLOAD;
-        prp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-        prp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
-        prp.CreationNodeMask = 1;
-        prp.VisibleNodeMask = 1;
-
-        // リソースの設定
-        D3D12_RESOURCE_DESC desc{};
-        desc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-        desc.Alignment = 0;
-        desc.Width = sizeof(Cb_Obj);
-        desc.Height = 1;
-        desc.DepthOrArraySize = 1;
-        desc.MipLevels = 1;
-        desc.Format = DXGI_FORMAT_UNKNOWN;
-        desc.SampleDesc.Count = 1;
-        desc.SampleDesc.Quality = 0;
-        desc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-        desc.Flags = D3D12_RESOURCE_FLAG_NONE;
-        const auto incrementSize = pDevice_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);;
-
-        // リソース生成
-        auto hr = pDevice_->CreateCommittedResource(
-            &prp,
-            D3D12_HEAP_FLAG_NONE,
-            &desc,
-            D3D12_RESOURCE_STATE_GENERIC_READ,
-            nullptr,
-            IID_PPV_ARGS(mpConstantBuffer.ReleaseAndGetAddressOf())
-        );
-        OrcaDebug::GraphicsLog("定数バッファを作成", hr);
-
-        const auto address = mpConstantBuffer->GetGPUVirtualAddress();
-        auto handleCPU = mpHeapCbV->GetCPUDescriptorHandleForHeapStart();
-        auto handleGPU = mpHeapCbV->GetGPUDescriptorHandleForHeapStart();
-        handleCPU.ptr += incrementSize;
-        handleGPU.ptr += incrementSize;
-
-        // 定数バッファビューの設定
-        mCbView.mHandleCPU = handleCPU;
-        mCbView.mHandleGPU = handleGPU;
-        mCbView.mDesc.BufferLocation = address;
-        mCbView.mDesc.SizeInBytes = sizeof(Cb_Obj);
-
-        // 定数バッファビューを作成
-        pDevice_->CreateConstantBufferView(&mCbView.mDesc, handleCPU);
-
-        // マッピング
-        hr = mpConstantBuffer->Map(0, nullptr,
-            reinterpret_cast<void**>(&mCbView.mpBuffer));
-
-        OrcaDebug::GraphicsLog("定数バッファをマッピング", hr);
-
-        const auto eyePos = DirectX::XMVectorSet(0.0f, 0.0f, 5.0f, 0.0f);
-        const auto targetPos = DirectX::XMVectorZero();
-        const auto upward = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-        constexpr auto fovY = DirectX::XMConvertToRadians(30.0f);
-        constexpr auto aspect = Orca::ScreenWidth / Orca::ScreenHeight;
-
-        // 変換行列の設定
-        mCbView.mpBuffer->World = DirectX::XMMatrixIdentity();
-        mCbView.mpBuffer->ViewMat = DirectX::XMMatrixLookAtLH(eyePos, targetPos, upward);
-        mCbView.mpBuffer->ProjMat = DirectX::XMMatrixPerspectiveFovLH(fovY, aspect, 1.0f, 1000.0f);
-    }
+    // 変換行列の設定
+    const auto ptr = mCb.GetPtr<Cb_Obj>();
+    ptr->World = DirectX::XMMatrixIdentity();
+    ptr->ViewMat = DirectX::XMMatrixLookAtLH(eyePos, targetPos, upward);
+    ptr->ProjMat = DirectX::XMMatrixPerspectiveFovLH(fovY, aspect, 1.0f, 1000.0f);
 }

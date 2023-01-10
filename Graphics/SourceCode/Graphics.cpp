@@ -6,7 +6,7 @@
 #include<d3dcompiler.h>
 #include"ResourceUploadBatch.h"
 #include"DDSTextureLoader.h"
-
+#include"DescriptorPool.h"
 
 #include"ScreenConstants.h"
 #include"OrcaException.h"
@@ -30,6 +30,8 @@ void OrcaGraphics::Graphics::Initialize(HWND hWnd_)
     CreateRenderTargetView();
     CreateFence();
     CreateVertexBuffer();
+    CreateDescriptorPool();
+
     CreateConstantBuffer();
     CreateRootSignature();
     CreateDepthBuffer();
@@ -49,15 +51,6 @@ void OrcaGraphics::Graphics::Finalize()
 
 void OrcaGraphics::Graphics::OnTerm()
 {
-    for (int i = 0; i < Orca::FrameCount; ++i)
-    {
-        if(mpConstantBuffer)
-        {
-            mpConstantBuffer[i]->Unmap(0, nullptr);
-            memset(&mCbV[i], 0, sizeof(mCbV[i]));
-        }
-        mpConstantBuffer->Reset();
-    }
     mpVertexBuffer.Reset();
     mpPSO.Reset();
 }
@@ -117,18 +110,23 @@ void OrcaGraphics::Graphics::CloseCmdList()
 
 void OrcaGraphics::Graphics::StackCmdList()
 {
-    // 更新処理
-    {
-        mRotateAngle -= 0.025f;
-        mCbV[mFrameIndex * 2 + 0].mpBuffer->World =
-            DirectX::XMMatrixRotationY(mRotateAngle + DirectX::XMConvertToRadians(45.0f));
-        mCbV[mFrameIndex * 2 + 1].mpBuffer->World =
-            DirectX::XMMatrixRotationY(mRotateAngle) * DirectX::XMMatrixScaling(2.0f, 0.5f, 1.0f);
-    }
+    //// 更新処理
+    //{
+    //    mRotateAngle -= 0.025f;
+    //    mCbV[mFrameIndex * 2 + 0].mpBuffer->World =
+    //        DirectX::XMMatrixRotationY(mRotateAngle + DirectX::XMConvertToRadians(45.0f));
+    //    mCbV[mFrameIndex * 2 + 1].mpBuffer->World =
+    //        DirectX::XMMatrixRotationY(mRotateAngle) * DirectX::XMMatrixScaling(2.0f, 0.5f, 1.0f);
+    //}
     // 描画処理
     {
+
+        ID3D12DescriptorHeap* const pHeaps[] = {
+          mpPool[POOL_TYPE_RES]->GetHeap()
+        };
+
         mpCommandList->SetGraphicsRootSignature(mpRootSignature.Get());
-        mpCommandList->SetDescriptorHeaps(1, mpHeapCbV_SRV_UAV.GetAddressOf());
+        mpCommandList->SetDescriptorHeaps(1, pHeaps);
         mpCommandList->SetPipelineState(mpPSO.Get());
         mpCommandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
         mpCommandList->IASetVertexBuffers(0, 1, &mVbView);
@@ -154,6 +152,11 @@ Microsoft::WRL::ComPtr<ID3D12Device> OrcaGraphics::Graphics::GetDevice() const
 Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> OrcaGraphics::Graphics::GetCmdList() const
 {
     return mpCommandList;
+}
+
+OrcaGraphics::DescriptorPool* OrcaGraphics::Graphics::GetDescriptorPool(POOL_TYPE Type_) const
+{
+    return mpPool[Type_];
 }
 
 void OrcaGraphics::Graphics::CreateDevice()
@@ -534,91 +537,70 @@ void OrcaGraphics::Graphics::CreateVertexBuffer()
     mVbView.StrideInBytes = sizeof(Vertex);
 }
 
+bool OrcaGraphics::Graphics::CreateDescriptorPool()
+{
+    // ディスクリプタプールの生成.
+    {
+        D3D12_DESCRIPTOR_HEAP_DESC desc = {};
+
+        desc.NodeMask = 1;
+        desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+        desc.NumDescriptors = 512;
+        desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+        if (!DescriptorPool::Create(mpDevice.Get(), &desc, &mpPool[POOL_TYPE_RES]))
+        {
+            return false;
+        }
+
+        desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER;
+        desc.NumDescriptors = 256;
+        desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+        if (!DescriptorPool::Create(mpDevice.Get(), &desc, &mpPool[POOL_TYPE_SMP]))
+        {
+            return false;
+        }
+
+        desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+        desc.NumDescriptors = 512;
+        desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+        if (!DescriptorPool::Create(mpDevice.Get(), &desc, &mpPool[POOL_TYPE_RTV]))
+        {
+            return false;
+        }
+
+        desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
+        desc.NumDescriptors = 512;
+        desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+        if (!DescriptorPool::Create(mpDevice.Get(), &desc, &mpPool[POOL_TYPE_DSV]))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 void OrcaGraphics::Graphics::CreateConstantBuffer()
 {
+    mpConstantBuffer->Initialize(mpDevice, mpPool[POOL_TYPE_RES], sizeof(CB_Simple));
+
+
+    const auto eyePos = DirectX::XMVectorSet(0.0f, 0.0f, 5.0f, 0.0f);
+    const auto targetPos = DirectX::XMVectorZero();
+    const auto upward = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+    constexpr auto fovY = DirectX::XMConvertToRadians(37.5f);
+    constexpr auto aspect = Orca::ScreenWidth / Orca::ScreenHeight;
+
+    // 変換行列の設定
+    for (int i = 0; i < ARRAYSIZE(mpConstantBuffer); ++i)
     {
-        D3D12_DESCRIPTOR_HEAP_DESC desc{};
-        desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-        desc.NumDescriptors = 2 * Orca::FrameCount;
-        desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-        desc.NodeMask = 0;
-
-        const auto hr = mpDevice->CreateDescriptorHeap(
-            &desc,
-            IID_PPV_ARGS(mpHeapCbV_SRV_UAV.ReleaseAndGetAddressOf()));
-
-        OrcaDebug::GraphicsLog("ディスクリプタヒープを作成", hr);
-    }
-
-    {
-        // ヒーププロパティの設定
-        D3D12_HEAP_PROPERTIES prp{};
-        prp.Type = D3D12_HEAP_TYPE_UPLOAD;
-        prp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-        prp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
-        prp.CreationNodeMask = 1;
-        prp.VisibleNodeMask = 1;
-
-        // リソースの設定
-        D3D12_RESOURCE_DESC desc{};
-        desc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-        desc.Alignment = 0;
-        desc.Width = sizeof(CB_Simple);
-        desc.Height = 1;
-        desc.DepthOrArraySize = 1;
-        desc.MipLevels = 1;
-        desc.Format = DXGI_FORMAT_UNKNOWN;
-        desc.SampleDesc.Count = 1;
-        desc.SampleDesc.Quality = 0;
-        desc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-        desc.Flags = D3D12_RESOURCE_FLAG_NONE;
-        const auto incrementSize = mpDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);;
-
-        for (int i = 0; i < Orca::FrameCount*2; ++i)
+        const auto ptr = mpConstantBuffer[i].GetPtr<CB_Simple>();
+        if(!ptr)
         {
-            // リソース生成
-            auto hr = mpDevice->CreateCommittedResource(
-                &prp,
-                D3D12_HEAP_FLAG_NONE,
-                &desc,
-                D3D12_RESOURCE_STATE_GENERIC_READ,
-                nullptr,
-                IID_PPV_ARGS(mpConstantBuffer[i].ReleaseAndGetAddressOf())
-            );
-            OrcaDebug::GraphicsLog("定数バッファを作成", hr);
-
-            const auto address = mpConstantBuffer[i]->GetGPUVirtualAddress();
-            auto handleCPU = mpHeapCbV_SRV_UAV->GetCPUDescriptorHandleForHeapStart();
-            auto handleGPU = mpHeapCbV_SRV_UAV->GetGPUDescriptorHandleForHeapStart();
-            handleCPU.ptr += incrementSize * i;
-            handleGPU.ptr += incrementSize * i;
-
-            // 定数バッファヴューの設定
-            mCbV[i].mHandleCPU = handleCPU;
-            mCbV[i].mHandleGPU = handleGPU;
-            mCbV[i].mDesc.BufferLocation = address;
-            mCbV[i].mDesc.SizeInBytes = sizeof(CB_Simple);
-
-            // 定数バッファビューを作成
-            mpDevice->CreateConstantBufferView(&mCbV[i].mDesc, handleCPU);
-
-            // マッピング
-            hr = mpConstantBuffer[i]->Map(0, nullptr,
-                reinterpret_cast<void**>(&mCbV[i].mpBuffer));
-
-            OrcaDebug::GraphicsLog("定数バッファをマッピング", hr);
-
-            const auto eyePos = DirectX::XMVectorSet(0.0f, 0.0f, 5.0f, 0.0f);
-            const auto targetPos = DirectX::XMVectorZero();
-            const auto upward = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-            constexpr auto fovY = DirectX::XMConvertToRadians(37.5f);
-            constexpr auto aspect = Orca::ScreenWidth / Orca::ScreenHeight;
-
-            // 変換行列の設定
-            mCbV[i].mpBuffer->World = DirectX::XMMatrixIdentity();
-            mCbV[i].mpBuffer->ViewMat = DirectX::XMMatrixLookAtLH(eyePos, targetPos, upward);
-            mCbV[i].mpBuffer->ProjMat = DirectX::XMMatrixPerspectiveFovLH(fovY, aspect, 1.0f, 1000.0f);
+            continue;
         }
+        ptr->World = DirectX::XMMatrixIdentity();
+        ptr->ViewMat = DirectX::XMMatrixLookAtLH(eyePos, targetPos, upward);
+        ptr->ProjMat = DirectX::XMMatrixPerspectiveFovLH(fovY, aspect, 1.0f, 1000.0f);
     }
 }
 
@@ -913,42 +895,9 @@ void OrcaGraphics::Graphics::CreateTexture()
     DirectX::ResourceUploadBatch batch(mpDevice.Get());
     batch.Begin();
     // リソースを生成
-    mTexture.Initialize(mpDevice,)
-
-    const auto hr = DirectX::CreateDDSTextureFromFile(
-        mpDevice.Get(),
-        batch,
-        L"../Resource/Sprite/Test.dds",
-        mTexture.mpResource.ReleaseAndGetAddressOf()
-    );
-    OrcaDebug::GraphicsLog("テクスチャを生成", hr);
+    mTexture.Initialize(mpDevice, mpPool[POOL_TYPE_RES], L"../Resource/Sprite/Test.dds", batch);
 
     // コマンドを実行
     const auto future = batch.End(mpCommandQueue.Get());
     future.wait();
-
-    const auto incrementSize = mpDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-    // ＣＰＵハンドルを取得
-    auto handleCPU = mpHeapCbV_SRV_UAV->GetCPUDescriptorHandleForHeapStart();
-    auto handleGPU = mpHeapCbV_SRV_UAV->GetGPUDescriptorHandleForHeapStart();
-    handleCPU.ptr += incrementSize * 2;
-    handleGPU.ptr += incrementSize * 2;
-    mTexture.mHandleCPU = handleCPU;
-    mTexture.mHandleGPU = handleGPU;
-
-    auto textureDesc = mTexture.mpResource->GetDesc();
-    // シェーダーリソースビューを設定
-    D3D12_SHADER_RESOURCE_VIEW_DESC descSRV{};
-    descSRV.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-    descSRV.Format = textureDesc.Format;
-    descSRV.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-    descSRV.Texture2D.MostDetailedMip = 0;
-    descSRV.Texture2D.MipLevels = textureDesc.MipLevels;
-    descSRV.Texture2D.PlaneSlice = 0;
-    descSRV.Texture2D.ResourceMinLODClamp = 0.0f;
-
-    // シェーダーリソースビューを作成
-    mpDevice->CreateShaderResourceView(mTexture.mpResource.Get(), &descSRV, handleCPU);
-
-
 }

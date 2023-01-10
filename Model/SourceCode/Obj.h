@@ -6,6 +6,13 @@
 #include<vector>
 
 #include"Graphics.h"
+#include"ConstantBuffer.h"
+
+// 前方宣言
+namespace OrcaGraphics
+{
+    class DescriptorPool;
+}
 
 namespace Model
 {
@@ -21,14 +28,14 @@ namespace Model
         ~Obj() = default;
 
         // 初期化
-        void Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* ObjPath_);
+        void Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, OrcaGraphics::DescriptorPool* pPool_, const wchar_t* ObjPath_);
         void Update(float Dt_); // 更新
         void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_); // 描画コマンドを積む
     private:
         static void Parse(const wchar_t* ObjPath_, std::vector<VertexData>& Vertices_, std::vector<uint32_t>& Indices_);
         void CreateVertexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const std::vector<VertexData>& Vertices_);
         void CreateIndexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const std::vector<uint32_t>& Indices_);
-        void CreateConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_);
+        void CreateConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, OrcaGraphics::DescriptorPool* pPool_);
     private:
         // ------------------------------- 頂点読み込み ------------------------------
         struct VertexData
@@ -53,7 +60,7 @@ namespace Model
         };
         Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mpHeapCbV{};
         Microsoft::WRL::ComPtr<ID3D12Resource> mpConstantBuffer{};
-        OrcaGraphics::ConstantBufferView<Cb_Obj> mCbView{};
+       OrcaGraphics::ConstantBuffer mCb{};
 
 
     };
