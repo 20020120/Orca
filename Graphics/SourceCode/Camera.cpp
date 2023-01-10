@@ -8,8 +8,6 @@ void OrcaGraphics::Camera::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevi
 {
     // 定数バッファを初期化
     mCb.Initialize(pDevice_, pPool_, sizeof(CbData));
-
-    
 }
 
 void OrcaGraphics::Camera::Update(float Dt_)
@@ -30,14 +28,15 @@ void OrcaGraphics::Camera::Update(float Dt_)
     const auto pData = mCb.GetPtr<CbData>();
     const auto V = DirectX::XMMatrixLookAtLH(DirectX::XMLoadFloat3(&eyePos), DirectX::XMLoadFloat3(&mTarget), upward);
     const auto P = DirectX::XMMatrixPerspectiveFovLH(fovY, aspect, 1.0f, 1000.0f);
-    DirectX::XMStoreFloat4x4(&pData->View, V);
-    DirectX::XMStoreFloat4x4(&pData->Proj, P);
+    DirectX::XMStoreFloat4x4(&pData->View, DirectX::XMMatrixTranspose(V));
+    DirectX::XMStoreFloat4x4(&pData->Proj, DirectX::XMMatrixTranspose(P));
 }
 
 void OrcaGraphics::Camera::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_)
 {
+    // 定数データをバインド
+    pCmdList_->SetGraphicsRootDescriptorTable(0, mCb.GetGPU());
 }
-
 void OrcaGraphics::Camera::Finalize()
 {
 }
@@ -82,10 +81,14 @@ void OrcaGraphics::Camera::InputRot(float Dt_)
 {
     // ----------------------------------- 回転 ----------------------------------
     auto axis = DirectX::XMFLOAT2();
-    if (GetAsyncKeyState('J'))  axis.x = -1.0f;
-    if (GetAsyncKeyState('L'))  axis.x = 1.0f;
-    if (GetAsyncKeyState('I'))  axis.y = -1.0f;
-    if (GetAsyncKeyState('K'))  axis.y = 1.0f;
+    if (GetAsyncKeyState('J'))  
+        axis.x = -1.0f;
+    if (GetAsyncKeyState('L'))  
+        axis.x = 1.0f;
+    if (GetAsyncKeyState('I'))  
+        axis.y = -1.0f;
+    if (GetAsyncKeyState('K'))  
+        axis.y = 1.0f;
     // クォータニオンの回転関数
     auto CalcQuaRotation = [&](DirectX::XMFLOAT3 RotAxis_, const float CalculatedRotSpeed_)
     {

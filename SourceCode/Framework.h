@@ -6,6 +6,7 @@
 #include<wrl.h>
 #include<memory>
 #include"Obj.h"
+#include"Shader.h"
 
 #define  WM_DROPFILES    0x0233
 
@@ -23,6 +24,7 @@ CONST LPCWSTR APPLICATION_NAME{ L"Orc" };
 namespace OrcaGraphics
 {
 	class Graphics;
+	class Camera;
 }
 
 
@@ -32,7 +34,7 @@ public:
 	HWND mHwnd{};
 
 
-    explicit FrameWork(HWND Hwnd_);
+	explicit FrameWork(HWND Hwnd_);
 	~FrameWork();
 
 	FrameWork(const FrameWork&) = delete;
@@ -56,7 +58,9 @@ private:
 	float mDeltaTime{ 0.0f };
 	int hConsole = 0;
 	std::unique_ptr<OrcaGraphics::Graphics> mpGraphics{}; // ï`âÊÉNÉâÉX
+	std::unique_ptr<OrcaGraphics::Camera> mpCamera{};	// ÉJÉÅÉâ
 	Model::Obj m_Obj{};
+	OrcaGraphics::Shader::Shader mShader{};
 
 	void CalculateFrameStats();
 };

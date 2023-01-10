@@ -1,4 +1,5 @@
 #include"Obj.hlsli"
+#include"Camera.hlsli"
 ObjVsOut main( ObjVsIn VsIn_ )
 {
 	ObjVsOut vsOut;

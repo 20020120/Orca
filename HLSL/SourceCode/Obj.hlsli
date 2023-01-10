@@ -11,12 +11,16 @@ struct ObjVsOut
 	float4 Position : SV_POSITION;
 	float4 Color : COLOR;
 };
-cbuffer Obj : register(b0)
+
+cbuffer Obj : register(b1)
 {
-	row_major float4x4 World : packoffset(c0);
-	row_major float4x4 ViewMatrix : packoffset(c4);
-	row_major float4x4 ProjMatrix : packoffset(c8);
+	float4x4 World;
 }
 
+cbuffer Camera : register(b0)
+{
+	float4x4 ViewMatrix;
+	float4x4 ProjMatrix;
+}
 #endif
 

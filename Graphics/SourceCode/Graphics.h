@@ -48,7 +48,6 @@ namespace OrcaGraphics
         void CreateCommandList();             // コマンドリストを作成
         void CreateRenderTargetView();        // レンダーターゲットビューを作成
         void CreateFence();                   // フェンスオブジェクトを作成する
-        void CreateIndexBuffer();             // インデックスバッファを作成
         void CreateDepthBuffer();             // デプスバッファを作成
 
         // ----------------------------------- 変数 ----------------------------------
@@ -86,24 +85,11 @@ namespace OrcaGraphics
             DirectX::XMMATRIX ProjMat{};
         };
 
-   
-        void CreateVertexBuffer(); // 頂点バッファを作成する
+
         bool CreateDescriptorPool();
-        void CreateRootSignature(); // ルートシグネチャを作成する
-        void CreateGPS();// グラフィックステートオブジェクトを作成する
-        void CreateGPS_Obj();// Obj用のグラフィックステートオブジェクトを作成する
         void CreateViewport(); // ビューポートを作成する
         void CreateScissor(); // シザー矩形を作成する
 
-        Microsoft::WRL::ComPtr<ID3D12Resource> mpVertexBuffer{};
-        D3D12_VERTEX_BUFFER_VIEW mVbView{};
-
-        Microsoft::WRL::ComPtr<ID3D12Resource> mpIndexBuffer{};
-        D3D12_INDEX_BUFFER_VIEW mIbView{};
-
-        Microsoft::WRL::ComPtr<ID3D12RootSignature> mpRootSignature{};
-        Microsoft::WRL::ComPtr<ID3D12PipelineState> mpPSO{};
-        Microsoft::WRL::ComPtr<ID3D12PipelineState> mpPSO_Obj{};
 
         Microsoft::WRL::ComPtr<ID3D12Resource> mpDepthBuffer{};
         Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mpHeapDSV{};

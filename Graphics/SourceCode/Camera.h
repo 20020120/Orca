@@ -28,7 +28,7 @@ namespace OrcaGraphics
         ConstantBuffer mCb{};
 
         DirectX::XMFLOAT3 mTarget{};
-        DirectX::XMFLOAT4 mOrientation{};
+        DirectX::XMFLOAT4 mOrientation{ 0.0f,0.0f,0.0f,1.0f };
 
     private:
         void InputMove(float Dt_); // “ü—Í‚©‚çˆÚ“®‚³‚¹‚é

@@ -1,8 +1,11 @@
 #include<sstream>
 #include"Framework.h"
+
+#include "Camera.h"
 #include "LogWindow.h"
 #include"Graphics.h"
 #include"DescriptorPool.h"
+#include"Camera.h"
 FrameWork::FrameWork(HWND Hwnd_)
     :mHwnd(Hwnd_)
 {}
@@ -94,17 +97,24 @@ bool FrameWork::Initialize()
     // コンソールウィンドを開く
     OrcaDebug::LogWindow::OpenWindow();
     // 描画管理クラスの実体を生成
-    mpGraphics = std::make_unique<OrcaGraphics::Graphics>(); 
+    mpGraphics = std::make_unique<OrcaGraphics::Graphics>();
+    mpCamera = std::make_unique<OrcaGraphics::Camera>();
 
     // ------------------------------ 以下、初期化関数を呼ぶ ------------------------------
     mpGraphics->Initialize(mHwnd);
     m_Obj.Initialize(mpGraphics->GetDevice(),mpGraphics->GetDescriptorPool(OrcaGraphics::Graphics::POOL_TYPE_RES),
         L"../Resource/Obj/cube.obj");
+    mpCamera->Initialize(mpGraphics->GetDevice(), mpGraphics->GetDescriptorPool(OrcaGraphics::Graphics::POOL_TYPE_RES));
+
+    mShader.Initialize(mpGraphics->GetDevice(), nullptr, nullptr);
     return true;
 }
 
 void FrameWork::Update(float Dt_)
 {
+    // カメラ行列を更新
+    mpCamera->Update(Dt_);
+
     m_Obj.Update(Dt_);
 }
 
@@ -114,6 +124,14 @@ void FrameWork::Render(float Dt_)
     mpGraphics->OpenCmdList();
     // コマンドリストにテストコマンドを積む
     mpGraphics->StackCmdList();
+    // シェーダーをセットする
+    mShader.StackGraphicsCmd(mpGraphics->GetCmdList());
+
+    auto start = mpGraphics->GetDescriptorPool(OrcaGraphics::Graphics::POOL_TYPE_RES)->GetHeap()->GetGPUDescriptorHandleForHeapStart();
+    start.ptr += static_cast<UINT64>(2) * mpGraphics->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+    mpCamera->StackGraphicsCmd(mpGraphics->GetCmdList(),
+        start);
     m_Obj.StackGraphicsCmd(mpGraphics->GetCmdList());
     // コマンドリストを閉じる
     mpGraphics->CloseCmdList();

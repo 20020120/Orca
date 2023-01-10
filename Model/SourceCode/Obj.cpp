@@ -37,12 +37,13 @@ void Model::Obj::Update(float Dt_)
     const auto ptr = mCb.GetPtr<Cb_Obj>();
     ptr->World = DirectX::XMMatrixRotationX(45.0f) * DirectX::XMMatrixRotationY(angle) *
         DirectX::XMMatrixTranslation(0.0f, 0.0f, -10.0f);
+    ptr->World = DirectX::XMMatrixTranspose(ptr->World);
 }
 
 void Model::Obj::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_)
 {
     // -------------------------------- コマンドを積む --------------------------------
-    pCmdList_->SetGraphicsRootConstantBufferView(0, mCb.GetAddress());
+    pCmdList_->SetGraphicsRootDescriptorTable(1, mCb.GetGPU());
     pCmdList_->IASetVertexBuffers(0, 1, &mVbView);
     pCmdList_->IASetIndexBuffer(&mIbView);
     pCmdList_->DrawIndexedInstanced(m_VertexCounts, 1, 0, 0, 0);
