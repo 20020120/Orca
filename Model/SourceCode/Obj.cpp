@@ -7,6 +7,12 @@
 #include"GraphicsLogger.h"
 #include"DescriptorPool.h"
 
+Model::Obj::~Obj()
+{
+    // 定数バッファを削除
+    mCb.Finalize();
+}
+
 void Model::Obj::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, OrcaGraphics::DescriptorPool* pPool_, const wchar_t* ObjPath_)
 {
     std::vector<VertexData> vertices{};

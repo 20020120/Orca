@@ -89,7 +89,6 @@ namespace OrcaGraphics
    
         void CreateVertexBuffer(); // 頂点バッファを作成する
         bool CreateDescriptorPool();
-        void CreateConstantBuffer(); // 定数バッファを作成する
         void CreateRootSignature(); // ルートシグネチャを作成する
         void CreateGPS();// グラフィックステートオブジェクトを作成する
         void CreateGPS_Obj();// Obj用のグラフィックステートオブジェクトを作成する
@@ -98,8 +97,6 @@ namespace OrcaGraphics
 
         Microsoft::WRL::ComPtr<ID3D12Resource> mpVertexBuffer{};
         D3D12_VERTEX_BUFFER_VIEW mVbView{};
-
-        ConstantBuffer mpConstantBuffer[Orca::FrameCount*2]{};
 
         Microsoft::WRL::ComPtr<ID3D12Resource> mpIndexBuffer{};
         D3D12_INDEX_BUFFER_VIEW mIbView{};

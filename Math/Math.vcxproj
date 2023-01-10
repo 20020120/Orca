@@ -19,29 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SourceCode\Camera.cpp" />
-    <ClCompile Include="SourceCode\ConstantBuffer.cpp" />
-    <ClCompile Include="SourceCode\DescriptorHandle.cpp" />
-    <ClCompile Include="SourceCode\DescriptorPool.cpp" />
-    <ClCompile Include="SourceCode\Graphics.cpp" />
-    <ClCompile Include="SourceCode\GraphicsLogger.cpp" />
-    <ClCompile Include="SourceCode\pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="SourceCode\Texture.cpp" />
+    <ClInclude Include="SourceCode\Quaternion.h" />
+    <ClInclude Include="SourceCode\Vector.h" />
+    <ClInclude Include="SourceCode\VectorOperator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SourceCode\Camera.h" />
-    <ClInclude Include="SourceCode\ConstantBuffer.h" />
-    <ClInclude Include="SourceCode\DescriptorHandle.h" />
-    <ClInclude Include="SourceCode\DescriptorPool.h" />
-    <ClInclude Include="SourceCode\Graphics.h" />
-    <ClInclude Include="SourceCode\GraphicsLogger.h" />
-    <ClInclude Include="SourceCode\GraphicsMacro.h" />
-    <ClInclude Include="SourceCode\pch.h" />
-    <ClInclude Include="SourceCode\Pool.h" />
-    <ClInclude Include="SourceCode\Texture.h" />
+    <ClCompile Include="SourceCode\Quaternion.cpp" />
+    <ClCompile Include="SourceCode\Vector.cpp" />
+    <ClCompile Include="SourceCode\VectorOperator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -49,8 +34,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{7e18b339-ac3a-4140-ae68-ae6bc7ce3e72}</ProjectGuid>
-    <RootNamespace>Graphics</RootNamespace>
+    <ProjectGuid>{4b8069ed-4a98-4cff-ad35-800a61002434}</ProjectGuid>
+    <RootNamespace>Math</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -99,10 +84,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>..\lib\Debug/</OutDir>
+    <OutDir>..\lib\Debug\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>..\lib\Release/</OutDir>
+    <OutDir>..\lib\Release\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -144,10 +129,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\OrcaCommon\SourceCode;..\Math\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -163,10 +146,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\Math\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>

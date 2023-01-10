@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Quaternion">
+      <UniqueIdentifier>{b42314ea-70ec-44ec-965a-38de502fb651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VectorOperator">
+      <UniqueIdentifier>{04607e86-3b61-4639-aa28-1b0c423166e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vector">
+      <UniqueIdentifier>{ee92d03a-4bd7-4382-9187-3c6bff398930}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SourceCode\Quaternion.h">
+      <Filter>Quaternion</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\VectorOperator.h">
+      <Filter>VectorOperator</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Vector.h">
+      <Filter>Vector</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SourceCode\Quaternion.cpp">
+      <Filter>Quaternion</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\VectorOperator.cpp">
+      <Filter>VectorOperator</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Vector.cpp">
+      <Filter>Vector</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

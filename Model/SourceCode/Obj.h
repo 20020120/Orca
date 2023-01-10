@@ -25,7 +25,7 @@ namespace Model
 
     public:
         Obj() = default;
-        ~Obj() = default;
+        ~Obj();
 
         // èâä˙âª
         void Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, OrcaGraphics::DescriptorPool* pPool_, const wchar_t* ObjPath_);
@@ -58,8 +58,6 @@ namespace Model
             DirectX::XMMATRIX ViewMat{};
             DirectX::XMMATRIX ProjMat{};
         };
-        Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mpHeapCbV{};
-        Microsoft::WRL::ComPtr<ID3D12Resource> mpConstantBuffer{};
        OrcaGraphics::ConstantBuffer mCb{};
 
 

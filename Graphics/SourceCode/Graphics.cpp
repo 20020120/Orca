@@ -32,7 +32,6 @@ void OrcaGraphics::Graphics::Initialize(HWND hWnd_)
     CreateVertexBuffer();
     CreateDescriptorPool();
 
-    CreateConstantBuffer();
     CreateRootSignature();
     CreateDepthBuffer();
     CreateGPS();
@@ -577,31 +576,6 @@ bool OrcaGraphics::Graphics::CreateDescriptorPool()
         }
     }
     return true;
-}
-
-void OrcaGraphics::Graphics::CreateConstantBuffer()
-{
-    mpConstantBuffer->Initialize(mpDevice, mpPool[POOL_TYPE_RES], sizeof(CB_Simple));
-
-
-    const auto eyePos = DirectX::XMVectorSet(0.0f, 0.0f, 5.0f, 0.0f);
-    const auto targetPos = DirectX::XMVectorZero();
-    const auto upward = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-    constexpr auto fovY = DirectX::XMConvertToRadians(37.5f);
-    constexpr auto aspect = Orca::ScreenWidth / Orca::ScreenHeight;
-
-    // ïœä∑çsóÒÇÃê›íË
-    for (int i = 0; i < ARRAYSIZE(mpConstantBuffer); ++i)
-    {
-        const auto ptr = mpConstantBuffer[i].GetPtr<CB_Simple>();
-        if(!ptr)
-        {
-            continue;
-        }
-        ptr->World = DirectX::XMMatrixIdentity();
-        ptr->ViewMat = DirectX::XMMatrixLookAtLH(eyePos, targetPos, upward);
-        ptr->ProjMat = DirectX::XMMatrixPerspectiveFovLH(fovY, aspect, 1.0f, 1000.0f);
-    }
 }
 
 void OrcaGraphics::Graphics::CreateRootSignature()
