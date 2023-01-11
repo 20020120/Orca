@@ -12,7 +12,7 @@ namespace OrcaGraphics
     {
     public:
         Camera() = default;
-        ~Camera() = default;
+        ~Camera();
 
         void Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_); // èâä˙âª
         void Update(float Dt_); // çXêV
@@ -36,5 +36,7 @@ namespace OrcaGraphics
         const float mMoveSpeed{ 10.0f };
         const float mRotEulerSpeed{ 180.0f };
         const float mDistanceToTarget{ 10.0f };
+        const  float mNearClip{ 1.0f };
+        const  float mFarClip{ 1000.0f };
     };
 }

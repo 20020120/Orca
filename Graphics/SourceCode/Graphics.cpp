@@ -5,7 +5,6 @@
 #include<d3d12.h>
 #include<d3dcompiler.h>
 #include"ResourceUploadBatch.h"
-#include"DDSTextureLoader.h"
 #include"DescriptorPool.h"
 
 #include"ScreenConstants.h"
@@ -42,6 +41,16 @@ void OrcaGraphics::Graphics::Finalize()
 {
     // ---------------------------------- 終了処理 ---------------------------------
     WaitGpu();
+
+
+    for(auto p:mpPool)
+    {
+        if(p)
+        {
+            delete p;
+            p = nullptr;
+        }
+    }
 }
 
 void OrcaGraphics::Graphics::OnTerm()
@@ -163,7 +172,7 @@ void OrcaGraphics::Graphics::CreateSwapChain(HWND hWnd_)
     OrcaDebug::GraphicsLog("IDXGIFactory4を初期化", hr);
 
     // スワップチェーンの初期化
-    DXGI_SWAP_CHAIN_DESC desc{};
+    DXGI_SWAP_CHAIN_DESC desc;
     desc.BufferDesc.Width = Orca::ScreenWidth;
     desc.BufferDesc.Height = Orca::ScreenHeight;
     desc.BufferDesc.RefreshRate.Numerator = Orca::RefreshRate;
@@ -245,12 +254,12 @@ void OrcaGraphics::Graphics::CreateRenderTargetView()
     const auto incrementSize = mpDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
     // レンダーターゲットビューの設定
-    D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
+    D3D12_RENDER_TARGET_VIEW_DESC rtvDesc;
     rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
     rtvDesc.Texture2D.MipSlice = 0;
     rtvDesc.Texture2D.PlaneSlice = 0;
-
+    
     for (int i = 0; i < Orca::FrameCount; ++i)
     {
         hr = mpSwapChain->GetBuffer(i, IID_PPV_ARGS(mpColorBuffer[i].ReleaseAndGetAddressOf()));

@@ -35,9 +35,9 @@ void Model::Obj::Update(float Dt_)
     static float angle = 0.0f;
     angle += DirectX::XMConvertToRadians(60.0f) * Dt_;
     const auto ptr = mCb.GetPtr<Cb_Obj>();
-    ptr->World = DirectX::XMMatrixRotationX(45.0f) * DirectX::XMMatrixRotationY(angle) *
-        DirectX::XMMatrixTranslation(0.0f, 0.0f, -10.0f);
-    ptr->World = DirectX::XMMatrixTranspose(ptr->World);
+    ptr->World = DirectX::XMMatrixScaling(1.0f, 1.0f, 1.0f) * DirectX::XMMatrixRotationY(angle) *
+        DirectX::XMMatrixTranslation(0.0f, -5.0f, -20.0f);
+   ptr->World = DirectX::XMMatrixTranspose(ptr->World);
 }
 
 void Model::Obj::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_)
@@ -223,15 +223,7 @@ void Model::Obj::CreateIndexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_
 void Model::Obj::CreateConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, OrcaGraphics::DescriptorPool* pPool_)
 {
     mCb.Initialize(pDevice_, pPool_, sizeof(Cb_Obj));
-    const auto eyePos = DirectX::XMVectorSet(0.0f, 0.0f, 5.0f, 0.0f);
-    const auto targetPos = DirectX::XMVectorZero();
-    const auto upward = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-    constexpr auto fovY = DirectX::XMConvertToRadians(30.0f);
-    constexpr auto aspect = Orca::ScreenWidth / Orca::ScreenHeight;
-
     // 変換行列の設定
     const auto ptr = mCb.GetPtr<Cb_Obj>();
     ptr->World = DirectX::XMMatrixIdentity();
-    ptr->ViewMat = DirectX::XMMatrixLookAtLH(eyePos, targetPos, upward);
-    ptr->ProjMat = DirectX::XMMatrixPerspectiveFovLH(fovY, aspect, 1.0f, 1000.0f);
 }

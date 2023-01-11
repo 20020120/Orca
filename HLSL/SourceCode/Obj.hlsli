@@ -16,11 +16,5 @@ cbuffer Obj : register(b1)
 {
 	float4x4 World;
 }
-
-cbuffer Camera : register(b0)
-{
-	float4x4 ViewMatrix;
-	float4x4 ProjMatrix;
-}
 #endif
 

@@ -103,7 +103,7 @@ bool FrameWork::Initialize()
     // ------------------------------ 以下、初期化関数を呼ぶ ------------------------------
     mpGraphics->Initialize(mHwnd);
     m_Obj.Initialize(mpGraphics->GetDevice(),mpGraphics->GetDescriptorPool(OrcaGraphics::Graphics::POOL_TYPE_RES),
-        L"../Resource/Obj/cube.obj");
+        L"../Resource/Obj/Mr.Incredible.obj");
     mpCamera->Initialize(mpGraphics->GetDevice(), mpGraphics->GetDescriptorPool(OrcaGraphics::Graphics::POOL_TYPE_RES));
 
     mShader.Initialize(mpGraphics->GetDevice(), nullptr, nullptr);
@@ -127,11 +127,7 @@ void FrameWork::Render(float Dt_)
     // シェーダーをセットする
     mShader.StackGraphicsCmd(mpGraphics->GetCmdList());
 
-    auto start = mpGraphics->GetDescriptorPool(OrcaGraphics::Graphics::POOL_TYPE_RES)->GetHeap()->GetGPUDescriptorHandleForHeapStart();
-    start.ptr += static_cast<UINT64>(2) * mpGraphics->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-
-    mpCamera->StackGraphicsCmd(mpGraphics->GetCmdList(),
-        start);
+    mpCamera->StackGraphicsCmd(mpGraphics->GetCmdList());
     m_Obj.StackGraphicsCmd(mpGraphics->GetCmdList());
     // コマンドリストを閉じる
     mpGraphics->CloseCmdList();
@@ -139,6 +135,7 @@ void FrameWork::Render(float Dt_)
 
 bool FrameWork::Finalize()
 {
+    
     return true;
 }
 

@@ -4,6 +4,12 @@
 #include"Quaternion.h"
 #include"Vector.h"
 #include "ScreenConstants.h"
+
+OrcaGraphics::Camera::~Camera()
+{
+    mCb.Finalize();
+}
+
 void OrcaGraphics::Camera::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_)
 {
     // 定数バッファを初期化
@@ -27,7 +33,7 @@ void OrcaGraphics::Camera::Update(float Dt_)
     // 変換行列の設定
     const auto pData = mCb.GetPtr<CbData>();
     const auto V = DirectX::XMMatrixLookAtLH(DirectX::XMLoadFloat3(&eyePos), DirectX::XMLoadFloat3(&mTarget), upward);
-    const auto P = DirectX::XMMatrixPerspectiveFovLH(fovY, aspect, 1.0f, 1000.0f);
+    const auto P = DirectX::XMMatrixPerspectiveFovLH(fovY, aspect, mNearClip, mFarClip);
     DirectX::XMStoreFloat4x4(&pData->View, DirectX::XMMatrixTranspose(V));
     DirectX::XMStoreFloat4x4(&pData->Proj, DirectX::XMMatrixTranspose(P));
 }
@@ -95,14 +101,14 @@ void OrcaGraphics::Camera::InputRot(float Dt_)
         const auto VUpAxis = DirectX::XMLoadFloat3(&RotAxis_);
         const auto rotQua = DirectX::XMQuaternionRotationAxis(VUpAxis, CalculatedRotSpeed_);
         auto VOri = DirectX::XMLoadFloat4(&mOrientation);
-        auto VOri2 = DirectX::XMQuaternionMultiply(VOri, rotQua);
+        const auto VOri2 = DirectX::XMQuaternionMultiply(VOri, rotQua);
         VOri = DirectX::XMQuaternionSlerp(VOri, VOri2, Dt_);
         DirectX::XMStoreFloat4(&mOrientation, VOri);
     };
 
 
     //--------------------<WorldのUp軸の回転>--------------------//
-    DirectX::XMFLOAT3 worldUpAxis = { 0.0f,1.0f,0.0f };
+    const DirectX::XMFLOAT3 worldUpAxis = { 0.0f,1.0f,0.0f };
 
     //  入力値や経過時間を考慮した速度を算出
     float calculatedRotSpeed = axis.x * mRotEulerSpeed * Dt_;

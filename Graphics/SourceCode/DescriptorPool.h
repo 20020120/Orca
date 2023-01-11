@@ -102,12 +102,12 @@ namespace OrcaGraphics
         //! @brief      コンストラクタです.
         //-------------------------------------------------------------------------
         DescriptorPool();
-
+    public:
         //-------------------------------------------------------------------------
         //! @brief      デストラクタです.
         //-------------------------------------------------------------------------
         ~DescriptorPool();
-
+    private:
         DescriptorPool(const DescriptorPool&) = delete;   // アクセス禁止.
         void operator = (const DescriptorPool&) = delete;   // アクセス禁止.
     };

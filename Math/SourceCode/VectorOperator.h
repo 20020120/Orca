@@ -9,7 +9,7 @@ namespace Math
         void operator += (DirectX::XMFLOAT3& a, const DirectX::XMFLOAT3& b);
 
         // -------------------------------- ˆø‚«ŽZ --------------------------------
-
+        DirectX::XMFLOAT3 operator - (const DirectX::XMFLOAT3& a, const DirectX::XMFLOAT3& b);
 
         // -------------------------------- Š|‚¯ŽZ --------------------------------
         DirectX::XMFLOAT3 operator * (const DirectX::XMFLOAT3& a, const DirectX::XMFLOAT3& b);

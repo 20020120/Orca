@@ -55,8 +55,6 @@ namespace Model
         struct alignas(256)Cb_Obj
         {
             DirectX::XMMATRIX World{};
-            DirectX::XMMATRIX ViewMat{};
-            DirectX::XMMATRIX ProjMat{};
         };
        OrcaGraphics::ConstantBuffer mCb{};
 

@@ -34,3 +34,8 @@ void Math::Operator::operator+=(DirectX::XMFLOAT3& a, const DirectX::XMFLOAT3& b
     a.z += b.z;
 }
 
+DirectX::XMFLOAT3 Math::Operator::operator-(const DirectX::XMFLOAT3& a, const DirectX::XMFLOAT3& b)
+{
+    return { a.x - b.x,a.y - b.y, a.z - b.z };
+}
+
