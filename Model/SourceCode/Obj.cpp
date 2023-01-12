@@ -4,6 +4,8 @@
 #include<DirectXMath.h>
 #include<fstream>
 #include<d3d12.h>
+#include<string>
+#include<filesystem>
 #include"GraphicsLogger.h"
 #include"DescriptorPool.h"
 
@@ -13,18 +15,22 @@ Model::Obj::~Obj()
     mCb.Finalize();
 }
 
-void Model::Obj::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, OrcaGraphics::DescriptorPool* pPool_, const wchar_t* ObjPath_)
+void Model::Obj::Initialize(OrcaComPtr(ID3D12Device) pDevice_, OrcaGraphics::DescriptorPool* pPool_,
+    OrcaComPtr(ID3D12CommandQueue) pCommandQueue_, const wchar_t* ObjPath_)
 {
     std::vector<VertexData> vertices{};
     std::vector<uint32_t> indices{};
+    std::wstring textureName{};
     // パスからデータをパースする
-    Parse(ObjPath_, vertices, indices);
+    Parse(ObjPath_, vertices, indices, textureName);
     // 頂点バッファを作成する
     CreateVertexBuffer(pDevice_, vertices);
     // インデックスバッファを作成する
     CreateIndexBuffer(pDevice_, indices);
     // 定数バッファを作成
     CreateConstantBuffer(pDevice_, pPool_);
+    // テクスチャを作成(このクラスはテスト用なのでテクスチャは１枚しか扱えない)
+    CreateTexture(pDevice_, pPool_, pCommandQueue_, textureName);
 
     // -------------------------------- 変数を初期化する -------------------------------
     m_VertexCounts = static_cast<UINT>(vertices.size());
@@ -36,7 +42,7 @@ void Model::Obj::Update(float Dt_)
     angle += DirectX::XMConvertToRadians(60.0f) * Dt_;
     const auto ptr = mCb.GetPtr<Cb_Obj>();
     ptr->World = DirectX::XMMatrixScaling(1.0f, 1.0f, 1.0f) * DirectX::XMMatrixRotationY(angle) *
-        DirectX::XMMatrixTranslation(0.0f, -5.0f, -20.0f);
+        DirectX::XMMatrixTranslation(0.0f, 0.0f, 5.0f);
    ptr->World = DirectX::XMMatrixTranspose(ptr->World);
 }
 
@@ -49,7 +55,8 @@ void Model::Obj::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandLi
     pCmdList_->DrawIndexedInstanced(m_VertexCounts, 1, 0, 0, 0);
 }
 
-void Model::Obj::Parse(const wchar_t* ObjPath_, std::vector<VertexData>& Vertices_, std::vector<uint32_t>& Indices_)
+void Model::Obj::Parse(const wchar_t* ObjPath_, std::vector<VertexData>& Vertices_, std::vector<uint32_t>& Indices_, 
+    std::wstring& TextureName_)
 {
     // Objファイルから頂点データをパースする
     Vertices_.clear();
@@ -58,25 +65,35 @@ void Model::Obj::Parse(const wchar_t* ObjPath_, std::vector<VertexData>& Vertice
     uint32_t current_index{ 0 };
     std::vector<DirectX::XMFLOAT3> positions;
     std::vector<DirectX::XMFLOAT3> normals;
+    std::vector<DirectX::XMFLOAT2> uvs;
+    std::vector<std::wstring> mtlFileNames;
 
     std::wifstream fin(ObjPath_);
     _ASSERT_EXPR(fin, L"'OBJ file not found.");
+    wchar_t command[256];
     while (fin)
     {
-        wchar_t command[256];
         fin >> command;
         if (0 == wcscmp(command, L"v"))
         {
             float x, y, z;
             fin >> x >> y >> z;
-            positions.push_back({ x, y, z });
+            positions.push_back({ x,y,z });
             fin.ignore(1024, L'\n');
         }
         else if (0 == wcscmp(command, L"vn"))
         {
             FLOAT i, j, k;
             fin >> i >> j >> k;
-            normals.push_back({ i, j, k });
+            normals.push_back({ i,j,k });
+            fin.ignore(1024, L'\n');
+        }
+        else if (0 == wcscmp(command, L"vt"))
+        {
+            float u, v;
+            fin >> u >> v;
+            uvs.push_back({ u,1.0f - v });
+
             fin.ignore(1024, L'\n');
         }
         else if (0 == wcscmp(command, L"f"))
@@ -84,33 +101,70 @@ void Model::Obj::Parse(const wchar_t* ObjPath_, std::vector<VertexData>& Vertice
             for (size_t i = 0; i < 3; i++)
             {
                 VertexData vertex;
-                size_t v;
+                size_t v, vt, vn;
 
                 fin >> v;
-                vertex.m_Position = positions.at(v - 1);
+                vertex.mPosition = positions.at(v - 1);
+                //次の文字がL'/'の場合
                 if (L'/' == fin.peek())
                 {
+                    // 1文字削除
                     fin.ignore(1);
+                    //次の文字がL'/'ではない場合
                     if (L'/' != fin.peek())
                     {
-                        size_t vt;
                         fin >> vt;
+                        vertex.mUv = uvs.at(vt - 1);
                     }
+                    //次の文字がL'/'の場合
                     if (L'/' == fin.peek())
                     {
-                        size_t vn;
+                        //1文字削除
                         fin.ignore(1);
                         fin >> vn;
-                        vertex.m_Normal = normals.at(vn - 1);
+                        //法線情報の入力
+                        vertex.mNormal = normals.at(vn - 1);
                     }
                 }
                 Vertices_.push_back(vertex);
                 Indices_.push_back(current_index++);
             }
+            //一番上にある１行を削除
             fin.ignore(1024, L'\n');
+        }
+        else if (0 == wcscmp(command, L"mtllib"))
+        {
+            wchar_t mtllib[256];
+            fin >> mtllib;
+            mtlFileNames.push_back(mtllib);
         }
         else
         {
+            //一番上にある１行を削除
+            fin.ignore(1024, L'\n');
+        }
+    }
+    fin.close();
+
+    // マテリアル情報をパース
+    std::filesystem::path mtlFilename(ObjPath_);
+    //ファイル名の部分のみMTLファイル名に入れ替える
+    mtlFilename.replace_filename(std::filesystem::path(mtlFileNames[0]).filename());
+
+    fin.open(mtlFilename);
+    _ASSERT_EXPR(fin, L"MTL file not found");
+    while (fin)
+    {
+        fin >> command;
+        if (0 == wcscmp(command, L"map_Kd"))
+        {
+            fin.ignore();
+            wchar_t map_Kd[256];
+            fin >> map_Kd;
+
+            std::filesystem::path path(ObjPath_);
+            path.replace_filename(std::filesystem::path(map_Kd).filename());
+            TextureName_ = path;
             fin.ignore(1024, L'\n');
         }
     }
@@ -226,4 +280,18 @@ void Model::Obj::CreateConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevi
     // 変換行列の設定
     const auto ptr = mCb.GetPtr<Cb_Obj>();
     ptr->World = DirectX::XMMatrixIdentity();
+}
+
+void Model::Obj::CreateTexture(OrcaComPtr(ID3D12Device) pDevice_, OrcaGraphics::DescriptorPool* pPool_,
+    OrcaComPtr(ID3D12CommandQueue) pCommandQueue_, std::wstring TexturePath_)
+{
+    // テクスチャを作成
+    DirectX::ResourceUploadBatch batch(pDevice_.Get());
+    batch.Begin();
+    // リソースを生成
+    mTexture.Initialize(pDevice_, pPool_, TexturePath_.c_str(), batch);
+
+    // コマンドを実行
+    const auto future = batch.End(pCommandQueue_.Get());
+    future.wait();
 }

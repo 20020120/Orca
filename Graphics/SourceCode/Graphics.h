@@ -39,7 +39,8 @@ namespace OrcaGraphics
 
         [[nodiscard]] Microsoft::WRL::ComPtr<ID3D12Device> GetDevice()const;
         [[nodiscard]] Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> GetCmdList()const;
-        [[nodiscard]] OrcaGraphics::DescriptorPool* GetDescriptorPool(POOL_TYPE Type_)const;
+        [[nodiscard]] DescriptorPool* GetDescriptorPool(POOL_TYPE Type_)const;
+        [[nodiscard]] OrcaComPtr(ID3D12CommandQueue) GetCommandQueue()const;
     private:
         void CreateDevice();                  // デバイスの初期化
         void CreateCommandQueue();            // コマンドキューの初期化

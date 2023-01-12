@@ -103,7 +103,7 @@ bool FrameWork::Initialize()
     // ------------------------------ ˆÈ‰ºA‰Šú‰»ŠÖ”‚ðŒÄ‚Ô ------------------------------
     mpGraphics->Initialize(mHwnd);
     m_Obj.Initialize(mpGraphics->GetDevice(),mpGraphics->GetDescriptorPool(OrcaGraphics::Graphics::POOL_TYPE_RES),
-        L"../Resource/Obj/Mr.Incredible.obj");
+        mpGraphics->GetCommandQueue(),L"../Resource/Obj/Bison/Bison.obj");
     mpCamera->Initialize(mpGraphics->GetDevice(), mpGraphics->GetDescriptorPool(OrcaGraphics::Graphics::POOL_TYPE_RES));
 
     mShader.Initialize(mpGraphics->GetDevice(), nullptr, nullptr);

@@ -6,7 +6,9 @@
 #include<vector>
 
 #include"Graphics.h"
+#include"Texture.h"
 #include"ConstantBuffer.h"
+#include"GraphicsMacro.h"
 
 // 前方宣言
 namespace OrcaGraphics
@@ -28,21 +30,25 @@ namespace Model
         ~Obj();
 
         // 初期化
-        void Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, OrcaGraphics::DescriptorPool* pPool_, const wchar_t* ObjPath_);
+        void Initialize(OrcaComPtr(ID3D12Device) pDevice_, OrcaGraphics::DescriptorPool* pPool_, 
+            OrcaComPtr(ID3D12CommandQueue) pCommandQueue_,const wchar_t* ObjPath_);
         void Update(float Dt_); // 更新
         void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_); // 描画コマンドを積む
     private:
-        static void Parse(const wchar_t* ObjPath_, std::vector<VertexData>& Vertices_, std::vector<uint32_t>& Indices_);
+        static void Parse(const wchar_t* ObjPath_, std::vector<VertexData>& Vertices_, std::vector<uint32_t>& Indices_,
+            std::wstring& TextureName_);
         void CreateVertexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const std::vector<VertexData>& Vertices_);
         void CreateIndexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const std::vector<uint32_t>& Indices_);
         void CreateConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, OrcaGraphics::DescriptorPool* pPool_);
+        void CreateTexture(OrcaComPtr(ID3D12Device) pDevice_, OrcaGraphics::DescriptorPool* pPool_,
+            OrcaComPtr(ID3D12CommandQueue) pCommandQueue_, std::wstring TexturePath_);
     private:
         // ------------------------------- 頂点読み込み ------------------------------
         struct VertexData
         {
-            DirectX::XMFLOAT3 m_Position{};
-            DirectX::XMFLOAT3 m_Normal{};
-            
+            DirectX::XMFLOAT3 mPosition{};
+            DirectX::XMFLOAT3 mNormal{};
+            DirectX::XMFLOAT2 mUv{};
         };
         Microsoft::WRL::ComPtr<ID3D12Resource> mpVertexBuffer{};
         D3D12_VERTEX_BUFFER_VIEW mVbView{};
@@ -58,6 +64,7 @@ namespace Model
         };
        OrcaGraphics::ConstantBuffer mCb{};
 
-
+       // -------------------------------- テクスチャ -------------------------------
+       OrcaGraphics::Texture mTexture{};
     };
 }

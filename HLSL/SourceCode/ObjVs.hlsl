@@ -8,6 +8,7 @@ ObjVsOut main( ObjVsIn VsIn_ )
 	const float4 viewPos = mul(worldPos, ViewMatrix);
 	const float4 projPos = mul(viewPos, ProjMatrix);
 
+	vsOut.Uv = VsIn_.Uv;
 	vsOut.Position = projPos;
 	vsOut.Color = float4(abs(VsIn_.Normal), 1.0);
 	return vsOut;

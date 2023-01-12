@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SourceCode\Bit.h" />
     <ClInclude Include="SourceCode\Quaternion.h" />
     <ClInclude Include="SourceCode\Vector.h" />
     <ClInclude Include="SourceCode\VectorOperator.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SourceCode\Bit.cpp" />
     <ClCompile Include="SourceCode\Quaternion.cpp" />
     <ClCompile Include="SourceCode\Vector.cpp" />
     <ClCompile Include="SourceCode\VectorOperator.cpp" />

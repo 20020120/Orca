@@ -34,7 +34,6 @@ void OrcaGraphics::Graphics::Initialize(HWND hWnd_)
     
     CreateViewport();
     CreateScissor();
-    CreateTexture();
 }
 
 void OrcaGraphics::Graphics::Finalize()
@@ -141,6 +140,11 @@ OrcaGraphics::DescriptorPool* OrcaGraphics::Graphics::GetDescriptorPool(POOL_TYP
     return mpPool[Type_];
 }
 
+Microsoft::WRL::ComPtr<ID3D12CommandQueue> OrcaGraphics::Graphics::GetCommandQueue() const
+{
+    return mpCommandQueue;
+}
+
 void OrcaGraphics::Graphics::CreateDevice()
 {
     // デバイスの初期化
@@ -162,7 +166,6 @@ void OrcaGraphics::Graphics::CreateCommandQueue()
 
     const auto hr = mpDevice->CreateCommandQueue(&desc, IID_PPV_ARGS(mpCommandQueue.ReleaseAndGetAddressOf()));
     OrcaDebug::GraphicsLog("コマンドキューを初期化", hr);
-
 }
 
 void OrcaGraphics::Graphics::CreateSwapChain(HWND hWnd_)
@@ -470,16 +473,4 @@ void OrcaGraphics::Graphics::CreateScissor()
     mScissor.right = Orca::ScreenWidth;
     mScissor.top = 0;
     mScissor.bottom = Orca::ScreenHeight;
-}
-
-void OrcaGraphics::Graphics::CreateTexture()
-{
-    DirectX::ResourceUploadBatch batch(mpDevice.Get());
-    batch.Begin();
-    // リソースを生成
-    mTexture.Initialize(mpDevice, mpPool[POOL_TYPE_RES], L"../Resource/Sprite/Test.dds", batch);
-
-    // コマンドを実行
-    const auto future = batch.End(mpCommandQueue.Get());
-    future.wait();
 }

@@ -10,6 +10,9 @@
     <Filter Include="Vector">
       <UniqueIdentifier>{ee92d03a-4bd7-4382-9187-3c6bff398930}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bit">
+      <UniqueIdentifier>{b57e4750-6626-43bb-9938-913a2b4a3dfc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\Quaternion.h">
@@ -21,6 +24,9 @@
     <ClInclude Include="SourceCode\Vector.h">
       <Filter>Vector</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\Bit.h">
+      <Filter>Bit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\Quaternion.cpp">
@@ -31,6 +37,9 @@
     </ClCompile>
     <ClCompile Include="SourceCode\Vector.cpp">
       <Filter>Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Bit.cpp">
+      <Filter>Bit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

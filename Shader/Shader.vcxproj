@@ -19,10 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SourceCode\BlendStates.h" />
+    <ClInclude Include="SourceCode\DepthStencilStates.h" />
+    <ClInclude Include="SourceCode\RasterizerStates.h" />
+    <ClInclude Include="SourceCode\ReflectionHelpers.h" />
+    <ClInclude Include="SourceCode\SamplerStates.h" />
     <ClInclude Include="SourceCode\Shader.h" />
+    <ClInclude Include="SourceCode\ShaderReflection.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SourceCode\BlendStates.cpp" />
+    <ClCompile Include="SourceCode\DepthStencilStates.cpp" />
+    <ClCompile Include="SourceCode\RasterizerStates.cpp" />
+    <ClCompile Include="SourceCode\ReflectionHelpers.cpp" />
+    <ClCompile Include="SourceCode\SamplerStates.cpp" />
     <ClCompile Include="SourceCode\Shader.cpp" />
+    <ClCompile Include="SourceCode\ShaderReflection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -80,10 +92,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>..\lib\Debug</OutDir>
+    <OutDir>..\lib\Debug\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>..\lib\Release</OutDir>
+    <OutDir>..\lib\Release\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -127,7 +139,8 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\Graphics\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\OrcaCommon\SourceCode;..\Graphics\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -145,7 +158,8 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\Graphics\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\OrcaCommon\SourceCode;..\Graphics\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>

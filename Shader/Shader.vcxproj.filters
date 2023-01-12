@@ -10,15 +10,69 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{9e349f18-d1b2-48d2-9cda-d49971e10d0c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ShaderReflection">
+      <UniqueIdentifier>{5ce75532-fd70-4ae5-af6d-9495081822d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ReflectionHelpers">
+      <UniqueIdentifier>{3ee0a652-0ff1-4544-a5fe-23bf3dfcf0b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SamplerStates">
+      <UniqueIdentifier>{cfdcc1c7-66e9-42af-9c5c-2770d3fdc4cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BlendState">
+      <UniqueIdentifier>{03747457-8342-4bc5-ab44-a76751e34538}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DepthStencilState">
+      <UniqueIdentifier>{0f2f4435-3b94-4c58-8fae-75d9d1c73a8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RasterizerStates">
+      <UniqueIdentifier>{237d0e3a-fbdb-4ecb-a8e6-090077c14665}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\Shader.h">
       <Filter>Shader</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\ShaderReflection.h">
+      <Filter>ShaderReflection</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\ReflectionHelpers.h">
+      <Filter>ReflectionHelpers</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\SamplerStates.h">
+      <Filter>SamplerStates</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\BlendStates.h">
+      <Filter>BlendState</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\DepthStencilStates.h">
+      <Filter>DepthStencilState</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\RasterizerStates.h">
+      <Filter>RasterizerStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\Shader.cpp">
       <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\ShaderReflection.cpp">
+      <Filter>ShaderReflection</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\ReflectionHelpers.cpp">
+      <Filter>ReflectionHelpers</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\SamplerStates.cpp">
+      <Filter>SamplerStates</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\BlendStates.cpp">
+      <Filter>BlendState</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\DepthStencilStates.cpp">
+      <Filter>DepthStencilState</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\RasterizerStates.cpp">
+      <Filter>RasterizerStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
