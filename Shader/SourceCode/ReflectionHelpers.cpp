@@ -101,31 +101,22 @@ D3D12_DESCRIPTOR_RANGE_TYPE OrcaGraphics::Shader::ReflectionHelpers::GetDescript
     return D3D12_DESCRIPTOR_RANGE_TYPE();
 }
 
-std::vector<D3D12_DESCRIPTOR_RANGE> OrcaGraphics::Shader::ReflectionHelpers::GetDescriptorRanges(
-    Microsoft::WRL::ComPtr<ID3D12ShaderReflection> pReflector_, UINT BoundsResource_)
+D3D12_DESCRIPTOR_RANGE OrcaGraphics::Shader::ReflectionHelpers::GetDescriptorRange(D3D12_SHADER_INPUT_BIND_DESC BindDesc_)
 {
-    std::vector<D3D12_DESCRIPTOR_RANGE> descriptorRanges{};
-    // リソースのデータを取得
-    for (UINT i = 0; i < BoundsResource_; i++)
-    {
-        D3D12_SHADER_INPUT_BIND_DESC bindDesc;
-        const auto hr = pReflector_->GetResourceBindingDesc(i, &bindDesc);
-        OrcaDebug::GraphicsLog("リソースの情報を取得", hr);
-        {
-            // ディスクリプタレンジを作成
-            D3D12_DESCRIPTOR_RANGE descriptorRange;
-            // リソースの種類を判別
-            descriptorRange.RangeType = ReflectionHelpers::GetDescriptorRangeType(bindDesc.Type, bindDesc.Dimension);
-            descriptorRange.NumDescriptors = 1;
-            // スロットを判別
-            descriptorRange.BaseShaderRegister = bindDesc.BindPoint;
-            descriptorRange.RegisterSpace = bindDesc.Space;
-            descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+    // ディスクリプタレンジを作成
+    D3D12_DESCRIPTOR_RANGE descriptorRange;
+    // リソースの種類を判別
+    descriptorRange.RangeType = ReflectionHelpers::GetDescriptorRangeType(BindDesc_.Type, BindDesc_.Dimension);
+    descriptorRange.NumDescriptors = 1;
+    // スロットを判別
+    descriptorRange.BaseShaderRegister = BindDesc_.BindPoint;
+    descriptorRange.RegisterSpace = BindDesc_.Space;
+    descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+    
+    return descriptorRange;
+}
 
-            // ディスクリプタレンジを登録
-            descriptorRanges.emplace_back(descriptorRange);
-        }
-    }
-
-    return descriptorRanges;
+D3D12_SHADER_VISIBILITY OrcaGraphics::Shader::ReflectionHelpers::GetShaderVisibility(Math::Bit::BIT ShaderStage_)
+{
+    // ---------------------------- シェーダーステージを確定させる ----------------------------
 }

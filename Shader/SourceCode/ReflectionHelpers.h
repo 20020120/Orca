@@ -3,8 +3,8 @@
 #include <d3d12shader.h>
 #include <d3dcommon.h>
 #include <dxgiformat.h>
-#include<vector>
 #include <wrl.h>
+#include"Bit.h"
 
 namespace OrcaGraphics
 {
@@ -22,8 +22,10 @@ namespace OrcaGraphics
 
             // シェーダーリフレクションのリソースの種類を取得
             static D3D12_DESCRIPTOR_RANGE_TYPE GetDescriptorRangeType(D3D_SHADER_INPUT_TYPE Type_, D3D_SRV_DIMENSION Dimension_);
-            static std::vector< D3D12_DESCRIPTOR_RANGE> GetDescriptorRanges(Microsoft::WRL::ComPtr<ID3D12ShaderReflection> pReflector_,
-                UINT BoundsResource_);
+            static D3D12_DESCRIPTOR_RANGE GetDescriptorRange(D3D12_SHADER_INPUT_BIND_DESC BindDesc_);
+
+            // シェーダーのアクセス権限を取得
+            D3D12_SHADER_VISIBILITY GetShaderVisibility(Math::Bit::BIT ShaderStage_);
         };
     }
 }

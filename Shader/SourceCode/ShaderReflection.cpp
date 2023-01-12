@@ -49,7 +49,14 @@ OrcaGraphics::Shader::ShaderReflection::ReflectionData OrcaGraphics::Shader::Sha
         // インプットレイアウトの数を設定
         reflectionData.mNumInputElements = shaderDesc.InputParameters;
         // ディスクリプタレンジを取得
-        reflectionData.mDescriptorRanges = ReflectionHelpers::GetDescriptorRanges(pReflector, shaderDesc.BoundResources);
+        for (UINT i = 0; i < shaderDesc.BoundResources; ++i)
+        {
+            D3D12_SHADER_INPUT_BIND_DESC bindDesc;
+            const auto hr = pReflector->GetResourceBindingDesc(i, &bindDesc);
+            OrcaDebug::GraphicsLog("リソースの情報を取得", hr);
+            std::tuple tuple = { ShaderStage::Vertex,ReflectionHelpers::GetDescriptorRange(bindDesc) };
+            reflectionData.mDescriptorRanges.emplace_back(tuple);
+        }
     }
     // ------------------------------- ピクセルシェーダー -------------------------------
     if(pBlobPs_)
@@ -59,8 +66,15 @@ OrcaGraphics::Shader::ShaderReflection::ReflectionData OrcaGraphics::Shader::Sha
         auto hr = D3DReflect(pBlobPs_->GetBufferPointer(), pBlobPs_->GetBufferSize(), IID_ID3D11ShaderReflection, (void**)&pReflector);
         OrcaDebug::GraphicsLog("ピクセルシェーダーのリフレクション情報を取得", hr);
 
-
-
+        // リフレクターから情報を取得
+        D3D12_SHADER_DESC shaderDesc;
+        pReflector->GetDesc(&shaderDesc);
+        // ディスクリプタレンジを取得
+        for (UINT i = 0; i < shaderDesc.BoundResources; ++i)
+        {
+            std::tuple tuple = { ShaderStage::Vertex,ReflectionHelpers::GetDescriptorRange(pReflector, i) };
+            reflectionData.mDescriptorRanges.emplace_back(tuple);
+        }
     }
     // -------------------------------- ドメインシェーダ -------------------------------
     if(pBlobDs_)

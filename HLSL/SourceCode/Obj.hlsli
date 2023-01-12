@@ -14,9 +14,12 @@ struct ObjVsOut
 	float4 Color : COLOR;
 };
 
+// ----------------------------------- 定数バッファ ----------------------------------
 cbuffer Obj : register(b1)
 {
 	float4x4 World;
 }
+
+
 #endif
 

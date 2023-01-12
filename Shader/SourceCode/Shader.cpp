@@ -29,13 +29,13 @@ void OrcaGraphics::Shader::Shader::Initialize(Microsoft::WRL::ComPtr<ID3D12Devic
 
     // ------------------------------ ルートパラメーターを設定 -----------------------------
     std::vector<D3D12_ROOT_PARAMETER> rootParameters;
-    for (auto& r : reflectionData.mDescriptorRanges)
+    for (auto& [shaderStage, range] : reflectionData.mDescriptorRanges)
     {
         D3D12_ROOT_PARAMETER param;
         param.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;		// パラメータ種別
         param.ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;				// どのシェーダーから利用可能か
         param.DescriptorTable.NumDescriptorRanges = 1;							// ディスクリプタレンジ数
-        param.DescriptorTable.pDescriptorRanges = &r;	                    // ディスクリプタレンジのアドレス
+        param.DescriptorTable.pDescriptorRanges = &range;	                    // ディスクリプタレンジのアドレス
         rootParameters.emplace_back(param);
     }
 

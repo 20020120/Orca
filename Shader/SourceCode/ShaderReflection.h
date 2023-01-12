@@ -1,9 +1,11 @@
 #pragma once
 #include <d3d12.h>
 #include <d3dcommon.h>
-#include <dxgiformat.h>
 #include<vector>
+#include<tuple>
 #include<wrl.h>
+#include<map>
+#include<string>
 
 namespace OrcaGraphics
 {
@@ -15,14 +17,14 @@ namespace OrcaGraphics
             // ----------------------------- 公開先クラス ----------------------------
             friend class Shader;
 
-            enum   ShaderStage
+            enum ShaderStage :UINT
             {
-                Vertex,
-                Domain,
-                Hull,
-                Geometry,
-                Pixel,
-                Compute
+                Vertex   = (1 << 0),
+                Domain   = (1 << 1),
+                Hull     = (1 << 2),
+                Geometry = (1 << 3),
+                Pixel    = (1 << 4),
+                Compute  = (1 << 5)
             };
 
             // -------------------- シェーダーからリフレクション情報を返す構造体 -------------------
@@ -36,9 +38,7 @@ namespace OrcaGraphics
 
                 std::vector<D3D12_INPUT_ELEMENT_DESC> mInputElementDescs{};   // インプットレイアウト
                 UINT mNumInputElements{};   // インプットレイアウトの数
-                std::vector<D3D12_DESCRIPTOR_RANGE> mDescriptorRanges{};    // ディスクリプタレンジ
-                std::vector<ShaderStage> mDescriptorRangeShaderStage{};  // ディスクリプタレンジのシェーダーステージ
-
+                std::multimap<std::string, std::tuple<ShaderStage, D3D12_DESCRIPTOR_RANGE>> mDescriptorRanges{};// ディスクリプタレンジ
             };
 
             
