@@ -1,8 +1,9 @@
 #pragma once
 #include<d3d12.h>
 #include<wrl.h>
-#include"MacroMinmam.h"
 #include<ResourceUploadBatch.h>
+#include"MacroMinmam.h"
+#include"GraphicsMacro.h"
 
 namespace OrcaGraphics
 {
@@ -24,11 +25,18 @@ namespace OrcaGraphics
 
         OrcaNodiscard D3D12_CPU_DESCRIPTOR_HANDLE GetHandleCPU()const;
         OrcaNodiscard D3D12_GPU_DESCRIPTOR_HANDLE GetHandleGPU()const;
-        OrcaNodiscard D3D12_SHADER_RESOURCE_VIEW_DESC GetViewDesc(bool IsCube_)const;
-
     private:
         Microsoft::WRL::ComPtr<ID3D12Resource> mpResource{};
         DescriptorHandle* mpHandle{};
         DescriptorPool* mpPool{};
+
+        // ------------------------------- ヘルパー関数 ------------------------------
+        void LoadTextureFromFile(OrcaComPtr(ID3D12Device) pDevice_, const wchar_t* FileName_, DirectX::ResourceUploadBatch& Batch_);
+
+        // DDSファイルからロードする
+        void DDSLoadTexture(OrcaComPtr(ID3D12Device) pDevice_, const wchar_t* FileName_, DirectX::ResourceUploadBatch& Batch_);
+        // WICファイルからロードする
+        void WICLoadTexture(OrcaComPtr(ID3D12Device) pDevice_,const wchar_t* FileName_, DirectX::ResourceUploadBatch& Batch_);
+        OrcaNodiscard D3D12_SHADER_RESOURCE_VIEW_DESC GetViewDesc(bool IsCube_) const;
     };
 }

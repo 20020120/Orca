@@ -28,7 +28,7 @@ void OrcaGraphics::Camera::Update(float Dt_)
     const auto eyePos = mTarget + (normalFront * mDistanceToTarget);
     const auto upward = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
     constexpr auto fovY = DirectX::XMConvertToRadians(30.0f);
-    constexpr float aspect = static_cast<float>(Orca::ScreenWidth) / static_cast<float>(Orca::ScreenHeight);
+    constexpr auto aspect = static_cast<float>(Orca::ScreenWidth) / static_cast<float>(Orca::ScreenHeight);
 
     // ïœä∑çsóÒÇÃê›íË
     const auto pData = mCb.GetPtr<CbData>();

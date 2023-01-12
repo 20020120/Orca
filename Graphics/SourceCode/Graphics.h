@@ -95,9 +95,6 @@ namespace OrcaGraphics
         Microsoft::WRL::ComPtr<ID3D12Resource> mpDepthBuffer{};
         Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mpHeapDSV{};
         D3D12_CPU_DESCRIPTOR_HANDLE mHandleDsV{};
-    private:
-        void CreateTexture();   // テクスチャを生成
-        Texture mTexture{};
 
         DescriptorPool* mpPool[POOL_COUNT];         // ディスクリプタプールです.
 

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include<DDSTextureLoader.h>
+#include<WICTextureLoader.h>
 #include<ResourceUploadBatch.h>
+#include<filesystem>
 
 #include"Texture.h"
 #include "DescriptorPool.h"
@@ -65,24 +67,9 @@ bool OrcaGraphics::Texture::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDev
     mpHandle = pPool_->AllocHandle();
     Orca_NullException(mpHandle);
 
-    // ファイルからテクスチャを生成
-    bool isCube = false;
-    const auto hr = DirectX::CreateDDSTextureFromFile(
-        pDevice_.Get(),
-        Batch_,
-        FileName_,
-        mpResource.GetAddressOf(),
-        true,
-        0,
-        nullptr,
-        &isCube
-    );
-    OrcaDebug::GraphicsLog("テクスチャを生成", hr);
+    // テクスチャをロードする
+    LoadTextureFromFile(pDevice_, FileName_, Batch_);
 
-    // シェーダーリソースビューの設定を求める
-    const auto viewDesc = GetViewDesc(isCube);
-    // シェーダーリソースビューを生成する
-    pDevice_->CreateShaderResourceView(mpResource.Get(), &viewDesc, mpHandle->HandleCPU);
     return true;
 }
 
@@ -96,8 +83,76 @@ D3D12_GPU_DESCRIPTOR_HANDLE OrcaGraphics::Texture::GetHandleGPU() const
     return mpHandle->HandleGPU;
 }
 
+void OrcaGraphics::Texture::LoadTextureFromFile(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* FileName_,
+    DirectX::ResourceUploadBatch& Batch_)
+{
+    // ----------------------------- テクスチャの種類を判定する -----------------------------
+    const std::filesystem::path fileName = FileName_;
+    if (!exists(fileName))
+    {
+        throw std::logic_error("ファイルを開くのに失敗しました");
+    }
+    // 拡張子を取得
+    const auto extension = fileName.extension().string();
+    // ----------------------------- DDS形式かどうかを判定する ----------------------------
+    if (std::strcmp(extension.c_str(), ".dds") == 0)
+    {
+        DDSLoadTexture(pDevice_, FileName_, Batch_);
+        return;
+    }
+    // ------------------------------- DDS形式以外の形式 ------------------------------
+    WICLoadTexture(pDevice_, FileName_, Batch_);
+
+}
+
+void OrcaGraphics::Texture::DDSLoadTexture(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* FileName_,
+    DirectX::ResourceUploadBatch& Batch_)
+{
+    // ---------------------------- DDSファイルをロードする関数 ----------------------------
+    // ファイルからテクスチャを生成
+    bool isCube = false;
+    const auto hr = DirectX::CreateDDSTextureFromFile(
+        pDevice_.Get(),
+        Batch_,
+        FileName_,
+        mpResource.GetAddressOf(),
+        true,
+        0,
+        nullptr,
+        &isCube
+    );
+    OrcaDebug::GraphicsLog("DDSファイルからテクスチャを生成", hr);
+
+    const auto viewDesc = GetViewDesc(isCube);
+    pDevice_->CreateShaderResourceView(mpResource.Get(), &viewDesc, mpHandle->HandleCPU);
+}
+
+void OrcaGraphics::Texture::WICLoadTexture(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* FileName_,
+    DirectX::ResourceUploadBatch& Batch_)
+{
+    // ---------------------------- DDSファイル以外をロードする関数 ----------------------------
+    // ファイルからテクスチャを生成
+    const auto hr = DirectX::CreateWICTextureFromFile(
+        pDevice_.Get(),
+        Batch_,
+        FileName_,
+        mpResource.GetAddressOf(),
+        true
+    );
+    OrcaDebug::GraphicsLog("DDS以外からテクスチャを生成", hr);
+
+    const auto viewDesc = mpResource->GetDesc();
+    D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+    srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+    srvDesc.Format = viewDesc.Format;
+    srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+    srvDesc.Texture2D.MipLevels = viewDesc.MipLevels;
+    pDevice_->CreateShaderResourceView(mpResource.Get(), &srvDesc, mpHandle->HandleCPU);
+}
+
 D3D12_SHADER_RESOURCE_VIEW_DESC OrcaGraphics::Texture::GetViewDesc(bool IsCube_) const
 {
+
     auto desc = mpResource->GetDesc();
     D3D12_SHADER_RESOURCE_VIEW_DESC viewDesc = {};
 
@@ -222,3 +277,4 @@ D3D12_SHADER_RESOURCE_VIEW_DESC OrcaGraphics::Texture::GetViewDesc(bool IsCube_)
 
     return viewDesc;
 }
+

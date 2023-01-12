@@ -6,6 +6,7 @@
 #include<d3d12.h>
 #include<string>
 #include<filesystem>
+#include<ResourceUploadBatch.h>
 #include"GraphicsLogger.h"
 #include"DescriptorPool.h"
 
