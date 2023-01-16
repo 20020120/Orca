@@ -17,16 +17,6 @@ namespace OrcaGraphics
             // ----------------------------- 公開先クラス ----------------------------
             friend class Shader;
 
-            enum ShaderStage :UINT
-            {
-                Vertex   = (1 << 0),
-                Domain   = (1 << 1),
-                Hull     = (1 << 2),
-                Geometry = (1 << 3),
-                Pixel    = (1 << 4),
-                Compute  = (1 << 5)
-            };
-
             // -------------------- シェーダーからリフレクション情報を返す構造体 -------------------
             struct ReflectionData
             {
@@ -38,7 +28,8 @@ namespace OrcaGraphics
 
                 std::vector<D3D12_INPUT_ELEMENT_DESC> mInputElementDescs{};   // インプットレイアウト
                 UINT mNumInputElements{};   // インプットレイアウトの数
-                std::multimap<std::string, std::tuple<ShaderStage, D3D12_DESCRIPTOR_RANGE>> mDescriptorRanges{};// ディスクリプタレンジ
+                std::multimap<std::string, std::tuple<D3D12_SHADER_VISIBILITY, D3D12_DESCRIPTOR_RANGE>> mDescriptorRanges{};// ディスクリプタレンジ
+                std::map<std::string, UINT> SamplerStatesInfo{};   // 使うサンプラーステートの情報を取得する(名前/バインドスロット)
             };
 
             

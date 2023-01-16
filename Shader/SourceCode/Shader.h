@@ -23,7 +23,7 @@ namespace OrcaGraphics
         private:
             Microsoft::WRL::ComPtr<ID3D12RootSignature> mpRootSignature{};
             Microsoft::WRL::ComPtr<ID3D12PipelineState> mpPso{};
-
+            
         };
     }
 }

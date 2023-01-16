@@ -1,6 +1,4 @@
 #include"ReflectionHelpers.h"
-
-#include "GraphicsLogger.h"
 #include"OrcaException.h"
 
 
@@ -77,8 +75,14 @@ D3D12_DESCRIPTOR_RANGE_TYPE OrcaGraphics::Shader::ReflectionHelpers::GetDescript
         return D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
 
     case D3D_SIT_TBUFFER:break;
-    case D3D_SIT_TEXTURE: break;
-
+    case D3D_SIT_TEXTURE:
+        // バッファ以外はテクスチャとして扱う
+        if(Dimension_!=D3D_SRV_DIMENSION_BUFFER)
+        {
+            return D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+        }
+        // シェーダーリソースビューはバッファの可能性もあるから一旦未実装で
+        break;
     case D3D_SIT_SAMPLER:
         return D3D12_DESCRIPTOR_RANGE_TYPE_SAMPLER;
     case D3D_SIT_STRUCTURED: break;
@@ -114,9 +118,4 @@ D3D12_DESCRIPTOR_RANGE OrcaGraphics::Shader::ReflectionHelpers::GetDescriptorRan
     descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
     
     return descriptorRange;
-}
-
-D3D12_SHADER_VISIBILITY OrcaGraphics::Shader::ReflectionHelpers::GetShaderVisibility(Math::Bit::BIT ShaderStage_)
-{
-    // ---------------------------- シェーダーステージを確定させる ----------------------------
 }

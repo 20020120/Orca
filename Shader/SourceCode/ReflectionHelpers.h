@@ -3,8 +3,6 @@
 #include <d3d12shader.h>
 #include <d3dcommon.h>
 #include <dxgiformat.h>
-#include <wrl.h>
-#include"Bit.h"
 
 namespace OrcaGraphics
 {
@@ -24,8 +22,8 @@ namespace OrcaGraphics
             static D3D12_DESCRIPTOR_RANGE_TYPE GetDescriptorRangeType(D3D_SHADER_INPUT_TYPE Type_, D3D_SRV_DIMENSION Dimension_);
             static D3D12_DESCRIPTOR_RANGE GetDescriptorRange(D3D12_SHADER_INPUT_BIND_DESC BindDesc_);
 
-            // シェーダーのアクセス権限を取得
-            D3D12_SHADER_VISIBILITY GetShaderVisibility(Math::Bit::BIT ShaderStage_);
+            // 静的サンプラーを使用していた場合ディスクリプタレンジから専用のサンプラー情報に移動させる関数
+            //static  MoveStaticSamplerInfo();
         };
     }
 }

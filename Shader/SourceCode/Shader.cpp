@@ -2,14 +2,16 @@
 #include "Shader.h"
 #include "GraphicsLogger.h"
 #include"ShaderReflection.h"
-#include"SamplerStates.h"
-#include<d3d12.h>
-#include <d3dcompiler.h>
 
 #include "SamplerStates.h"
 #include"BlendStates.h"
 #include"DepthStencilStates.h"
 #include"RasterizerStates.h"
+
+#include<d3d12.h>
+#include <d3dcompiler.h>
+#include <ranges>
+
 
 void OrcaGraphics::Shader::Shader::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const char* VsPath_, const char* PsPath_)
 {
@@ -29,27 +31,46 @@ void OrcaGraphics::Shader::Shader::Initialize(Microsoft::WRL::ComPtr<ID3D12Devic
 
     // ------------------------------ ルートパラメーターを設定 -----------------------------
     std::vector<D3D12_ROOT_PARAMETER> rootParameters;
-    for (auto& [shaderStage, range] : reflectionData.mDescriptorRanges)
+    for (auto it = reflectionData.mDescriptorRanges.begin(); it != reflectionData.mDescriptorRanges.end();)
     {
+
+        // ----------------------------- 名前ごとにアクセス -----------------------------
+        auto nameIt = reflectionData.mDescriptorRanges.find(it->first);
+        UINT shaderStage{};
+        UINT counts = static_cast<UINT>(reflectionData.mDescriptorRanges.count(it->first));
+        for (UINT i = 0; i < counts; ++i)
+        {
+            const  auto& stage = std::get<0>(nameIt->second);
+            shaderStage |= stage;
+            ++nameIt;
+        }
+        auto& range = std::get<1>(it->second);
         D3D12_ROOT_PARAMETER param;
         param.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;		// パラメータ種別
-        param.ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;				// どのシェーダーから利用可能か
+        //param.ShaderVisibility = static_cast<D3D12_SHADER_VISIBILITY>(shaderStage); // どのシェーダーから利用可能か
+        // TODO 一旦アクセス指定をオールにしているが個別設定のやり方を模索すること
+        param.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;			// どのシェーダーから利用可能か
         param.DescriptorTable.NumDescriptorRanges = 1;							// ディスクリプタレンジ数
         param.DescriptorTable.pDescriptorRanges = &range;	                    // ディスクリプタレンジのアドレス
         rootParameters.emplace_back(param);
+
+        // 重複している分だけイテレータを進める
+        for (UINT c = 0; c < counts; ++c)
+        {
+            ++it;
+        }
     }
-
-
-    // スタティックサンプラーを取得
-    auto staticSampler = PipelineObject::SamplerStates::GetStaticSampler();
+    // スタティックサンプラーを設定する
+    auto samplers = PipelineObject::SamplerStates::GetStaticSamplerForReflection(reflectionData.SamplerStatesInfo);
 
     // ルートシグネチャの設定
     D3D12_ROOT_SIGNATURE_DESC desc{};
     desc.NumParameters = static_cast<UINT>(rootParameters.size());
     desc.pParameters = rootParameters.data();
-    desc.NumStaticSamplers = 1;
-    desc.pStaticSamplers = &staticSampler;
+    desc.NumStaticSamplers = static_cast<UINT>(samplers.size());
+    desc.pStaticSamplers = samplers.data();
     desc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+
 
     Microsoft::WRL::ComPtr<ID3DBlob> pBlob{};
     Microsoft::WRL::ComPtr<ID3DBlob> pErrorBlob{};

@@ -13,6 +13,15 @@
     <Filter Include="Camera">
       <UniqueIdentifier>{9b52ee5d-0682-4805-9845-807639606d66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HLSLMacro">
+      <UniqueIdentifier>{ae4297ff-9a62-4e0f-a378-a97877440a93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSLMacro\SamplerStates">
+      <UniqueIdentifier>{75fd1cf1-a623-40b4-829e-c466177511b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SamplerStates">
+      <UniqueIdentifier>{6da28dc5-e4a4-46e5-b646-64f1bb437a03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SourceCode\SimpleVs.hlsl">
@@ -47,5 +56,13 @@
     <None Include="SourceCode\Camera.hlsli">
       <Filter>Camera</Filter>
     </None>
+    <None Include="SourceCode\SamplerStates.hlsli">
+      <Filter>SamplerStates</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HLSLMacro\SamplerStateNames.h">
+      <Filter>HLSLMacro\SamplerStates</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
