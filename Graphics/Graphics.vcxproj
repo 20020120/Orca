@@ -29,6 +29,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SourceCode\RenderResource.cpp" />
+    <ClCompile Include="SourceCode\RenderResourceHolder.cpp" />
     <ClCompile Include="SourceCode\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -41,6 +43,8 @@
     <ClInclude Include="SourceCode\GraphicsMacro.h" />
     <ClInclude Include="SourceCode\pch.h" />
     <ClInclude Include="SourceCode\Pool.h" />
+    <ClInclude Include="SourceCode\RenderResource.h" />
+    <ClInclude Include="SourceCode\RenderResourceHolder.h" />
     <ClInclude Include="SourceCode\Texture.h" />
   </ItemGroup>
   <ItemGroup>

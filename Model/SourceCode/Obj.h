@@ -60,9 +60,10 @@ namespace Model
         // ------------------------------- 定数バッファ ------------------------------
         struct alignas(256)Cb_Obj
         {
-            DirectX::XMMATRIX World{};
+            DirectX::XMFLOAT4X4 World{};
         };
-       OrcaGraphics::ConstantBuffer mCb{};
+        Cb_Obj* mCbData{};
+        std::unique_ptr<OrcaGraphics::ConstantBuffer> mCb{};
 
        // -------------------------------- テクスチャ -------------------------------
        OrcaGraphics::Texture mTexture{};

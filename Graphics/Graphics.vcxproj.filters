@@ -19,6 +19,12 @@
     <Filter Include="Texture">
       <UniqueIdentifier>{00fda5b7-5e90-40a5-82cb-fb8be6eaaba2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RenderResource">
+      <UniqueIdentifier>{20d76710-3576-46b5-84c5-9a56ec25fc06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderResourceHolder">
+      <UniqueIdentifier>{eb875729-5cd3-4d7d-9b46-4ed93a0ca2ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\pch.cpp">
@@ -42,6 +48,12 @@
     </ClCompile>
     <ClCompile Include="SourceCode\Texture.cpp">
       <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\RenderResource.cpp">
+      <Filter>RenderResource</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\RenderResourceHolder.cpp">
+      <Filter>RenderResourceHolder</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +83,12 @@
       <Filter>Texture</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\GraphicsMacro.h" />
+    <ClInclude Include="SourceCode\RenderResource.h">
+      <Filter>RenderResource</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\RenderResourceHolder.h">
+      <Filter>RenderResourceHolder</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -12,8 +12,6 @@
 
 Model::Obj::~Obj()
 {
-    // 定数バッファを削除
-    mCb.Finalize();
 }
 
 void Model::Obj::Initialize(OrcaComPtr(ID3D12Device) pDevice_, OrcaGraphics::DescriptorPool* pPool_,
@@ -41,16 +39,18 @@ void Model::Obj::Update(float Dt_)
 {
     static float angle = 0.0f;
     angle += DirectX::XMConvertToRadians(60.0f) * Dt_;
-    const auto ptr = mCb.GetPtr<Cb_Obj>();
-    ptr->World = DirectX::XMMatrixScaling(1.0f, 1.0f, 1.0f) * DirectX::XMMatrixRotationY(angle) *
+    auto W = DirectX::XMMatrixScaling(1.0f, 1.0f, 1.0f) * DirectX::XMMatrixRotationY(angle) *
         DirectX::XMMatrixTranslation(0.0f, 0.0f, 5.0f);
-   ptr->World = DirectX::XMMatrixTranspose(ptr->World);
+    W = DirectX::XMMatrixTranspose(W);
+    DirectX::XMStoreFloat4x4(&mCbData->World, W);
+    //auto aa = static_cast<Cb_Obj*>(mCb->p);
+    //aa->World = mCbData.World;
 }
 
 void Model::Obj::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_)
 {
     // -------------------------------- コマンドを積む --------------------------------
-    pCmdList_->SetGraphicsRootDescriptorTable(1, mCb.GetGPU());
+    mCb->Bind(pCmdList_);
     pCmdList_->SetGraphicsRootDescriptorTable(2, mTexture.GetHandleGPU());
     pCmdList_->IASetVertexBuffers(0, 1, &mVbView);
     pCmdList_->IASetIndexBuffer(&mIbView);
@@ -278,10 +278,8 @@ void Model::Obj::CreateIndexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_
 
 void Model::Obj::CreateConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, OrcaGraphics::DescriptorPool* pPool_)
 {
-    mCb.Initialize(pDevice_, pPool_, sizeof(Cb_Obj));
-    // 変換行列の設定
-    const auto ptr = mCb.GetPtr<Cb_Obj>();
-    ptr->World = DirectX::XMMatrixIdentity();
+    mCb = std::make_unique<OrcaGraphics::ConstantBuffer>(pDevice_, pPool_, sizeof(Cb_Obj), 1, reinterpret_cast<void**>(&mCbData));
+    //mCbData->World = DirectX::XMMatrixIdentity();
 }
 
 void Model::Obj::CreateTexture(OrcaComPtr(ID3D12Device) pDevice_, OrcaGraphics::DescriptorPool* pPool_,

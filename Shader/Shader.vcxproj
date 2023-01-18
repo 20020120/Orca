@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="SourceCode\BlendStates.h" />
     <ClInclude Include="SourceCode\DepthStencilStates.h" />
+    <ClInclude Include="SourceCode\ObjSampleShader.h" />
     <ClInclude Include="SourceCode\RasterizerStates.h" />
     <ClInclude Include="SourceCode\ReflectionHelpers.h" />
     <ClInclude Include="SourceCode\SamplerStates.h" />
@@ -30,6 +31,7 @@
   <ItemGroup>
     <ClCompile Include="SourceCode\BlendStates.cpp" />
     <ClCompile Include="SourceCode\DepthStencilStates.cpp" />
+    <ClCompile Include="SourceCode\ObjSampleShader.cpp" />
     <ClCompile Include="SourceCode\RasterizerStates.cpp" />
     <ClCompile Include="SourceCode\ReflectionHelpers.cpp" />
     <ClCompile Include="SourceCode\SamplerStates.cpp" />

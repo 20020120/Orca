@@ -131,3 +131,8 @@ void OrcaGraphics::Shader::Shader::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D1
     pCmdList_->SetGraphicsRootSignature(mpRootSignature.Get());
     pCmdList_->SetPipelineState(mpPso.Get());
 }
+
+OrcaGraphics::Shader::Shader::RootParamIndexes OrcaGraphics::Shader::Shader::GetRootParamIndexes() const
+{
+    return mRootParamIndexes;
+}

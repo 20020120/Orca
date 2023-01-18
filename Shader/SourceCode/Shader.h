@@ -3,6 +3,7 @@
 #include<wrl.h>
 #include<map>
 #include<string>
+#include"MacroMinmam.h"
 // -------------------------------- 前方宣言 -------------------------------
 struct ID3D12GraphicsCommandList;
 struct ID3D12RootSignature;
@@ -22,9 +23,14 @@ namespace OrcaGraphics
         private:
             Microsoft::WRL::ComPtr<ID3D12RootSignature> mpRootSignature{};
             Microsoft::WRL::ComPtr<ID3D12PipelineState> mpPso{};
-            
-            std::map<std::string, UINT> mRootParamIndexes{};    // リソースの名前とルートパラメーターのインデックス
 
+        public:
+            // リソースバインド時に必要なパラメーターをモデル作成時に生成できるようにしておく
+            using RootParamIndexes = std::map<std::string, UINT>;
+
+            OrcaNodiscard RootParamIndexes GetRootParamIndexes()const;
+        private:
+            RootParamIndexes mRootParamIndexes{};    // リソースの名前とルートパラメーターのインデックス
         };
     }
 }

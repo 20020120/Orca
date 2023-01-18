@@ -22,6 +22,9 @@
     <Filter Include="SamplerStates">
       <UniqueIdentifier>{6da28dc5-e4a4-46e5-b646-64f1bb437a03}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HLSLMacro\Obj">
+      <UniqueIdentifier>{5437f286-5eed-425f-b467-80956d0da92b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SourceCode\SimpleVs.hlsl">

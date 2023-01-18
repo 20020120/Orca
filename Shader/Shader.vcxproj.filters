@@ -25,6 +25,9 @@
     <Filter Include="RasterizerStates">
       <UniqueIdentifier>{237d0e3a-fbdb-4ecb-a8e6-090077c14665}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ObjSampleShader">
+      <UniqueIdentifier>{699d3427-29b4-4e51-9684-b1e8def55a53}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\Shader.h">
@@ -48,6 +51,9 @@
     <ClInclude Include="SourceCode\RasterizerStates.h">
       <Filter>RasterizerStates</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\ObjSampleShader.h">
+      <Filter>ObjSampleShader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\Shader.cpp">
@@ -70,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="SourceCode\RasterizerStates.cpp">
       <Filter>RasterizerStates</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\ObjSampleShader.cpp">
+      <Filter>ObjSampleShader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

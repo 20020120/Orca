@@ -7,13 +7,12 @@
 
 OrcaGraphics::Camera::~Camera()
 {
-    mCb.Finalize();
 }
 
 void OrcaGraphics::Camera::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_)
 {
     // 定数バッファを初期化
-    mCb.Initialize(pDevice_, pPool_, sizeof(CbData));
+    mCb = std::make_unique<ConstantBuffer>(pDevice_, pPool_, sizeof(CbData), 0, reinterpret_cast<void**>(&mCbData));
 }
 
 void OrcaGraphics::Camera::Update(float Dt_)
@@ -30,21 +29,20 @@ void OrcaGraphics::Camera::Update(float Dt_)
     constexpr auto fovY = DirectX::XMConvertToRadians(30.0f);
     constexpr auto aspect = static_cast<float>(Orca::ScreenWidth) / static_cast<float>(Orca::ScreenHeight);
 
+    
     // 変換行列の設定
-    const auto pData = mCb.GetPtr<CbData>();
     const auto V = DirectX::XMMatrixLookAtLH(DirectX::XMLoadFloat3(&eyePos), DirectX::XMLoadFloat3(&mTarget), upward);
     const auto P = DirectX::XMMatrixPerspectiveFovLH(fovY, aspect, mNearClip, mFarClip);
-    DirectX::XMStoreFloat4x4(&pData->View, DirectX::XMMatrixTranspose(V));
-    DirectX::XMStoreFloat4x4(&pData->Proj, DirectX::XMMatrixTranspose(P));
+    DirectX::XMStoreFloat4x4(&mCbData->View, DirectX::XMMatrixTranspose(V));
+    DirectX::XMStoreFloat4x4(&mCbData->Proj, DirectX::XMMatrixTranspose(P));
+    //auto aa = static_cast<CbData*>(mCb->p);
+    //aa->Proj = mCbData.Proj;
+    //aa->View = mCbData.View;
 }
 
-void OrcaGraphics::Camera::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_)
+void OrcaGraphics::Camera::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) const
 {
-    // 定数データをバインド
-    pCmdList_->SetGraphicsRootDescriptorTable(0, mCb.GetGPU());
-}
-void OrcaGraphics::Camera::Finalize()
-{
+    mCb->Bind(pCmdList_);
 }
 
 void OrcaGraphics::Camera::InputMove(float Dt_)

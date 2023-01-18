@@ -4,7 +4,7 @@
 #include"DescriptorPool.h"
 #include<wrl.h>
 #include<DirectXMath.h>
-
+#include<memory>
 namespace OrcaGraphics
 {
     // カメラを制御する
@@ -16,7 +16,7 @@ namespace OrcaGraphics
 
         void Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_); // 初期化
         void Update(float Dt_); // 更新
-        void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_); // 描画コマンドを積む
+        void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) const; // 描画コマンドを積む
         void Finalize();    // 終了処理
     private:
         // ------------------------------- 定数バッファ ------------------------------
@@ -25,7 +25,8 @@ namespace OrcaGraphics
             DirectX::XMFLOAT4X4 View{};
             DirectX::XMFLOAT4X4 Proj{};
         };
-        ConstantBuffer mCb{};
+        std::unique_ptr<ConstantBuffer> mCb{};
+        CbData* mCbData{};
 
         DirectX::XMFLOAT3 mTarget{};
         DirectX::XMFLOAT4 mOrientation{ 0.0f,0.0f,0.0f,1.0f };
