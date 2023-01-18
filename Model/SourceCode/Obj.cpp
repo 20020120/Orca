@@ -51,7 +51,7 @@ void Model::Obj::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandLi
 {
     // -------------------------------- コマンドを積む --------------------------------
     pCmdList_->SetGraphicsRootDescriptorTable(1, mCb.GetGPU());
-   // pCmdList_->SetGraphicsRootDescriptorTable(0, mTexture.GetHandleGPU());
+    pCmdList_->SetGraphicsRootDescriptorTable(2, mTexture.GetHandleGPU());
     pCmdList_->IASetVertexBuffers(0, 1, &mVbView);
     pCmdList_->IASetIndexBuffer(&mIbView);
     pCmdList_->DrawIndexedInstanced(m_VertexCounts, 1, 0, 0, 0);

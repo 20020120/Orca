@@ -31,9 +31,9 @@ void OrcaGraphics::Shader::Shader::Initialize(Microsoft::WRL::ComPtr<ID3D12Devic
 
     // ------------------------------ ルートパラメーターを設定 -----------------------------
     std::vector<D3D12_ROOT_PARAMETER> rootParameters;
+    UINT rootIndex{}; // ルートパラメーターの通し番号
     for (auto it = reflectionData.mDescriptorRanges.begin(); it != reflectionData.mDescriptorRanges.end();)
     {
-
         // ----------------------------- 名前ごとにアクセス -----------------------------
         auto nameIt = reflectionData.mDescriptorRanges.find(it->first);
         UINT shaderStage{};
@@ -44,6 +44,7 @@ void OrcaGraphics::Shader::Shader::Initialize(Microsoft::WRL::ComPtr<ID3D12Devic
             shaderStage |= stage;
             ++nameIt;
         }
+
         auto& range = std::get<1>(it->second);
         D3D12_ROOT_PARAMETER param;
         param.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;		// パラメータ種別
@@ -53,7 +54,8 @@ void OrcaGraphics::Shader::Shader::Initialize(Microsoft::WRL::ComPtr<ID3D12Devic
         param.DescriptorTable.NumDescriptorRanges = 1;							// ディスクリプタレンジ数
         param.DescriptorTable.pDescriptorRanges = &range;	                    // ディスクリプタレンジのアドレス
         rootParameters.emplace_back(param);
-
+        // 名前とインデックスをリソースバインドのために保持する
+        mRootParamIndexes.try_emplace(it->first, rootIndex++);
         // 重複している分だけイテレータを進める
         for (UINT c = 0; c < counts; ++c)
         {
@@ -70,7 +72,6 @@ void OrcaGraphics::Shader::Shader::Initialize(Microsoft::WRL::ComPtr<ID3D12Devic
     desc.NumStaticSamplers = static_cast<UINT>(samplers.size());
     desc.pStaticSamplers = samplers.data();
     desc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-
 
     Microsoft::WRL::ComPtr<ID3DBlob> pBlob{};
     Microsoft::WRL::ComPtr<ID3DBlob> pErrorBlob{};

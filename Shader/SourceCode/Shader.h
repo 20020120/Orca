@@ -1,9 +1,8 @@
 #pragma once
 #include <d3d12.h>
 #include<wrl.h>
-#include<d3dcommon.h>
-#include<vector>
-
+#include<map>
+#include<string>
 // -------------------------------- 前方宣言 -------------------------------
 struct ID3D12GraphicsCommandList;
 struct ID3D12RootSignature;
@@ -24,6 +23,8 @@ namespace OrcaGraphics
             Microsoft::WRL::ComPtr<ID3D12RootSignature> mpRootSignature{};
             Microsoft::WRL::ComPtr<ID3D12PipelineState> mpPso{};
             
+            std::map<std::string, UINT> mRootParamIndexes{};    // リソースの名前とルートパラメーターのインデックス
+
         };
     }
 }
