@@ -12,7 +12,8 @@ OrcaGraphics::Camera::~Camera()
 void OrcaGraphics::Camera::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_)
 {
     // 定数バッファを初期化
-    mCb = std::make_unique<ConstantBuffer>(pDevice_, pPool_, sizeof(CbData), 0, reinterpret_cast<void**>(&mCbData));
+    mCb = std::make_unique<ConstantBuffer>(pDevice_, pPool_, sizeof(CbData), 0);
+    mCb->Mapping(reinterpret_cast<void**>(&mCbData));
 }
 
 void OrcaGraphics::Camera::Update(float Dt_)

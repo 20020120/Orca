@@ -1,7 +1,7 @@
 #pragma once
 #include <d3d12.h>
-#include <intsafe.h>
 #include"GraphicsMacro.h"
+#include<string>
 
 namespace OrcaGraphics
 {
@@ -24,6 +24,7 @@ namespace OrcaGraphics
         DescriptorHandle* mpHandle{};
         DescriptorPool* mpPool{};
         OrcaComPtr(ID3D12Resource) mpResource {};
+        std::string mName{};
     };
 }
 

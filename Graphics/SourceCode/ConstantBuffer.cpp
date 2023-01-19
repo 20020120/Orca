@@ -5,9 +5,22 @@
 #include"OrcaException.h"
 #include"GraphicsLogger.h"
 #include"GraphicsMacro.h"
-OrcaGraphics::ConstantBuffer::ConstantBuffer(OrcaComPtr(ID3D12Device) pDevice_, DescriptorPool* pPool_,
-    size_t Size_, UINT RootParamIndex_, void** MappedPtr_)
+
+OrcaGraphics::ConstantBuffer::ConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_,
+    size_t Size_, UINT RootParamIndex_)
     :RenderResource(pPool_, RootParamIndex_)
+{
+    Initialize(pDevice_, pPool_, Size_);
+}
+
+void OrcaGraphics::ConstantBuffer::Mapping(void** Ptr_) const
+{
+    // メモリマッピングしておきます.
+    const auto hr = mpResource->Map(0, nullptr, Ptr_);
+    OrcaDebug::GraphicsLog("定数バッファ：メモリマッピング", hr);
+}
+
+void OrcaGraphics::ConstantBuffer::Initialize(OrcaComPtr(ID3D12Device) pDevice_, DescriptorPool* pPool_,size_t Size_)
 {
     Orca_NullException(pDevice_);
     Orca_NullException(pPool_);
@@ -48,10 +61,6 @@ OrcaGraphics::ConstantBuffer::ConstantBuffer(OrcaComPtr(ID3D12Device) pDevice_, 
         nullptr,
         IID_PPV_ARGS(mpResource.GetAddressOf()));
     OrcaDebug::GraphicsLog("定数バッファ：リソースを生成", hr);
-
-    // メモリマッピングしておきます.
-    hr = mpResource->Map(0, nullptr, MappedPtr_);
-    OrcaDebug::GraphicsLog("定数バッファ：メモリマッピング", hr);
 
     mDesc.BufferLocation = mpResource->GetGPUVirtualAddress();
     mDesc.SizeInBytes = static_cast<UINT>(sizeAligned);
