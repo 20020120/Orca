@@ -24,14 +24,12 @@ namespace OrcaGraphics
 
         RenderPipeline() = delete;
         ~RenderPipeline() = default;
-        void StackGraphicsCmd(OrcaComPtr(ID3D12GraphicsCommandList) pCmdList_);
+        void StackGraphicsCmd(OrcaComPtr(ID3D12GraphicsCommandList) pCmdList_) const;
     private:
         OrcaComPtr(ID3D12RootSignature) mpRootSignature {};
         OrcaComPtr(ID3D12PipelineState) mpPipelineState {};
         Shader::ShaderDesc mShaderDesc{};
-
     private:
-
         // --------------------------- ディスクリプタレンジを作成 ---------------------------
         using DescriptorRanges = std::multimap<std::string, std::tuple<Shader::ShaderStage, D3D12_DESCRIPTOR_RANGE>>;
         using SamplerInfo = std::map<std::string, UINT>;   // 使うサンプラーステートの情報を取得する(名前/バインドスロット)
@@ -39,5 +37,9 @@ namespace OrcaGraphics
         void CreateRootParameter(const Shader::ShaderBuilder& ShaderBuilder_, std::vector<D3D12_ROOT_PARAMETER>& RootParameters_,
             DescriptorRanges& DescriptorRanges_, SamplerInfo& SamplersInfo_) const;
         static void CreateDescriptorRange(const Shader::ShaderBuilder& ShaderBuilder_, DescriptorRanges& DescriptorRanges_, SamplerInfo& SamplerInfo_);
+
+    private:
+        void CreateDx12ResourceInfo();
+
     };
 }

@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "RenderResource.h"
+#include "Dx12Resource.h"
 #include "DescriptorHandle.h"
 #include "OrcaException.h"
 #include"DescriptorPool.h"
 
-OrcaGraphics::RenderResource::RenderResource(DescriptorPool* pDescriptorPool_, UINT RootParamIndex)
+OrcaGraphics::Resource::Dx12Resource::Dx12Resource(DescriptorPool * pDescriptorPool_, UINT RootParamIndex)
     :mRootParamIndex(RootParamIndex)
 {
     Orca_NotNullException(mpPool);
@@ -14,7 +14,7 @@ OrcaGraphics::RenderResource::RenderResource(DescriptorPool* pDescriptorPool_, U
     mpPool->AddRef();
 }
 
-OrcaGraphics::RenderResource::~RenderResource()
+OrcaGraphics::Resource::Dx12Resource::~Dx12Resource()
 {
     // メモリマッピングを解除して，定数バッファを解放します.
     if (mpResource != nullptr)
@@ -36,7 +36,7 @@ OrcaGraphics::RenderResource::~RenderResource()
     }
 }
 
-void OrcaGraphics::RenderResource::Bind(const OrcaComPtr(ID3D12GraphicsCommandList) pCmdList_) const
+void OrcaGraphics::Resource::Dx12Resource::Bind(const OrcaComPtr(ID3D12GraphicsCommandList) pCmdList_) const
 {
     pCmdList_->SetGraphicsRootDescriptorTable(mRootParamIndex, mpHandle->HandleGPU);
 }

@@ -27,11 +27,9 @@
     <ClInclude Include="SourceCode\ReflectionHelpers.h" />
     <ClInclude Include="SourceCode\RenderPipline.h" />
     <ClInclude Include="SourceCode\SamplerStates.h" />
-    <ClInclude Include="SourceCode\Shader.h" />
     <ClInclude Include="SourceCode\ShaderBuilder.h" />
     <ClInclude Include="SourceCode\ShaderDesc.h" />
     <ClInclude Include="SourceCode\ShaderMinimun.h" />
-    <ClInclude Include="SourceCode\ShaderReflection.h" />
     <ClInclude Include="SourceCode\ShaderType.h" />
   </ItemGroup>
   <ItemGroup>
@@ -42,9 +40,7 @@
     <ClCompile Include="SourceCode\ReflectionHelpers.cpp" />
     <ClCompile Include="SourceCode\RenderPipline.cpp" />
     <ClCompile Include="SourceCode\SamplerStates.cpp" />
-    <ClCompile Include="SourceCode\Shader.cpp" />
     <ClCompile Include="SourceCode\ShaderBuilder.cpp" />
-    <ClCompile Include="SourceCode\ShaderReflection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

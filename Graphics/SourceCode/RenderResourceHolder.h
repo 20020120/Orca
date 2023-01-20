@@ -3,7 +3,7 @@
 #include<memory>
 namespace OrcaGraphics
 {
-    class RenderResource;
+    class Dx12Resource;
 
     // 描画用リソースの保持クラス
     class RenderResourceHolder
@@ -13,6 +13,6 @@ namespace OrcaGraphics
         void AddTexture(const wchar_t* Path_);
 
     private:
-        std::vector<std::unique_ptr<RenderResource>> mResources{};
+        std::vector<std::unique_ptr<Dx12Resource>> mResources{};
     };
 }

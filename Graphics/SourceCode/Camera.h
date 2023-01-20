@@ -25,7 +25,7 @@ namespace OrcaGraphics
             DirectX::XMFLOAT4X4 View{};
             DirectX::XMFLOAT4X4 Proj{};
         };
-        std::unique_ptr<ConstantBuffer> mCb{};
+        std::unique_ptr<Resource::ConstantBuffer> mCb{};
         CbData* mCbData{};
 
         DirectX::XMFLOAT3 mTarget{};

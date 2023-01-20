@@ -6,21 +6,21 @@
 #include"GraphicsLogger.h"
 #include"GraphicsMacro.h"
 
-OrcaGraphics::ConstantBuffer::ConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_,
+OrcaGraphics::Resource::ConstantBuffer::ConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_,
     size_t Size_, UINT RootParamIndex_)
-    :RenderResource(pPool_, RootParamIndex_)
+    :Dx12Resource(pPool_, RootParamIndex_)
 {
     Initialize(pDevice_, pPool_, Size_);
 }
 
-void OrcaGraphics::ConstantBuffer::Mapping(void** Ptr_) const
+void OrcaGraphics::Resource::ConstantBuffer::Mapping(void** Ptr_) const
 {
     // メモリマッピングしておきます.
     const auto hr = mpResource->Map(0, nullptr, Ptr_);
     OrcaDebug::GraphicsLog("定数バッファ：メモリマッピング", hr);
 }
 
-void OrcaGraphics::ConstantBuffer::Initialize(OrcaComPtr(ID3D12Device) pDevice_, DescriptorPool* pPool_,size_t Size_)
+void OrcaGraphics::Resource::ConstantBuffer::Initialize(OrcaComPtr(ID3D12Device) pDevice_, DescriptorPool* pPool_,size_t Size_)
 {
     Orca_NullException(pDevice_);
     Orca_NullException(pPool_);

@@ -4,12 +4,6 @@
     <Filter Include="System">
       <UniqueIdentifier>{2db9054c-fb13-402e-a37d-a715cf75cd64}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader">
-      <UniqueIdentifier>{9e349f18-d1b2-48d2-9cda-d49971e10d0c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ShaderReflection">
-      <UniqueIdentifier>{5ce75532-fd70-4ae5-af6d-9495081822d4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ReflectionHelpers">
       <UniqueIdentifier>{3ee0a652-0ff1-4544-a5fe-23bf3dfcf0b9}</UniqueIdentifier>
     </Filter>
@@ -45,12 +39,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SourceCode\Shader.h">
-      <Filter>Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceCode\ShaderReflection.h">
-      <Filter>ShaderReflection</Filter>
-    </ClInclude>
     <ClInclude Include="SourceCode\ReflectionHelpers.h">
       <Filter>ReflectionHelpers</Filter>
     </ClInclude>
@@ -87,12 +75,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SourceCode\Shader.cpp">
-      <Filter>Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\ShaderReflection.cpp">
-      <Filter>ShaderReflection</Filter>
-    </ClCompile>
     <ClCompile Include="SourceCode\ReflectionHelpers.cpp">
       <Filter>ReflectionHelpers</Filter>
     </ClCompile>

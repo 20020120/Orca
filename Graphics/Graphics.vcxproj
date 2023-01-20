@@ -23,13 +23,14 @@
     <ClCompile Include="SourceCode\ConstantBuffer.cpp" />
     <ClCompile Include="SourceCode\DescriptorHandle.cpp" />
     <ClCompile Include="SourceCode\DescriptorPool.cpp" />
+    <ClCompile Include="SourceCode\Dx12ResourceInfo.cpp" />
     <ClCompile Include="SourceCode\Graphics.cpp" />
     <ClCompile Include="SourceCode\GraphicsLogger.cpp" />
     <ClCompile Include="SourceCode\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="SourceCode\RenderResource.cpp" />
+    <ClCompile Include="SourceCode\Dx12Resource.cpp" />
     <ClCompile Include="SourceCode\RenderResourceHolder.cpp" />
     <ClCompile Include="SourceCode\Texture.cpp" />
   </ItemGroup>
@@ -38,12 +39,13 @@
     <ClInclude Include="SourceCode\ConstantBuffer.h" />
     <ClInclude Include="SourceCode\DescriptorHandle.h" />
     <ClInclude Include="SourceCode\DescriptorPool.h" />
+    <ClInclude Include="SourceCode\Dx12ResourceInfo.h" />
     <ClInclude Include="SourceCode\Graphics.h" />
     <ClInclude Include="SourceCode\GraphicsLogger.h" />
     <ClInclude Include="SourceCode\GraphicsMacro.h" />
     <ClInclude Include="SourceCode\pch.h" />
     <ClInclude Include="SourceCode\Pool.h" />
-    <ClInclude Include="SourceCode\RenderResource.h" />
+    <ClInclude Include="SourceCode\Dx12Resource.h" />
     <ClInclude Include="SourceCode\RenderResourceHolder.h" />
     <ClInclude Include="SourceCode\Texture.h" />
   </ItemGroup>

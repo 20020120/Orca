@@ -171,7 +171,7 @@ OrcaGraphics::RenderPipeline::RenderPipeline(OrcaComPtr(ID3D12Device) pDevice_, 
     }
 }
 
-void OrcaGraphics::RenderPipeline::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_)
+void OrcaGraphics::RenderPipeline::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) const
 {
     pCmdList_->SetGraphicsRootSignature(mpRootSignature.Get());
     pCmdList_->SetPipelineState(mpPipelineState.Get());
