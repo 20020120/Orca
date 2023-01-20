@@ -162,8 +162,10 @@ OrcaGraphics::RenderPipeline::RenderPipeline(OrcaComPtr(ID3D12Device) pDevice_, 
     // パイプラインステートを設定
     hr = pDevice_->CreateGraphicsPipelineState(
         &descGps, IID_PPV_ARGS(mpPipelineState.GetAddressOf()));
-
     OrcaDebug::GraphicsLog("パイプラインステートを作成", hr);
+
+    // ----------------------------- リソースに必要な情報を取得 -----------------------------
+    
 
     for (const auto& aaa : inputElementDescs)
     {

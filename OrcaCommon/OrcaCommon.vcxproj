@@ -22,6 +22,7 @@
     <ClInclude Include="SourceCode\MacroMinmam.h" />
     <ClInclude Include="SourceCode\OrcaException.h" />
     <ClInclude Include="SourceCode\ScreenConstants.h" />
+    <ClInclude Include="SourceCode\ShaderType.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

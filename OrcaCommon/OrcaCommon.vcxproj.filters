@@ -4,5 +4,6 @@
     <ClInclude Include="SourceCode\ScreenConstants.h" />
     <ClInclude Include="SourceCode\OrcaException.h" />
     <ClInclude Include="SourceCode\MacroMinmam.h" />
+    <ClInclude Include="SourceCode\ShaderType.h" />
   </ItemGroup>
 </Project>

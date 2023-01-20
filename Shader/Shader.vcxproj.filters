@@ -25,9 +25,6 @@
     <Filter Include="ShaderDesc">
       <UniqueIdentifier>{96138b69-9843-4670-8e89-2f6ebf7560fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ShaderType">
-      <UniqueIdentifier>{d0a9faed-9fc6-4a78-ba16-27f608445800}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PipelineTypes">
       <UniqueIdentifier>{35ff1620-ee82-4047-9e0f-50a6bae4bc09}</UniqueIdentifier>
     </Filter>
@@ -60,9 +57,6 @@
     <ClInclude Include="SourceCode\ShaderMinimun.h" />
     <ClInclude Include="SourceCode\ShaderDesc.h">
       <Filter>ShaderDesc</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceCode\ShaderType.h">
-      <Filter>ShaderType</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\PipelineTypes.h">
       <Filter>PipelineTypes</Filter>

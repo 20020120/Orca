@@ -30,7 +30,6 @@
     <ClInclude Include="SourceCode\ShaderBuilder.h" />
     <ClInclude Include="SourceCode\ShaderDesc.h" />
     <ClInclude Include="SourceCode\ShaderMinimun.h" />
-    <ClInclude Include="SourceCode\ShaderType.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\BlendStates.cpp" />

@@ -55,7 +55,7 @@
     <ClCompile Include="SourceCode\Dx12Resource.cpp">
       <Filter>Dx12Resource</Filter>
     </ClCompile>
-    <ClCompile Include="SourceCode\RenderResourceHolder.cpp">
+    <ClCompile Include="SourceCode\Dx12ResourceHolder.cpp">
       <Filter>RenderResourceHolder</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\Dx12ResourceInfo.cpp">
@@ -92,7 +92,7 @@
     <ClInclude Include="SourceCode\Dx12Resource.h">
       <Filter>Dx12Resource</Filter>
     </ClInclude>
-    <ClInclude Include="SourceCode\RenderResourceHolder.h">
+    <ClInclude Include="SourceCode\Dx12ResourceHolder.h">
       <Filter>RenderResourceHolder</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\Dx12ResourceInfo.h">

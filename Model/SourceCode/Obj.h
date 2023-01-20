@@ -63,7 +63,7 @@ namespace Model
             DirectX::XMFLOAT4X4 World{};
         };
         Cb_Obj* mCbData{};
-        std::unique_ptr<OrcaGraphics::ConstantBuffer> mCb{};
+        std::unique_ptr<OrcaGraphics::Resource::ConstantBuffer> mCb{};
 
        // -------------------------------- テクスチャ -------------------------------
        OrcaGraphics::Texture mTexture{};

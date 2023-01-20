@@ -3,11 +3,13 @@
 #include"GraphicsMacro.h"
 #include"ShaderDesc.h"
 #include"ShaderBuilder.h"
+#include"Dx12ResourceInfo.h"
 
 #include<map>
 #include<tuple>
 #include<d3d12.h>
 #include<vector>
+#include<string>
 // ------------------------------------ ‘O•ûéŒ¾ -----------------------------------
 struct ID3D12GraphicsCommandList;
 struct ID3D12RootSignature;
@@ -40,6 +42,5 @@ namespace OrcaGraphics
 
     private:
         void CreateDx12ResourceInfo();
-
     };
 }
