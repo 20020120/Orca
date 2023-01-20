@@ -21,21 +21,29 @@
   <ItemGroup>
     <ClInclude Include="SourceCode\BlendStates.h" />
     <ClInclude Include="SourceCode\DepthStencilStates.h" />
-    <ClInclude Include="SourceCode\ObjSampleShader.h" />
+    <ClInclude Include="SourceCode\InputLayout.h" />
+    <ClInclude Include="SourceCode\PipelineTypes.h" />
     <ClInclude Include="SourceCode\RasterizerStates.h" />
     <ClInclude Include="SourceCode\ReflectionHelpers.h" />
+    <ClInclude Include="SourceCode\RenderPipline.h" />
     <ClInclude Include="SourceCode\SamplerStates.h" />
     <ClInclude Include="SourceCode\Shader.h" />
+    <ClInclude Include="SourceCode\ShaderBuilder.h" />
+    <ClInclude Include="SourceCode\ShaderDesc.h" />
+    <ClInclude Include="SourceCode\ShaderMinimun.h" />
     <ClInclude Include="SourceCode\ShaderReflection.h" />
+    <ClInclude Include="SourceCode\ShaderType.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\BlendStates.cpp" />
     <ClCompile Include="SourceCode\DepthStencilStates.cpp" />
-    <ClCompile Include="SourceCode\ObjSampleShader.cpp" />
+    <ClCompile Include="SourceCode\InputLayout.cpp" />
     <ClCompile Include="SourceCode\RasterizerStates.cpp" />
     <ClCompile Include="SourceCode\ReflectionHelpers.cpp" />
+    <ClCompile Include="SourceCode\RenderPipline.cpp" />
     <ClCompile Include="SourceCode\SamplerStates.cpp" />
     <ClCompile Include="SourceCode\Shader.cpp" />
+    <ClCompile Include="SourceCode\ShaderBuilder.cpp" />
     <ClCompile Include="SourceCode\ShaderReflection.cpp" />
   </ItemGroup>
   <ItemGroup>

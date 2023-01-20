@@ -11,12 +11,14 @@ namespace OrcaGraphics
         class Shader;
     }
 
+
     namespace PipelineObject
     {
         class SamplerStates
         {
             // ---------------------------- 公開先のクラス ----------------------------
             friend class Shader::Shader;
+            friend class RenderPipeline;
 
             // シェーダーリフレクションで取得した情報から静的サンプラーステートを生成して返す関数
             static std::vector<D3D12_STATIC_SAMPLER_DESC> GetStaticSamplerForReflection(const std::map<std::string, UINT>

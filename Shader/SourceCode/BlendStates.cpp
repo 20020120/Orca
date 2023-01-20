@@ -1,4 +1,17 @@
 #include"BlendStates.h"
+#include"OrcaException.h"
+D3D12_BLEND_DESC OrcaGraphics::PipelineObject::BlendStates::GetBlendDesc(const Shader::ShaderDesc& ShaderDesc_)
+{
+    // ------------------------------ ブレンドステートを取得 ------------------------------
+    switch (ShaderDesc_.mBlendState)
+    {
+    case PipelineTypes::BlendState::Sample:
+        return GetSampleBlendState();
+    }
+
+    // ここまで来たら未実装のステート
+    Orca_Unimplemented
+}
 
 D3D12_BLEND_DESC OrcaGraphics::PipelineObject::BlendStates::GetSampleBlendState()
 {

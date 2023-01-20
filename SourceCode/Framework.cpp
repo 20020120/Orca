@@ -6,6 +6,7 @@
 #include"Graphics.h"
 #include"DescriptorPool.h"
 #include"Camera.h"
+#include"ShaderDesc.h"
 FrameWork::FrameWork(HWND Hwnd_)
     :mHwnd(Hwnd_)
 {}
@@ -106,7 +107,14 @@ bool FrameWork::Initialize()
         mpGraphics->GetCommandQueue(),L"../Resource/Obj/Bison/Bison.obj");
     mpCamera->Initialize(mpGraphics->GetDevice(), mpGraphics->GetDescriptorPool(OrcaGraphics::Graphics::POOL_TYPE_RES));
 
-    mShader.Initialize(mpGraphics->GetDevice(), nullptr, nullptr);
+    OrcaGraphics::Shader::ShaderDesc shaderDesc{};
+    shaderDesc.mVsFileName = L"../Resource/Shader/ObjVs.cso";
+    shaderDesc.mPsFileName = L"../Resource/Shader/ObjPs.cso";
+    shaderDesc.mShaderType = OrcaGraphics::Shader::ShaderType::Sample;
+    shaderDesc.mBlendState = OrcaGraphics::PipelineTypes::BlendState::Sample;
+    shaderDesc.mRasterizerState = OrcaGraphics::PipelineTypes::RasterizerState::Sample;
+    shaderDesc.mDepthStencilState = OrcaGraphics::PipelineTypes::DepthStencilState::Sample;
+    mpPipeline = std::make_unique<OrcaGraphics::RenderPipeline>(mpGraphics->GetDevice(), shaderDesc);
     return true;
 }
 
@@ -125,7 +133,7 @@ void FrameWork::Render(float Dt_)
     // コマンドリストにテストコマンドを積む
     mpGraphics->StackCmdList();
     // シェーダーをセットする
-    mShader.StackGraphicsCmd(mpGraphics->GetCmdList());
+    mpPipeline->StackGraphicsCmd(mpGraphics->GetCmdList());
 
     mpCamera->StackGraphicsCmd(mpGraphics->GetCmdList());
     m_Obj.StackGraphicsCmd(mpGraphics->GetCmdList());

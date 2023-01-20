@@ -6,7 +6,7 @@
 #include<wrl.h>
 #include<memory>
 #include"Obj.h"
-#include"Shader.h"
+#include"RenderPipline.h"
 
 #define  WM_DROPFILES    0x0233
 
@@ -60,7 +60,7 @@ private:
 	std::unique_ptr<OrcaGraphics::Graphics> mpGraphics{}; // •`‰æƒNƒ‰ƒX
 	std::unique_ptr<OrcaGraphics::Camera> mpCamera{};	// ƒJƒƒ‰
 	Model::Obj m_Obj{};
-	OrcaGraphics::Shader::Shader mShader{};
+	std::unique_ptr<OrcaGraphics::RenderPipeline> mpPipeline{};
 
 	void CalculateFrameStats();
 };

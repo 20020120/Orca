@@ -1,4 +1,18 @@
 #include"RasterizerStates.h"
+#include "OrcaException.h"
+D3D12_RASTERIZER_DESC OrcaGraphics::PipelineObject::RasterizerStates::GetRasterizerDesc(
+    const Shader::ShaderDesc& ShaderDesc_)
+{
+    // ----------------------------- ラスタライザステートを取得 -----------------------------
+    switch (ShaderDesc_.mRasterizerState)
+    {
+    case PipelineTypes::RasterizerState::Sample:
+        return GetSampleRasterizerState();
+    }
+    // ここまで来たら未実装のステート
+    Orca_Unimplemented;
+    return {};
+}
 
 D3D12_RASTERIZER_DESC OrcaGraphics::PipelineObject::RasterizerStates::GetSampleRasterizerState()
 {

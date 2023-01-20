@@ -25,8 +25,23 @@
     <Filter Include="RasterizerStates">
       <UniqueIdentifier>{237d0e3a-fbdb-4ecb-a8e6-090077c14665}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ObjSampleShader">
-      <UniqueIdentifier>{699d3427-29b4-4e51-9684-b1e8def55a53}</UniqueIdentifier>
+    <Filter Include="ShaderBuilder">
+      <UniqueIdentifier>{fb575db9-1752-4fcd-a789-d022be57ac30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShaderDesc">
+      <UniqueIdentifier>{96138b69-9843-4670-8e89-2f6ebf7560fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShaderType">
+      <UniqueIdentifier>{d0a9faed-9fc6-4a78-ba16-27f608445800}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PipelineTypes">
+      <UniqueIdentifier>{35ff1620-ee82-4047-9e0f-50a6bae4bc09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderPipline">
+      <UniqueIdentifier>{67784c32-a20f-437b-921c-7441fcafe130}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InputLayout">
+      <UniqueIdentifier>{1a03c60d-5eec-4351-9765-b7bcf86c6022}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -51,8 +66,24 @@
     <ClInclude Include="SourceCode\RasterizerStates.h">
       <Filter>RasterizerStates</Filter>
     </ClInclude>
-    <ClInclude Include="SourceCode\ObjSampleShader.h">
-      <Filter>ObjSampleShader</Filter>
+    <ClInclude Include="SourceCode\ShaderBuilder.h">
+      <Filter>ShaderBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\ShaderMinimun.h" />
+    <ClInclude Include="SourceCode\ShaderDesc.h">
+      <Filter>ShaderDesc</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\ShaderType.h">
+      <Filter>ShaderType</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\PipelineTypes.h">
+      <Filter>PipelineTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\RenderPipline.h">
+      <Filter>RenderPipline</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\InputLayout.h">
+      <Filter>InputLayout</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -77,8 +108,14 @@
     <ClCompile Include="SourceCode\RasterizerStates.cpp">
       <Filter>RasterizerStates</Filter>
     </ClCompile>
-    <ClCompile Include="SourceCode\ObjSampleShader.cpp">
-      <Filter>ObjSampleShader</Filter>
+    <ClCompile Include="SourceCode\ShaderBuilder.cpp">
+      <Filter>ShaderBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\RenderPipline.cpp">
+      <Filter>RenderPipline</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\InputLayout.cpp">
+      <Filter>InputLayout</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
