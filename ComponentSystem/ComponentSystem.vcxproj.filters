@@ -7,15 +7,30 @@
     <Filter Include="pch">
       <UniqueIdentifier>{89643ba3-8e0a-466d-b53e-c38cf8f9a527}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{d67e370c-8e4d-483f-8cc0-345644ef5bc4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\pch.h">
       <Filter>pch</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\GameObject.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Component.h">
+      <Filter>Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\pch.cpp">
       <Filter>pch</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\GameObject.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Component.cpp">
+      <Filter>Component</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
