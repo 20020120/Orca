@@ -11,10 +11,12 @@
 #include"DepthStencilStates.h"
 
 #include"ReflectionHelpers.h"
+#include"Dx12ResourceCreator.h"
+#include"Graphics.h"
 
 #include<filesystem>
 
-OrcaGraphics::RenderPipeline::RenderPipeline(OrcaComPtr(ID3D12Device) pDevice_, const Shader::ShaderDesc& ShaderDesc_)
+OrcaGraphics::RenderPipeline::RenderPipeline(const Shader::ShaderDesc& ShaderDesc_)
 {
     // ------------------------------ 頂点シェーダーを読み込み -----------------------------
     OrcaExecuteDebug(
@@ -32,6 +34,7 @@ OrcaGraphics::RenderPipeline::RenderPipeline(OrcaComPtr(ID3D12Device) pDevice_, 
     Shader::ShaderBuilder psBuilder{};
     psBuilder.Build(ShaderDesc_.mPsFileName.c_str(), Shader::ShaderStage::PS);
 
+    
     // ------------------------------ ルートパラメーターを取得 -----------------------------
     std::vector<D3D12_ROOT_PARAMETER> rootParameters{};
     SamplerInfo samplersInfo{};
@@ -43,7 +46,7 @@ OrcaGraphics::RenderPipeline::RenderPipeline(OrcaComPtr(ID3D12Device) pDevice_, 
         for (UINT i = 0; i < BoundsResource_; ++i)
         {
             D3D12_SHADER_INPUT_BIND_DESC bindDesc;
-            HRESULT hr = pReflector->GetResourceBindingDesc(i, &bindDesc);
+            const HRESULT hr = pReflector->GetResourceBindingDesc(i, &bindDesc);
             OrcaDebug::GraphicsLog("リソースの情報を取得", hr);
             auto descriptorRange = Shader::ReflectionHelpers::GetDescriptorRange(bindDesc);
             // 取得した情報が静的サンプラーだった場合専用の処理に分岐する
@@ -59,6 +62,26 @@ OrcaGraphics::RenderPipeline::RenderPipeline(OrcaComPtr(ID3D12Device) pDevice_, 
 
     getDescriptorRange(vsBuilder.GetReflector(), vsBuilder.GetShaderDesc().BoundResources, Shader::ShaderStage::VS);
     getDescriptorRange(psBuilder.GetReflector(), psBuilder.GetShaderDesc().BoundResources, Shader::ShaderStage::PS);
+
+    // ---------------------------- シェーダーのリソース情報を取得 ----------------------------
+    Resource::Dx12ResourceCreator::AddResourceInfo(ShaderDesc_.mShaderType, vsBuilder.GetReflector(), vsBuilder.GetShaderDesc().BoundResources);
+    Resource::Dx12ResourceCreator::AddResourceInfo(ShaderDesc_.mShaderType, psBuilder.GetReflector(), psBuilder.GetShaderDesc().BoundResources);
+
+
+    // ------------------------ ここ以下のシェーダーは読み込みに失敗してもいいよ -----------------------
+    if (std::filesystem::exists(ShaderDesc_.mDsFileName))
+    {
+        Orca_Unimplemented;
+    }
+    if (std::filesystem::exists(ShaderDesc_.mHsFileName))
+    {
+        Orca_Unimplemented;
+    }
+    if (std::filesystem::exists(ShaderDesc_.mGsFileName))
+    {
+        Orca_Unimplemented;
+    }
+
 
     // ------------------------------ ルートパラメーターを作成 -----------------------------
     for (auto it = descriptorRanges.begin(); it != descriptorRanges.end();)
@@ -92,7 +115,7 @@ OrcaGraphics::RenderPipeline::RenderPipeline(OrcaComPtr(ID3D12Device) pDevice_, 
         }
     }
 
-    // ------------------------ ここ以下のシェーダーは読み込みに失敗してもいいよ -----------------------
+  
 
 
     // ----------------------------- インプットレイアウトを作成 -----------------------------
@@ -122,8 +145,10 @@ OrcaGraphics::RenderPipeline::RenderPipeline(OrcaComPtr(ID3D12Device) pDevice_, 
     );
     OrcaDebug::GraphicsLog("ルートシグネチャをシリアライズ", hr);
 
+
+    auto pDevice = OrcaGraphics::Graphics::GetDevice();
     // ルートシグネチャを生成
-    hr = pDevice_->CreateRootSignature(
+    hr = pDevice->CreateRootSignature(
         0,
         pBlob->GetBufferPointer(),
         pBlob->GetBufferSize(),
@@ -160,7 +185,7 @@ OrcaGraphics::RenderPipeline::RenderPipeline(OrcaComPtr(ID3D12Device) pDevice_, 
     descGps.SampleDesc = { 1,0 };
 
     // パイプラインステートを設定
-    hr = pDevice_->CreateGraphicsPipelineState(
+    hr = pDevice->CreateGraphicsPipelineState(
         &descGps, IID_PPV_ARGS(mpPipelineState.GetAddressOf()));
     OrcaDebug::GraphicsLog("パイプラインステートを作成", hr);
 

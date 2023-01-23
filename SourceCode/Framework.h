@@ -57,9 +57,8 @@ private:
 	uint32_t mFrames{ 0 };
 	float mDeltaTime{ 0.0f };
 	int hConsole = 0;
-	std::unique_ptr<OrcaGraphics::Graphics> mpGraphics{}; // •`‰æƒNƒ‰ƒX
 	std::unique_ptr<OrcaGraphics::Camera> mpCamera{};	// ƒJƒƒ‰
-	Model::Obj m_Obj{};
+	std::unique_ptr<Model::Obj> mpObj{};
 	std::unique_ptr<OrcaGraphics::RenderPipeline> mpPipeline{};
 
 	void CalculateFrameStats();

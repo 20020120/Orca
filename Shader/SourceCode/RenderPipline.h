@@ -22,7 +22,7 @@ namespace OrcaGraphics
     {
     public:
         // -------------------------------- ‰Šú‰» --------------------------------
-        RenderPipeline(OrcaComPtr(ID3D12Device) pDevice_, const Shader::ShaderDesc& ShaderDesc_);
+        RenderPipeline(const Shader::ShaderDesc& ShaderDesc_);
 
         RenderPipeline() = delete;
         ~RenderPipeline() = default;

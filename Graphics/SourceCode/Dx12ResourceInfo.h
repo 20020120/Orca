@@ -1,5 +1,4 @@
 #pragma once
-#include <intsafe.h>
 #include<string>
 // ---------------------------- シェーダーのリソースを生成するための情報 ---------------------------
 namespace OrcaGraphics
@@ -10,8 +9,9 @@ namespace OrcaGraphics
         {
             Unknown,
             ConstantBuffer,
+            Sampler,
             Texture,
-
+            UAV,
         };
 
         struct Dx12ResourceInfo

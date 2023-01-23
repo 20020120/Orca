@@ -14,7 +14,7 @@ namespace OrcaGraphics
         Camera() = default;
         ~Camera();
 
-        void Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_); // 初期化
+        void Initialize(); // 初期化
         void Update(float Dt_); // 更新
         void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) const; // 描画コマンドを積む
         void Finalize();    // 終了処理

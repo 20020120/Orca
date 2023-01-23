@@ -1,35 +1,40 @@
 ﻿#include"pch.h"
-#include"Obj.h"
 #include<vector>
 #include<DirectXMath.h>
 #include<fstream>
-#include<d3d12.h>
 #include<string>
 #include<filesystem>
 #include<ResourceUploadBatch.h>
+
+#include"Obj.h"
 #include"GraphicsLogger.h"
 #include"DescriptorPool.h"
+#include"Graphics.h"
 
 Model::Obj::~Obj()
 {
+    
 }
 
-void Model::Obj::Initialize(OrcaComPtr(ID3D12Device) pDevice_, OrcaGraphics::DescriptorPool* pPool_,
-    OrcaComPtr(ID3D12CommandQueue) pCommandQueue_, const wchar_t* ObjPath_)
+void Model::Obj::Initialize(const wchar_t* ObjPath_)
 {
     std::vector<VertexData> vertices{};
     std::vector<uint32_t> indices{};
     std::wstring textureName{};
+
+    const auto pDevice = OrcaGraphics::Graphics::GetDevice();
+
     // パスからデータをパースする
     Parse(ObjPath_, vertices, indices, textureName);
     // 頂点バッファを作成する
-    CreateVertexBuffer(pDevice_, vertices);
+    CreateVertexBuffer(OrcaGraphics::Graphics::GetDevice(), vertices);
     // インデックスバッファを作成する
-    CreateIndexBuffer(pDevice_, indices);
+    CreateIndexBuffer(pDevice, indices);
     // 定数バッファを作成
-    CreateConstantBuffer(pDevice_, pPool_);
+    CreateConstantBuffer(pDevice, OrcaGraphics::Graphics::GetDescriptorPool(OrcaGraphics::POOL_TYPE_RES));
     // テクスチャを作成(このクラスはテスト用なのでテクスチャは１枚しか扱えない)
-    CreateTexture(pDevice_, pPool_, pCommandQueue_, textureName);
+    CreateTexture(pDevice, OrcaGraphics::Graphics::GetDescriptorPool(OrcaGraphics::POOL_TYPE_RES),
+        OrcaGraphics::Graphics::GetCommandQueue(), textureName);
 
     // -------------------------------- 変数を初期化する -------------------------------
     m_VertexCounts = static_cast<UINT>(vertices.size());
@@ -294,4 +299,9 @@ void Model::Obj::CreateTexture(OrcaComPtr(ID3D12Device) pDevice_, OrcaGraphics::
     // コマンドを実行
     const auto future = batch.End(pCommandQueue_.Get());
     future.wait();
+}
+
+void Model::Obj::CreateDx12Resource()
+{
+
 }

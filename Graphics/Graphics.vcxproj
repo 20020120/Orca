@@ -23,8 +23,12 @@
     <ClCompile Include="SourceCode\ConstantBuffer.cpp" />
     <ClCompile Include="SourceCode\DescriptorHandle.cpp" />
     <ClCompile Include="SourceCode\DescriptorPool.cpp" />
+    <ClCompile Include="SourceCode\Dx12ResourceCreator.cpp" />
+    <ClCompile Include="SourceCode\Dx12ResourceGetter.cpp" />
     <ClCompile Include="SourceCode\Dx12ResourceInfo.cpp" />
     <ClCompile Include="SourceCode\Graphics.cpp" />
+    <ClCompile Include="SourceCode\GraphicsForGameLoop.cpp" />
+    <ClCompile Include="SourceCode\GraphicsImpl.cpp" />
     <ClCompile Include="SourceCode\GraphicsLogger.cpp" />
     <ClCompile Include="SourceCode\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -39,10 +43,15 @@
     <ClInclude Include="SourceCode\ConstantBuffer.h" />
     <ClInclude Include="SourceCode\DescriptorHandle.h" />
     <ClInclude Include="SourceCode\DescriptorPool.h" />
+    <ClInclude Include="SourceCode\Dx12ResourceCreator.h" />
+    <ClInclude Include="SourceCode\Dx12ResourceGetter.h" />
     <ClInclude Include="SourceCode\Dx12ResourceInfo.h" />
     <ClInclude Include="SourceCode\Graphics.h" />
+    <ClInclude Include="SourceCode\GraphicsForGameLoop.h" />
+    <ClInclude Include="SourceCode\GraphicsImpl.h" />
     <ClInclude Include="SourceCode\GraphicsLogger.h" />
     <ClInclude Include="SourceCode\GraphicsMacro.h" />
+    <ClInclude Include="SourceCode\GraphicsMinimum.h" />
     <ClInclude Include="SourceCode\pch.h" />
     <ClInclude Include="SourceCode\Pool.h" />
     <ClInclude Include="SourceCode\Dx12Resource.h" />
@@ -50,6 +59,7 @@
     <ClInclude Include="SourceCode\Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cpp.hint" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

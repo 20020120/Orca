@@ -1,15 +1,14 @@
 #pragma once
-#include <d3d12shader.h>
 
 #include"ShaderMinimun.h"
 #include"GraphicsMacro.h"
 #include"MacroMinmam.h"
 
+#include <d3d12shader.h>
 #include<string>
 #include<d3dcommon.h>
 
 // ------------------------------------ 前方宣言 -----------------------------------
-
 
 // ------------------------------- シェーダーを作成するクラス -------------------------------
 namespace OrcaGraphics

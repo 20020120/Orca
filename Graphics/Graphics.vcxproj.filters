@@ -28,6 +28,21 @@
     <Filter Include="Dx12ResourceInfo">
       <UniqueIdentifier>{70e54cfb-399f-48b2-be69-855bb3da6d0a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Dx12ResourceCreator">
+      <UniqueIdentifier>{299d9997-2a3b-421d-9deb-8abe765d3c4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicsImpl">
+      <UniqueIdentifier>{24df9ae9-384e-402e-a2e1-89db0899aa70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicsForGameLoop">
+      <UniqueIdentifier>{971a83f9-100a-4a92-b051-0fb14eeff669}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dx12ResourceGetter">
+      <UniqueIdentifier>{54664206-a683-4016-938d-d980da1b1c1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicsLogger">
+      <UniqueIdentifier>{266fda4a-12b8-4131-a7e2-33b46eba8c0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\pch.cpp">
@@ -36,7 +51,6 @@
     <ClCompile Include="SourceCode\Graphics.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="SourceCode\GraphicsLogger.cpp" />
     <ClCompile Include="SourceCode\Camera.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
@@ -61,6 +75,21 @@
     <ClCompile Include="SourceCode\Dx12ResourceInfo.cpp">
       <Filter>Dx12ResourceInfo</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\Dx12ResourceCreator.cpp">
+      <Filter>Dx12ResourceCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\GraphicsImpl.cpp">
+      <Filter>GraphicsImpl</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\GraphicsForGameLoop.cpp">
+      <Filter>GraphicsForGameLoop</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Dx12ResourceGetter.cpp">
+      <Filter>Dx12ResourceGetter</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\GraphicsLogger.cpp">
+      <Filter>GraphicsLogger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\pch.h">
@@ -69,7 +98,6 @@
     <ClInclude Include="SourceCode\Graphics.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="SourceCode\GraphicsLogger.h" />
     <ClInclude Include="SourceCode\Camera.h">
       <Filter>Camera</Filter>
     </ClInclude>
@@ -98,8 +126,25 @@
     <ClInclude Include="SourceCode\Dx12ResourceInfo.h">
       <Filter>Dx12ResourceInfo</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\Dx12ResourceCreator.h">
+      <Filter>Dx12ResourceCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\GraphicsImpl.h">
+      <Filter>GraphicsImpl</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\GraphicsForGameLoop.h">
+      <Filter>GraphicsForGameLoop</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Dx12ResourceGetter.h">
+      <Filter>Dx12ResourceGetter</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\GraphicsLogger.h">
+      <Filter>GraphicsLogger</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\GraphicsMinimum.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

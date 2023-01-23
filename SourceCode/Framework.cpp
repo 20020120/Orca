@@ -1,12 +1,13 @@
-#include<sstream>
 #include"Framework.h"
 
 #include "Camera.h"
 #include "LogWindow.h"
-#include"Graphics.h"
+#include"GraphicsForGameLoop.h"
 #include"DescriptorPool.h"
 #include"Camera.h"
 #include"ShaderDesc.h"
+
+#include<sstream>
 FrameWork::FrameWork(HWND Hwnd_)
     :mHwnd(Hwnd_)
 {}
@@ -98,14 +99,14 @@ bool FrameWork::Initialize()
     // コンソールウィンドを開く
     OrcaDebug::LogWindow::OpenWindow();
     // 描画管理クラスの実体を生成
-    mpGraphics = std::make_unique<OrcaGraphics::Graphics>();
     mpCamera = std::make_unique<OrcaGraphics::Camera>();
+    mpObj = std::make_unique<Model::Obj>();
 
     // ------------------------------ 以下、初期化関数を呼ぶ ------------------------------
-    mpGraphics->Initialize(mHwnd);
-    m_Obj.Initialize(mpGraphics->GetDevice(),mpGraphics->GetDescriptorPool(OrcaGraphics::Graphics::POOL_TYPE_RES),
-        mpGraphics->GetCommandQueue(),L"../Resource/Obj/Bison/Bison.obj");
-    mpCamera->Initialize(mpGraphics->GetDevice(), mpGraphics->GetDescriptorPool(OrcaGraphics::Graphics::POOL_TYPE_RES));
+    OrcaGraphics::GraphicsForGameLoop::Initialize(mHwnd);
+
+    mpObj->Initialize(L"../Resource/Obj/Bison/Bison.obj");
+    mpCamera->Initialize();
 
     OrcaGraphics::Shader::ShaderDesc shaderDesc{};
     shaderDesc.mVsFileName = L"../Resource/Shader/ObjVs.cso";
@@ -114,7 +115,7 @@ bool FrameWork::Initialize()
     shaderDesc.mBlendState = OrcaGraphics::PipelineTypes::BlendState::Sample;
     shaderDesc.mRasterizerState = OrcaGraphics::PipelineTypes::RasterizerState::Sample;
     shaderDesc.mDepthStencilState = OrcaGraphics::PipelineTypes::DepthStencilState::Sample;
-    mpPipeline = std::make_unique<OrcaGraphics::RenderPipeline>(mpGraphics->GetDevice(), shaderDesc);
+    mpPipeline = std::make_unique<OrcaGraphics::RenderPipeline>(shaderDesc);
     return true;
 }
 
@@ -123,27 +124,31 @@ void FrameWork::Update(float Dt_)
     // カメラ行列を更新
     mpCamera->Update(Dt_);
 
-    m_Obj.Update(Dt_);
+    mpObj->Update(Dt_);
 }
 
 void FrameWork::Render(float Dt_)
 {
     // コマンドリスト開放
-    mpGraphics->OpenCmdList();
+    OrcaGraphics::GraphicsForGameLoop::OpenCmdList();
     // コマンドリストにテストコマンドを積む
-    mpGraphics->StackCmdList();
-    // シェーダーをセットする
-    mpPipeline->StackGraphicsCmd(mpGraphics->GetCmdList());
+    OrcaGraphics::GraphicsForGameLoop::StackCmdList();
+    // コマンドリストを取得
+    const auto cmdList = OrcaGraphics::Graphics::GetCmdList();
 
-    mpCamera->StackGraphicsCmd(mpGraphics->GetCmdList());
-    m_Obj.StackGraphicsCmd(mpGraphics->GetCmdList());
+    // シェーダーをセットする
+    mpPipeline->StackGraphicsCmd(cmdList);
+    mpCamera->StackGraphicsCmd(cmdList);
+    mpObj->StackGraphicsCmd(cmdList);
     // コマンドリストを閉じる
-    mpGraphics->CloseCmdList();
+    OrcaGraphics::GraphicsForGameLoop::CloseCmdList();
 }
 
 bool FrameWork::Finalize()
 {
-    
+    mpCamera.reset();
+    mpObj.reset();
+    OrcaGraphics::GraphicsForGameLoop::Finalize();
     return true;
 }
 

@@ -30,8 +30,7 @@ namespace Model
         ~Obj();
 
         // 初期化
-        void Initialize(OrcaComPtr(ID3D12Device) pDevice_, OrcaGraphics::DescriptorPool* pPool_, 
-            OrcaComPtr(ID3D12CommandQueue) pCommandQueue_,const wchar_t* ObjPath_);
+        void Initialize(const wchar_t* ObjPath_);
         void Update(float Dt_); // 更新
         void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_); // 描画コマンドを積む
     private:
@@ -42,6 +41,8 @@ namespace Model
         void CreateConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, OrcaGraphics::DescriptorPool* pPool_);
         void CreateTexture(OrcaComPtr(ID3D12Device) pDevice_, OrcaGraphics::DescriptorPool* pPool_,
             OrcaComPtr(ID3D12CommandQueue) pCommandQueue_, std::wstring TexturePath_);
+
+        void CreateDx12Resource();
     private:
         // ------------------------------- 頂点読み込み ------------------------------
         struct VertexData
