@@ -1,7 +1,10 @@
 #pragma once
-#include <d3d12.h>
+//#include <d3d12.h>
 #include"GraphicsMacro.h"
 #include<string>
+
+struct ID3D12GraphicsCommandList;
+struct ID3D12Resource;
 
 namespace OrcaGraphics
 {
@@ -18,8 +21,9 @@ namespace OrcaGraphics
             // 共通の初期化
             Dx12Resource(DescriptorPool* pDescriptorPool_, UINT RootParamIndex);
             virtual ~Dx12Resource();
-            void Bind(OrcaComPtr(ID3D12GraphicsCommandList) pCmdList_) const; // GPUにバインド
 
+            void Bind(OrcaComPtr(ID3D12GraphicsCommandList) pCmdList_) const; // GPUにバインド
+            OrcaNodiscard std::string GetName()const;
         private:
             UINT mRootParamIndex{}; // ルートパラメーターの番号
         protected:

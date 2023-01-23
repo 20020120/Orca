@@ -19,17 +19,11 @@
     <Filter Include="Texture">
       <UniqueIdentifier>{00fda5b7-5e90-40a5-82cb-fb8be6eaaba2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RenderResourceHolder">
-      <UniqueIdentifier>{eb875729-5cd3-4d7d-9b46-4ed93a0ca2ae}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Dx12Resource">
       <UniqueIdentifier>{20d76710-3576-46b5-84c5-9a56ec25fc06}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dx12ResourceInfo">
       <UniqueIdentifier>{70e54cfb-399f-48b2-be69-855bb3da6d0a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Dx12ResourceCreator">
-      <UniqueIdentifier>{299d9997-2a3b-421d-9deb-8abe765d3c4e}</UniqueIdentifier>
     </Filter>
     <Filter Include="GraphicsImpl">
       <UniqueIdentifier>{24df9ae9-384e-402e-a2e1-89db0899aa70}</UniqueIdentifier>
@@ -42,6 +36,15 @@
     </Filter>
     <Filter Include="GraphicsLogger">
       <UniqueIdentifier>{266fda4a-12b8-4131-a7e2-33b46eba8c0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dx12ResourceHolder">
+      <UniqueIdentifier>{eb875729-5cd3-4d7d-9b46-4ed93a0ca2ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dx12ResourceInfoCreator">
+      <UniqueIdentifier>{299d9997-2a3b-421d-9deb-8abe765d3c4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dx12ResourceCreator">
+      <UniqueIdentifier>{13477d3f-0e3c-4123-8e1d-4fc8bc27041e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -70,13 +73,13 @@
       <Filter>Dx12Resource</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\Dx12ResourceHolder.cpp">
-      <Filter>RenderResourceHolder</Filter>
+      <Filter>Dx12ResourceHolder</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\Dx12ResourceInfo.cpp">
       <Filter>Dx12ResourceInfo</Filter>
     </ClCompile>
-    <ClCompile Include="SourceCode\Dx12ResourceCreator.cpp">
-      <Filter>Dx12ResourceCreator</Filter>
+    <ClCompile Include="SourceCode\Dx12ResourceInfoCreator.cpp">
+      <Filter>Dx12ResourceInfoCreator</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\GraphicsImpl.cpp">
       <Filter>GraphicsImpl</Filter>
@@ -89,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="SourceCode\GraphicsLogger.cpp">
       <Filter>GraphicsLogger</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Dx12ResourceCreator.cpp">
+      <Filter>Dx12ResourceCreator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -121,13 +127,13 @@
       <Filter>Dx12Resource</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\Dx12ResourceHolder.h">
-      <Filter>RenderResourceHolder</Filter>
+      <Filter>Dx12ResourceHolder</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\Dx12ResourceInfo.h">
       <Filter>Dx12ResourceInfo</Filter>
     </ClInclude>
-    <ClInclude Include="SourceCode\Dx12ResourceCreator.h">
-      <Filter>Dx12ResourceCreator</Filter>
+    <ClInclude Include="SourceCode\Dx12ResourceInfoCreator.h">
+      <Filter>Dx12ResourceInfoCreator</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\GraphicsImpl.h">
       <Filter>GraphicsImpl</Filter>
@@ -142,6 +148,9 @@
       <Filter>GraphicsLogger</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\GraphicsMinimum.h" />
+    <ClInclude Include="SourceCode\Dx12ResourceCreator.h">
+      <Filter>Dx12ResourceCreator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

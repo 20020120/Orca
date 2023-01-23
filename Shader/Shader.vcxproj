@@ -25,6 +25,7 @@
     <ClInclude Include="SourceCode\PipelineTypes.h" />
     <ClInclude Include="SourceCode\RasterizerStates.h" />
     <ClInclude Include="SourceCode\ReflectionHelpers.h" />
+    <ClInclude Include="SourceCode\RenderPipelineHolder.h" />
     <ClInclude Include="SourceCode\RenderPipline.h" />
     <ClInclude Include="SourceCode\SamplerStates.h" />
     <ClInclude Include="SourceCode\ShaderBuilder.h" />
@@ -37,6 +38,7 @@
     <ClCompile Include="SourceCode\InputLayout.cpp" />
     <ClCompile Include="SourceCode\RasterizerStates.cpp" />
     <ClCompile Include="SourceCode\ReflectionHelpers.cpp" />
+    <ClCompile Include="SourceCode\RenderPipelineHolder.cpp" />
     <ClCompile Include="SourceCode\RenderPipline.cpp" />
     <ClCompile Include="SourceCode\SamplerStates.cpp" />
     <ClCompile Include="SourceCode\ShaderBuilder.cpp" />

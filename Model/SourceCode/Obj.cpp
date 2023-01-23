@@ -283,7 +283,7 @@ void Model::Obj::CreateIndexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_
 
 void Model::Obj::CreateConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, OrcaGraphics::DescriptorPool* pPool_)
 {
-    mCb = std::make_unique<OrcaGraphics::Resource::ConstantBuffer>(pDevice_, pPool_, sizeof(Cb_Obj), 1);
+    mCb = std::make_unique<OrcaGraphics::Resource::ConstantBuffer>(sizeof(Cb_Obj), 1);
     mCb->Mapping(reinterpret_cast<void**>(&mCbData));
 }
 

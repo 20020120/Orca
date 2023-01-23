@@ -10,6 +10,9 @@
     <Filter Include="Component">
       <UniqueIdentifier>{d67e370c-8e4d-483f-8cc0-345644ef5bc4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjectHolder">
+      <UniqueIdentifier>{e008a7a1-eb75-43c2-8f52-c27e89067d1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\pch.h">
@@ -21,6 +24,9 @@
     <ClInclude Include="SourceCode\Component.h">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\GameObjectHolder.h">
+      <Filter>GameObjectHolder</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\pch.cpp">
@@ -31,6 +37,9 @@
     </ClCompile>
     <ClCompile Include="SourceCode\Component.cpp">
       <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\GameObjectHolder.cpp">
+      <Filter>GameObjectHolder</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,74 +1,40 @@
 #include"pch.h"
 #include"Dx12ResourceCreator.h"
-#include"OrcaException.h"
-#include"GraphicsLogger.h"
 
-#include <d3d12shader.h>
+#include"ConstantBuffer.h"
 
-void OrcaGraphics::Resource::Dx12ResourceCreator::AddResourceInfo(const Shader::ShaderType& ShaderType_,
-                                                        Microsoft::WRL::ComPtr<ID3D12ShaderReflection> pReflector_, uint32_t MaxResources_)
+void OrcaGraphics::Resource::Dx12ResourceCreator::CreateResource(
+    std::unordered_map<std::string, std::shared_ptr<Resource::Dx12Resource>>& Holder_,
+    const OrcaGraphics::Resource::Dx12ResourceInfo& Info_)
 {
-    HRESULT hr;
-    // ------------------------------ リフレクション情報を取得 -----------------------------
-    for (uint32_t i = 0; i < MaxResources_; ++i)
+    // ----------------------------- Infoからリソースを生成 -----------------------------
+    switch (Info_.mType)
     {
-        D3D12_SHADER_INPUT_BIND_DESC desc;
-        hr = pReflector_->GetResourceBindingDesc(i, &desc);
-        OrcaDebug::GraphicsLog("リフレクション情報を取得", hr);
+    case ResourceType::Unknown: 
+        break;
+    case ResourceType::ConstantBuffer:
+        Add(Holder_, CreateConstantBuffer(Info_));
+        return;
+    case ResourceType::Sampler: break;
+    case ResourceType::Texture:
 
-        Resource::Dx12ResourceInfo info;
-        info.mName = desc.Name;
-        info.mType = GetResourceType(desc.Type);
-
-        // TODO : 未実装の要素のためにContinueできるようにする
-        if(info.mType==Resource::ResourceType::Sampler) // ダイナミックサンプラー実装時に必要
-            continue;
-
-        info.mRootIndex = i;
-        // 定数バッファのみサイズを取得
-        if (info.mType == Resource::ResourceType::ConstantBuffer)
-        {
-            const auto cbInfo = pReflector_->GetConstantBufferByIndex(i);
-            D3D12_SHADER_BUFFER_DESC bufferDesc;
-            hr = cbInfo->GetDesc(&bufferDesc);
-            OrcaDebug::GraphicsLog("リフレクション情報を取得", hr);
-            info.mBufferSize = bufferDesc.Size;
-        }
-        else
-            info.mBufferSize = -1;
-
-        // --------------------------------- 要素を追加 ---------------------------------
-        mHolder[ShaderType_][info.mName] = info;
+        return;
+    case ResourceType::UAV: break;
+    default: ;
     }
 }
 
 
-OrcaGraphics::Resource::ResourceType OrcaGraphics::Resource::Dx12ResourceCreator::GetResourceType(
-    const D3D_SHADER_INPUT_TYPE& InputType_)
+void OrcaGraphics::Resource::Dx12ResourceCreator::Add(std::unordered_map<std::string, std::shared_ptr<Dx12Resource>>& Holder_,
+    std::shared_ptr<Dx12Resource> pResource_)
 {
-    switch (InputType_)
-    {
-    case D3D_SIT_CBUFFER:
-        return Resource::ResourceType::ConstantBuffer;
-    case D3D_SIT_TBUFFER: break;
-    case D3D_SIT_TEXTURE:
-        return Resource::ResourceType::Texture;
-    case D3D_SIT_SAMPLER:
-        return Resource::ResourceType::Sampler;
-    case D3D_SIT_STRUCTURED: break;
-    case D3D_SIT_BYTEADDRESS: break;
-    case D3D_SIT_RTACCELERATIONSTRUCTURE:
+    // ------------------------------- リソースを追加する -------------------------------
+    Holder_.try_emplace(pResource_->GetName(), pResource_);
+}
 
-    case D3D_SIT_UAV_RWSTRUCTURED:
-    case D3D_SIT_UAV_RWTYPED: 
-    case D3D_SIT_UAV_RWBYTEADDRESS:
-    case D3D_SIT_UAV_APPEND_STRUCTURED:
-    case D3D_SIT_UAV_CONSUME_STRUCTURED: 
-    case D3D_SIT_UAV_RWSTRUCTURED_WITH_COUNTER:
-    case D3D_SIT_UAV_FEEDBACKTEXTURE:
-        return Resource::ResourceType::UAV;
-    }
-
-    Orca_Unimplemented;
-    return Resource::ResourceType::Unknown;
+std::shared_ptr<OrcaGraphics::Resource::ConstantBuffer> OrcaGraphics::Resource::Dx12ResourceCreator::CreateConstantBuffer(
+    const Dx12ResourceInfo& Info_)
+{
+    // ------------------------------- 定数バッファを作成 -------------------------------
+    return std::make_shared<ConstantBuffer>(Info_.mBufferSize, Info_.mRootIndex);
 }

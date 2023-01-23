@@ -21,11 +21,13 @@
   <ItemGroup>
     <ClInclude Include="SourceCode\Component.h" />
     <ClInclude Include="SourceCode\GameObject.h" />
+    <ClInclude Include="SourceCode\GameObjectHolder.h" />
     <ClInclude Include="SourceCode\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\Component.cpp" />
     <ClCompile Include="SourceCode\GameObject.cpp" />
+    <ClCompile Include="SourceCode\GameObjectHolder.cpp" />
     <ClCompile Include="SourceCode\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -133,6 +135,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -150,6 +153,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>

@@ -24,6 +24,7 @@
     <ClCompile Include="SourceCode\DescriptorHandle.cpp" />
     <ClCompile Include="SourceCode\DescriptorPool.cpp" />
     <ClCompile Include="SourceCode\Dx12ResourceCreator.cpp" />
+    <ClCompile Include="SourceCode\Dx12ResourceInfoCreator.cpp" />
     <ClCompile Include="SourceCode\Dx12ResourceGetter.cpp" />
     <ClCompile Include="SourceCode\Dx12ResourceInfo.cpp" />
     <ClCompile Include="SourceCode\Graphics.cpp" />
@@ -44,6 +45,7 @@
     <ClInclude Include="SourceCode\DescriptorHandle.h" />
     <ClInclude Include="SourceCode\DescriptorPool.h" />
     <ClInclude Include="SourceCode\Dx12ResourceCreator.h" />
+    <ClInclude Include="SourceCode\Dx12ResourceInfoCreator.h" />
     <ClInclude Include="SourceCode\Dx12ResourceGetter.h" />
     <ClInclude Include="SourceCode\Dx12ResourceInfo.h" />
     <ClInclude Include="SourceCode\Graphics.h" />

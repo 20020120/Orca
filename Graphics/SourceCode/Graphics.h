@@ -1,7 +1,7 @@
 #pragma once
 #include"GraphicsMacro.h"
 #include"MacroMinmam.h"
-#include "GraphicsMinimum.h"
+#include"GraphicsMinimum.h"
 #include<memory>
 // ------------------------------------ ‘O•ûéŒ¾ -----------------------------------
 namespace OrcaGraphics

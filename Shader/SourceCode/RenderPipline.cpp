@@ -11,7 +11,7 @@
 #include"DepthStencilStates.h"
 
 #include"ReflectionHelpers.h"
-#include"Dx12ResourceCreator.h"
+#include"Dx12ResourceInfoCreator.h"
 #include"Graphics.h"
 
 #include<filesystem>
@@ -64,8 +64,8 @@ OrcaGraphics::RenderPipeline::RenderPipeline(const Shader::ShaderDesc& ShaderDes
     getDescriptorRange(psBuilder.GetReflector(), psBuilder.GetShaderDesc().BoundResources, Shader::ShaderStage::PS);
 
     // ---------------------------- シェーダーのリソース情報を取得 ----------------------------
-    Resource::Dx12ResourceCreator::AddResourceInfo(ShaderDesc_.mShaderType, vsBuilder.GetReflector(), vsBuilder.GetShaderDesc().BoundResources);
-    Resource::Dx12ResourceCreator::AddResourceInfo(ShaderDesc_.mShaderType, psBuilder.GetReflector(), psBuilder.GetShaderDesc().BoundResources);
+    Resource::Dx12ResourceInfoCreator::AddResourceInfo(ShaderDesc_.mShaderType, vsBuilder.GetReflector(), vsBuilder.GetShaderDesc().BoundResources);
+    Resource::Dx12ResourceInfoCreator::AddResourceInfo(ShaderDesc_.mShaderType, psBuilder.GetReflector(), psBuilder.GetShaderDesc().BoundResources);
 
 
     // ------------------------ ここ以下のシェーダーは読み込みに失敗してもいいよ -----------------------

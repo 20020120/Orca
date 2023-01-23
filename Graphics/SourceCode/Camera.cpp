@@ -4,7 +4,6 @@
 #include"Quaternion.h"
 #include"Vector.h"
 #include "ScreenConstants.h"
-#include"Graphics.h"
 OrcaGraphics::Camera::~Camera()
 {
 }
@@ -12,7 +11,7 @@ OrcaGraphics::Camera::~Camera()
 void OrcaGraphics::Camera::Initialize()
 {
     // 定数バッファを初期化
-    mCb = std::make_unique<Resource::ConstantBuffer>(Graphics::GetDevice(), Graphics::GetDescriptorPool(POOL_TYPE_RES), sizeof(CbData), 0);
+    mCb = std::make_unique<Resource::ConstantBuffer>(sizeof(CbData), 0);
     mCb->Mapping(reinterpret_cast<void**>(&mCbData));
 }
 

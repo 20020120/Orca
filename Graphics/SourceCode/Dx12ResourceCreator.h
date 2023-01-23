@@ -1,17 +1,19 @@
 #pragma once
-
-#include"ShaderType.h"
 #include"Dx12ResourceInfo.h"
-#include"GraphicsMacro.h"
-#include"MacroMinmam.h"
 
-#include <map>
-#include <unordered_map>
-#include <d3dcommon.h>
+#include<unordered_map>
+#include<memory>
+// ------------------------------------ 前方宣言 -----------------------------------
+namespace OrcaGraphics
+{
+    namespace Resource
+    {
+        class ConstantBuffer;
+        class Dx12Resource;
+    }
+}
 
-struct ID3D12ShaderReflection;
-;
-
+// -------------------------------- リソースを生成するクラス -------------------------------
 namespace OrcaGraphics
 {
     namespace Resource
@@ -19,16 +21,17 @@ namespace OrcaGraphics
         class Dx12ResourceCreator
         {
         public:
-            // 要素を新規作成する
-            static void AddResourceInfo(const Shader::ShaderType& ShaderType_, OrcaComPtr(ID3D12ShaderReflection) pReflector_, uint32_t MaxResources_);
+            static void CreateResource(std::unordered_map<std::string, std::shared_ptr<Dx12Resource>>& Holder_,
+                const Dx12ResourceInfo& Info_);
+
 
         private:
-            inline static std::map<Shader::ShaderType, std::unordered_map<std::string, Resource::Dx12ResourceInfo>> mHolder{};
-            Dx12ResourceCreator() = default;
+            // ------------------------ リソースをコンテナに追加する関数 -----------------------
+            static void Add(std::unordered_map<std::string, std::shared_ptr<Dx12Resource>>& Holder_,
+                std::shared_ptr<Dx12Resource> pResource_);
 
-        private:
-            // --------------------------- 情報作成のためのヘルパー関数 --------------------------
-            OrcaNodiscard static Resource::ResourceType GetResourceType(const D3D_SHADER_INPUT_TYPE& InputType_);
+            // ------------------------- 各リソースを生成するかんすう ------------------------
+            static std::shared_ptr<ConstantBuffer> CreateConstantBuffer(const Dx12ResourceInfo& Info_);
         };
     }
 }

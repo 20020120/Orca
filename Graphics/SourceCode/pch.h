@@ -8,6 +8,10 @@
 #define PCH_H
 
 // プリコンパイルするヘッダーをここに追加します
+#include"GraphicsImpl.h"
+#include "Graphics.h"
+#include"GraphicsForGameLoop.h"
 
+#include"GraphicsLogger.h"
 
 #endif //PCH_H

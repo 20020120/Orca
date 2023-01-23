@@ -40,3 +40,8 @@ void OrcaGraphics::Resource::Dx12Resource::Bind(const OrcaComPtr(ID3D12GraphicsC
 {
     pCmdList_->SetGraphicsRootDescriptorTable(mRootParamIndex, mpHandle->HandleGPU);
 }
+
+std::string OrcaGraphics::Resource::Dx12Resource::GetName() const
+{
+    return mName;
+}
