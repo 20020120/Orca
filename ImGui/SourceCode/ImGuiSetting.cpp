@@ -34,7 +34,7 @@ void ImGuiSetting::Renderer::CreateImGui(HWND Hwnd_, ID3D12Device* pDevice_,
     //    style.Colors[ImGuiCol_WindowBg].w = 1.0f;
     //}
 
-    IOSettings(Hwnd_);
+    //IOSettings(Hwnd_);
 
 
     

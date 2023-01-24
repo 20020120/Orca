@@ -3,6 +3,9 @@
 #include<memory>
 #include<vector>
 #include<string>
+
+#include "GameObject.h"
+
 namespace ComponentSystem
 {
     // ---------------------------------- ëOï˚êÈåæ ---------------------------------
@@ -12,7 +15,7 @@ namespace ComponentSystem
     class GameObjectHolder
     {
     public:
-        GameObjectHolder();
+        GameObjectHolder() = default;
         ~GameObjectHolder() = default;
 
         GameObjectHolder(const GameObjectHolder& RHS_) = delete;
@@ -30,5 +33,6 @@ namespace ComponentSystem
 
     private:
         std::vector<std::shared_ptr<GameObject>> mHolder{};
+        bool mOpenGui{};
     };
 }

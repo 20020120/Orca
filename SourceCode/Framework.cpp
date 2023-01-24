@@ -135,8 +135,17 @@ void FrameWork::Update(float Dt_)
     mpCamera->Update(Dt_);
     mpObj->Update(Dt_);
 
-    ImGui::Begin("aaa");
-    ImGui::End();
+    mGameObjects.Update(Dt_);
+
+    // ----------------------------- ImGuiのメニューを更新 -----------------------------
+    GuiMenu(Dt_);
+
+
+}
+
+void FrameWork::GuiMenu(float Dt_)
+{
+    mGameObjects.GuiMenu();
 }
 
 void FrameWork::Render(float Dt_)
@@ -149,13 +158,15 @@ void FrameWork::Render(float Dt_)
     // コマンドリストにテストコマンドを積む
     OrcaGraphics::GraphicsForGameLoop::StackCmdList();
     ImGuiSetting::Renderer::Render();
-    ImGuiSetting::Renderer::RenderDrawData(cmdList.Get());
 
     // シェーダーをセットする
     mpPipeline->StackGraphicsCmd(cmdList);
     mpCamera->StackGraphicsCmd(cmdList);
     mpObj->StackGraphicsCmd(cmdList);
 
+
+    // ImGuiはコマンドの最後に積むこと！
+    ImGuiSetting::Renderer::RenderDrawData(cmdList.Get());
     // コマンドリストを閉じる
     OrcaGraphics::GraphicsForGameLoop::CloseCmdList();
 }

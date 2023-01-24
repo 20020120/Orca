@@ -27,6 +27,7 @@
     <ClInclude Include="ImGui\imstb_rectpack.h" />
     <ClInclude Include="ImGui\imstb_textedit.h" />
     <ClInclude Include="ImGui\imstb_truetype.h" />
+    <ClInclude Include="SourceCode\ImGuiHelper.h" />
     <ClInclude Include="SourceCode\ImGuiSetting.h" />
   </ItemGroup>
   <ItemGroup>
@@ -37,6 +38,7 @@
     <ClCompile Include="ImGui\imgui_draw.cpp" />
     <ClCompile Include="ImGui\imgui_tables.cpp" />
     <ClCompile Include="ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="SourceCode\ImGuiHelper.cpp" />
     <ClCompile Include="SourceCode\ImGuiSetting.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

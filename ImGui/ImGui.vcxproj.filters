@@ -22,6 +22,9 @@
     <Filter Include="ImGuiBackends">
       <UniqueIdentifier>{d684e85a-c008-4165-b3d5-a457e75db218}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ImGuiHelper">
+      <UniqueIdentifier>{453a1b8e-3ad8-447a-8f80-3acca3a84255}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImGui\imconfig.h">
@@ -51,6 +54,9 @@
     <ClInclude Include="SourceCode\ImGuiSetting.h">
       <Filter>ImGuiSetting</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\ImGuiHelper.h">
+      <Filter>ImGuiHelper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGui\imgui.cpp">
@@ -76,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="SourceCode\ImGuiSetting.cpp">
       <Filter>ImGuiSetting</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\ImGuiHelper.cpp">
+      <Filter>ImGuiHelper</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

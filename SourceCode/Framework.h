@@ -7,6 +7,7 @@
 #include<memory>
 #include"Obj.h"
 #include"RenderPipline.h"
+#include"GameObjectHolder.h"
 
 #define  WM_DROPFILES    0x0233
 
@@ -49,6 +50,7 @@ public:
 private:
 	[[nodiscard]] bool Initialize();
 	void Update(float Dt_/*Elapsed seconds from last frame*/);
+	void GuiMenu(float Dt_);
 	void Render(float Dt_/*Elapsed seconds from last frame*/);
 	bool Finalize();
 
@@ -60,6 +62,7 @@ private:
 	std::unique_ptr<OrcaGraphics::Camera> mpCamera{};	// ÉJÉÅÉâ
 	std::unique_ptr<Model::Obj> mpObj{};
 	std::unique_ptr<OrcaGraphics::RenderPipeline> mpPipeline{};
+	ComponentSystem::GameObjectHolder mGameObjects{};
 
 	void CalculateFrameStats();
 };
