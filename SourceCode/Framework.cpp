@@ -6,7 +6,8 @@
 #include"DescriptorPool.h"
 #include"Camera.h"
 #include"ShaderDesc.h"
-
+#include"ImGuiSetting.h"
+#include"../Imgui/imgui.h"
 #include<sstream>
 FrameWork::FrameWork(HWND Hwnd_)
     :mHwnd(Hwnd_)
@@ -51,7 +52,8 @@ int FrameWork::Run()
 
 LRESULT FrameWork::HandleMessage(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-    //if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam)) { return true; }
+    if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
+        return true;
 
     switch (msg)
     {
@@ -105,6 +107,10 @@ bool FrameWork::Initialize()
     // ------------------------------ 以下、初期化関数を呼ぶ ------------------------------
     OrcaGraphics::GraphicsForGameLoop::Initialize(mHwnd);
 
+    // ------------------------------- ImGuiを初期化 -------------------------------
+    ImGuiSetting::CreateImGui(mHwnd, OrcaGraphics::GraphicsForGameLoop::GetDevice().Get(),
+        OrcaGraphics::GraphicsForGameLoop::GetDescriptorPool(OrcaGraphics::POOL_TYPE_RES)->GetHeap());
+
     mpObj->Initialize(L"../Resource/Obj/Bison/Bison.obj");
     mpCamera->Initialize();
 
@@ -121,14 +127,19 @@ bool FrameWork::Initialize()
 
 void FrameWork::Update(float Dt_)
 {
+    ImGuiSetting::NewFrame();
+
     // カメラ行列を更新
     mpCamera->Update(Dt_);
-
     mpObj->Update(Dt_);
+
+    ImGui::Begin("aaa");
+    ImGui::End();
 }
 
 void FrameWork::Render(float Dt_)
 {
+
     // コマンドリスト開放
     OrcaGraphics::GraphicsForGameLoop::OpenCmdList();
     // コマンドリストにテストコマンドを積む
@@ -140,6 +151,9 @@ void FrameWork::Render(float Dt_)
     mpPipeline->StackGraphicsCmd(cmdList);
     mpCamera->StackGraphicsCmd(cmdList);
     mpObj->StackGraphicsCmd(cmdList);
+
+    ImGuiSetting::Render();
+    ImGuiSetting::RenderDrawData(OrcaGraphics::GraphicsForGameLoop::GetCmdList().Get());
     // コマンドリストを閉じる
     OrcaGraphics::GraphicsForGameLoop::CloseCmdList();
 }
@@ -149,6 +163,7 @@ bool FrameWork::Finalize()
     mpCamera.reset();
     mpObj.reset();
     OrcaGraphics::GraphicsForGameLoop::Finalize();
+    ImGuiSetting::Cleanup();
     return true;
 }
 

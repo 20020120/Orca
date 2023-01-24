@@ -9,14 +9,22 @@ namespace ComponentSystem
 
     class GameObject final 
     {
+    public:
+        GameObject(const std::string& Name_);
+
         template<class... T>
         void AddComponent(T&&... Arg_);
 
         template<class T>
         std::shared_ptr<T> GetComponent()const;
+
+        void Delete();  // 削除
     private:
         std::string mName{};    // 名前
         std::vector <std::shared_ptr<Component>> mComponents{}; // 所持しているコンポ―ンネント
+
+        // ------------------------------ オプション変数 ------------------------------
+        bool mIsAlive{ true };  // 生存判定
     };
 }
 

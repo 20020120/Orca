@@ -2,6 +2,7 @@
 
 #include<memory>
 #include<vector>
+#include<string>
 namespace ComponentSystem
 {
     // ---------------------------------- ‘O•ûéŒ¾ ---------------------------------
@@ -19,8 +20,10 @@ namespace ComponentSystem
         GameObjectHolder(GameObjectHolder&& LHS_)noexcept = delete;
         GameObjectHolder& operator =(GameObjectHolder&& LHS_) = delete;
 
+        void Update(float Dt_); // XV 
 
-        
+        void  AddGameObject(const std::string& Name_);
+
 
     private:
         std::vector<std::shared_ptr<GameObject>> mHolder{};
