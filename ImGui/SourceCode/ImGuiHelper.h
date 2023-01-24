@@ -1,7 +1,4 @@
 #pragma once
-#include"../ImGui/imgui.h"
-
-
 // -------------------------------- ImGui‚Ìƒwƒ‹ƒp[ŠÖ” -------------------------------
 namespace OrcaGui
 {

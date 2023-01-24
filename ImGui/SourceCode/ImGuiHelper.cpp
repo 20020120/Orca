@@ -1,4 +1,5 @@
 #include"ImGuiHelper.h"
+#include"../ImGui/imgui.h"
 
 void OrcaGui::MainMenu(const char* Label_, const char* Detail_, bool* IsOpen_)
 {

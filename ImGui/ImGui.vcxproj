@@ -27,8 +27,10 @@
     <ClInclude Include="ImGui\imstb_rectpack.h" />
     <ClInclude Include="ImGui\imstb_textedit.h" />
     <ClInclude Include="ImGui\imstb_truetype.h" />
+    <ClInclude Include="SourceCode\GuiInclude.h" />
     <ClInclude Include="SourceCode\ImGuiHelper.h" />
     <ClInclude Include="SourceCode\ImGuiSetting.h" />
+    <ClInclude Include="SourceCode\ScopedGui.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGui\backends\imgui_impl_dx12.cpp" />
@@ -40,6 +42,7 @@
     <ClCompile Include="ImGui\imgui_widgets.cpp" />
     <ClCompile Include="SourceCode\ImGuiHelper.cpp" />
     <ClCompile Include="SourceCode\ImGuiSetting.cpp" />
+    <ClCompile Include="SourceCode\ScopedGui.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

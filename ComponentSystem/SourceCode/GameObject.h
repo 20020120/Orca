@@ -10,7 +10,7 @@ namespace ComponentSystem
     class GameObject final 
     {
     public:
-        GameObject(const std::string& Name_);
+        explicit GameObject(const std::string& Name_);
 
         template<class... T>
         void AddComponent(T&&... Arg_);
@@ -19,12 +19,14 @@ namespace ComponentSystem
         std::shared_ptr<T> GetComponent()const;
 
         void Delete();  // 削除
+        void GuiMenu(float Dt_);
     private:
         std::string mName{};    // 名前
         std::vector <std::shared_ptr<Component>> mComponents{}; // 所持しているコンポ―ンネント
 
         // ------------------------------ オプション変数 ------------------------------
         bool mIsAlive{ true };  // 生存判定
+        bool mOpenGui{};
     };
 }
 
@@ -35,6 +37,7 @@ void ComponentSystem::GameObject::AddComponent(T&&... Arg_)
     mComponents.emplace_back(std::make_shared<T>(std::forward<T>(Arg_)...));
 }
 
+// ------------------------------- コンポーネントを取得する関数 ------------------------------
 template <class T>
 std::shared_ptr<T> ComponentSystem::GameObject::GetComponent() const
 {

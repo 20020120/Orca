@@ -29,7 +29,7 @@ namespace ComponentSystem
 
         // ----------------------------- 恒常的に呼ばれる関数 ----------------------------
         void Update(float Dt_); // 更新
-        void GuiMenu(); // ImGuiのメニューを表示
+        void GuiMenu(float Dt_); // ImGuiのメニューを表示
 
     private:
         std::vector<std::shared_ptr<GameObject>> mHolder{};

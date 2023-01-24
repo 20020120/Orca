@@ -113,8 +113,10 @@ bool FrameWork::Initialize()
     ImGuiSetting::Renderer::CreateImGui(mHwnd, OrcaGraphics::GraphicsForGameLoop::GetDevice().Get(),
         OrcaGraphics::GraphicsForGameLoop::GetDescriptorPool(OrcaGraphics::POOL_TYPE_RES));
 
-    mpObj->Initialize(L"../Resource/Obj/Bison/Bison.obj");
     mpCamera->Initialize();
+    mpObj->Initialize(L"../Resource/Obj/Bison/Bison.obj");
+
+    mGameObjects.AddGameObject("Test");
 
     OrcaGraphics::Shader::ShaderDesc shaderDesc{};
     shaderDesc.mVsFileName = L"../Resource/Shader/ObjVs.cso";
@@ -139,13 +141,11 @@ void FrameWork::Update(float Dt_)
 
     // ----------------------------- ImGuiのメニューを更新 -----------------------------
     GuiMenu(Dt_);
-
-
 }
 
 void FrameWork::GuiMenu(float Dt_)
 {
-    mGameObjects.GuiMenu();
+    mGameObjects.GuiMenu(Dt_);
 }
 
 void FrameWork::Render(float Dt_)

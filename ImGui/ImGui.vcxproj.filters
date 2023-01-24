@@ -25,6 +25,12 @@
     <Filter Include="ImGuiHelper">
       <UniqueIdentifier>{453a1b8e-3ad8-447a-8f80-3acca3a84255}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GuiInclude">
+      <UniqueIdentifier>{93147e8e-60c8-4b72-b29e-6dfed0f660a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScopedGui">
+      <UniqueIdentifier>{58d9f707-83e6-454f-9508-d94ea03d2937}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImGui\imconfig.h">
@@ -57,6 +63,12 @@
     <ClInclude Include="SourceCode\ImGuiHelper.h">
       <Filter>ImGuiHelper</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\ScopedGui.h">
+      <Filter>ScopedGui</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\GuiInclude.h">
+      <Filter>GuiInclude</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGui\imgui.cpp">
@@ -85,6 +97,9 @@
     </ClCompile>
     <ClCompile Include="SourceCode\ImGuiHelper.cpp">
       <Filter>ImGuiHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\ScopedGui.cpp">
+      <Filter>ScopedGui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
