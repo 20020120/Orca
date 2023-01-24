@@ -8,7 +8,9 @@
 #include"ShaderDesc.h"
 #include"ImGuiSetting.h"
 #include"../Imgui/imgui.h"
+
 #include<sstream>
+
 FrameWork::FrameWork(HWND Hwnd_)
     :mHwnd(Hwnd_)
 {}
@@ -108,8 +110,8 @@ bool FrameWork::Initialize()
     OrcaGraphics::GraphicsForGameLoop::Initialize(mHwnd);
 
     // ------------------------------- ImGuiを初期化 -------------------------------
-    ImGuiSetting::CreateImGui(mHwnd, OrcaGraphics::GraphicsForGameLoop::GetDevice().Get(),
-        OrcaGraphics::GraphicsForGameLoop::GetDescriptorPool(OrcaGraphics::POOL_TYPE_RES)->GetHeap());
+    ImGuiSetting::Renderer::CreateImGui(mHwnd, OrcaGraphics::GraphicsForGameLoop::GetDevice().Get(),
+        OrcaGraphics::GraphicsForGameLoop::GetDescriptorPool(OrcaGraphics::POOL_TYPE_RES));
 
     mpObj->Initialize(L"../Resource/Obj/Bison/Bison.obj");
     mpCamera->Initialize();
@@ -127,7 +129,7 @@ bool FrameWork::Initialize()
 
 void FrameWork::Update(float Dt_)
 {
-    ImGuiSetting::NewFrame();
+    ImGuiSetting::Renderer::NewFrame();
 
     // カメラ行列を更新
     mpCamera->Update(Dt_);
@@ -139,21 +141,21 @@ void FrameWork::Update(float Dt_)
 
 void FrameWork::Render(float Dt_)
 {
+    // コマンドリストを取得
+    const auto cmdList = OrcaGraphics::Graphics::GetCmdList();
 
     // コマンドリスト開放
     OrcaGraphics::GraphicsForGameLoop::OpenCmdList();
     // コマンドリストにテストコマンドを積む
     OrcaGraphics::GraphicsForGameLoop::StackCmdList();
-    // コマンドリストを取得
-    const auto cmdList = OrcaGraphics::Graphics::GetCmdList();
+    ImGuiSetting::Renderer::Render();
+    ImGuiSetting::Renderer::RenderDrawData(cmdList.Get());
 
     // シェーダーをセットする
     mpPipeline->StackGraphicsCmd(cmdList);
     mpCamera->StackGraphicsCmd(cmdList);
     mpObj->StackGraphicsCmd(cmdList);
 
-    ImGuiSetting::Render();
-    ImGuiSetting::RenderDrawData(OrcaGraphics::GraphicsForGameLoop::GetCmdList().Get());
     // コマンドリストを閉じる
     OrcaGraphics::GraphicsForGameLoop::CloseCmdList();
 }
@@ -162,8 +164,8 @@ bool FrameWork::Finalize()
 {
     mpCamera.reset();
     mpObj.reset();
+    ImGuiSetting::Renderer::Cleanup();
     OrcaGraphics::GraphicsForGameLoop::Finalize();
-    ImGuiSetting::Cleanup();
     return true;
 }
 

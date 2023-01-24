@@ -19,31 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Imgui\backends\imgui_impl_dx12.h" />
-    <ClInclude Include="Imgui\backends\imgui_impl_win32.h" />
-    <ClInclude Include="Imgui\imconfig.h" />
-    <ClInclude Include="Imgui\imgui.h" />
-    <ClInclude Include="Imgui\imgui_internal.h" />
-    <ClInclude Include="Imgui\imstb_rectpack.h" />
-    <ClInclude Include="Imgui\imstb_textedit.h" />
-    <ClInclude Include="Imgui\imstb_truetype.h" />
     <ClInclude Include="SourceCode\Constructors.h" />
-    <ClInclude Include="SourceCode\ImGuiSetting.h" />
     <ClInclude Include="SourceCode\MacroMinmam.h" />
     <ClInclude Include="SourceCode\Misc.h" />
     <ClInclude Include="SourceCode\OrcaException.h" />
     <ClInclude Include="SourceCode\ScreenConstants.h" />
     <ClInclude Include="SourceCode\ShaderType.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Imgui\backends\imgui_impl_dx12.cpp" />
-    <ClCompile Include="Imgui\backends\imgui_impl_win32.cpp" />
-    <ClCompile Include="Imgui\imgui.cpp" />
-    <ClCompile Include="Imgui\imgui_demo.cpp" />
-    <ClCompile Include="Imgui\imgui_draw.cpp" />
-    <ClCompile Include="Imgui\imgui_tables.cpp" />
-    <ClCompile Include="Imgui\imgui_widgets.cpp" />
-    <ClCompile Include="SourceCode\ImGuiSetting.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

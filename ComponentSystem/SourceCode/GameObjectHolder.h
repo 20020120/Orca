@@ -12,7 +12,7 @@ namespace ComponentSystem
     class GameObjectHolder
     {
     public:
-        GameObjectHolder(uint32_t MaxIndex_);
+        GameObjectHolder();
         ~GameObjectHolder() = default;
 
         GameObjectHolder(const GameObjectHolder& RHS_) = delete;
@@ -20,10 +20,13 @@ namespace ComponentSystem
         GameObjectHolder(GameObjectHolder&& LHS_)noexcept = delete;
         GameObjectHolder& operator =(GameObjectHolder&& LHS_) = delete;
 
-        void Update(float Dt_); // 更新 
+        // ------------------------------- ヘルパー関数 ------------------------------
+        void AddGameObject(const std::string& Name_);   // ゲームオブジェクトを追加
 
-        void  AddGameObject(const std::string& Name_);
 
+        // ----------------------------- 恒常的に呼ばれる関数 ----------------------------
+        void Update(float Dt_); // 更新
+        void GuiMenu(); // ImGuiのメニューを表示
 
     private:
         std::vector<std::shared_ptr<GameObject>> mHolder{};

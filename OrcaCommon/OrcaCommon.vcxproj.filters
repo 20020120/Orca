@@ -6,71 +6,7 @@
     <ClInclude Include="SourceCode\MacroMinmam.h" />
     <ClInclude Include="SourceCode\ShaderType.h" />
     <ClInclude Include="SourceCode\Constructors.h" />
-    <ClInclude Include="SourceCode\ImGuiSetting.h">
-      <Filter>ImGuiSetting</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imconfig.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imgui.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imgui_internal.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imstb_rectpack.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imstb_textedit.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imstb_truetype.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\backends\imgui_impl_dx12.h">
-      <Filter>ImGuiBackends</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\backends\imgui_impl_win32.h">
-      <Filter>ImGuiBackends</Filter>
-    </ClInclude>
     <ClInclude Include="SourceCode\Misc.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="ImGuiSetting">
-      <UniqueIdentifier>{1420d3cf-e834-4303-a4a5-c1e48b4611fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ImGui">
-      <UniqueIdentifier>{52d2f397-445a-48d2-ae94-727cc437964c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ImGuiBackends">
-      <UniqueIdentifier>{558f79ea-3fa0-4657-8d2e-b05a4a049405}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="SourceCode\ImGuiSetting.cpp">
-      <Filter>ImGuiSetting</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\imgui.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\imgui_draw.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\backends\imgui_impl_dx12.cpp">
-      <Filter>ImGuiBackends</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\backends\imgui_impl_win32.cpp">
-      <Filter>ImGuiBackends</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\imgui_demo.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\imgui_tables.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\imgui_widgets.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
