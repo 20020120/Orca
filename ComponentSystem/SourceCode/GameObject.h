@@ -18,8 +18,11 @@ namespace ComponentSystem
         template<class T>
         std::shared_ptr<T> GetComponent()const;
 
-        void Delete();  // 削除
+        void Delete();
         void GuiMenu(float Dt_);
+
+        // -------------------------------- ゲッター -------------------------------
+        std::string GetName()const; 
     private:
         std::string mName{};    // 名前
         std::vector <std::shared_ptr<Component>> mComponents{}; // 所持しているコンポ―ンネント

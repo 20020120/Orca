@@ -15,3 +15,8 @@ void ComponentSystem::GameObject::GuiMenu(float Dt_)
         ImGui::TreePop();
     }
 }
+
+std::string ComponentSystem::GameObject::GetName() const
+{
+    return mName;
+}

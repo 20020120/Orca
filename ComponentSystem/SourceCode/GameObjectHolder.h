@@ -33,6 +33,9 @@ namespace ComponentSystem
 
     private:
         std::vector<std::shared_ptr<GameObject>> mHolder{};
-        bool mOpenGui{};
+
+        // ------------------------------ オプション変数 ------------------------------
+        bool mOpenGui{};    //Guiを開いているかどうか
+        std::shared_ptr<GameObject> mpGuiObject{};  // 選択中のGameObjectをGuiに出す
     };
 }

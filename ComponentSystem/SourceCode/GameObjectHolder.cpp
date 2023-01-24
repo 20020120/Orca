@@ -20,11 +20,28 @@ void ComponentSystem::GameObjectHolder::GuiMenu(float Dt_)
     // -------------------------------------------------------------------------
     if (mOpenGui)
     {
-        OrcaGui::ScopedWindow window(GuiName);
-
-        for (const auto& obj : mHolder)
+        // -------------------------------- ˆê——•\Ž¦ -------------------------------
         {
-            obj->GuiMenu(Dt_);
+            OrcaGui::ScopedWindow window(GuiName);
+            for (const auto& obj : mHolder)
+            {
+                if (ImGui::Button(obj->GetName().c_str()))
+                {
+                    mpGuiObject = obj;
+                }
+            }
+            ImGui::Separator();
+            if (ImGui::Button("Close"))
+                mOpenGui = false;
+        }
+        // ------------------------- ŒÂ•Ê‚ÌGameObject‚ÌGui -------------------------
+        if(mpGuiObject)
+        {
+            OrcaGui::ScopedWindow window(mpGuiObject->GetName().c_str());
+            mpGuiObject->GuiMenu(Dt_);
+            ImGui::Separator();
+            if (ImGui::Button("Close"))
+                mpGuiObject.reset();
         }
     }
 }
