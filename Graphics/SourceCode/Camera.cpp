@@ -17,13 +17,11 @@ void OrcaGraphics::Camera::Initialize()
 
 void OrcaGraphics::Camera::Update(float Dt_)
 {
-    using namespace Math::Operator;
-
     // 姿勢を更新
     InputMove(Dt_);
     InputRot(Dt_);
 
-    const auto normalFront = Math::Vector::Normalize(Math::Quaternion::Front(mOrientation));
+    const auto normalFront = mOrientation.Front().Normalize();
     const auto eyePos = mTarget + (normalFront * mDistanceToTarget);
     const auto upward = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
     constexpr auto fovY = DirectX::XMConvertToRadians(30.0f);
@@ -44,13 +42,11 @@ void OrcaGraphics::Camera::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12Graphic
 
 void OrcaGraphics::Camera::InputMove(float Dt_)
 {
-    using namespace Math::Operator;
-
     // 入力からカメラを移動させる関数
-    auto front = Math::Quaternion::Front(mOrientation); // 前方向
-    auto right = Math::Quaternion::Right(mOrientation); // 右方向
+    const auto front = mOrientation.Front();  // 前方向
+    const auto right = mOrientation.Right();  // 右方向
 
-    DirectX::XMFLOAT3 MoveVec{};
+    Math::Vector3 MoveVec{};
     // 移動
     if (GetAsyncKeyState('W')) {
         MoveVec = front;
@@ -75,7 +71,7 @@ void OrcaGraphics::Camera::InputMove(float Dt_)
         MoveVec.y = -1.0f;
     }
 
-    mTarget += mMoveSpeed * Dt_ * MoveVec;
+    mTarget += MoveVec * mMoveSpeed * Dt_;
 }
 
 void OrcaGraphics::Camera::InputRot(float Dt_)
@@ -103,7 +99,7 @@ void OrcaGraphics::Camera::InputRot(float Dt_)
 
 
     //--------------------<WorldのUp軸の回転>--------------------//
-    const DirectX::XMFLOAT3 worldUpAxis = { 0.0f,1.0f,0.0f };
+    const Math::Vector3 worldUpAxis = { 0.0f,1.0f,0.0f };
 
     //  入力値や経過時間を考慮した速度を算出
     float calculatedRotSpeed = axis.x * mRotEulerSpeed * Dt_;
@@ -112,12 +108,11 @@ void OrcaGraphics::Camera::InputRot(float Dt_)
     //--------------------<WorldのX軸の回転>--------------------//
 
     // カメラの前方向と上方向から外積で右ベクトルを求める
-    DirectX::XMFLOAT3 cameraFront = Math::Quaternion::Front(mOrientation);
-    cameraFront = Math::Vector::Normalize(cameraFront);
+    const auto cameraFront = mOrientation.Front().Normalize();
     // 外積の例外処理
 
     // 外積を使って回転軸を算出
-    const DirectX::XMFLOAT3 worldRightAxis = Math::Vector::Cross(worldUpAxis, cameraFront, false);
+    const auto worldRightAxis = worldUpAxis.Cross(cameraFront);
 
     //  入力値や経過時間を考慮した速度を算出
     calculatedRotSpeed = axis.y * mRotEulerSpeed * Dt_;

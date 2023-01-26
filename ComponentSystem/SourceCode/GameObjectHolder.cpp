@@ -18,16 +18,24 @@ void ComponentSystem::GameObjectHolder::GuiMenu(float Dt_)
 
     OrcaGui::MainMenu("System", GuiName, &mOpenGui);
     // -------------------------------------------------------------------------
+    ImVec2 childWindowPos = {};
     if (mOpenGui)
     {
         // -------------------------------- 一覧表示 -------------------------------
         {
             OrcaGui::ScopedWindow window(GuiName);
+
+            // ImGuiのウインドウの位置をいい感じの位置に設定する
+            const auto windowWidth = ImGui::GetWindowWidth();
+            const auto windowPos = ImGui::GetWindowPos();
+            childWindowPos = { windowPos.x + windowWidth,windowPos.y };
+
             for (const auto& obj : mHolder)
             {
                 if (ImGui::Button(obj->GetName().c_str()))
                 {
                     mpGuiObject = obj;
+                    ImGui::SetNextWindowPos(childWindowPos);
                 }
             }
             ImGui::Separator();
@@ -38,6 +46,7 @@ void ComponentSystem::GameObjectHolder::GuiMenu(float Dt_)
         if(mpGuiObject)
         {
             OrcaGui::ScopedWindow window(mpGuiObject->GetName().c_str());
+            ImGui::SetWindowPos(childWindowPos);
             mpGuiObject->GuiMenu(Dt_);
             ImGui::Separator();
             if (ImGui::Button("Close"))

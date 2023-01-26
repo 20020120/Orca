@@ -1,9 +1,10 @@
 #pragma once
 
 #include"ConstantBuffer.h"
-#include"DescriptorPool.h"
+#include"MathMinimum.h"
+#include"Quaternion.h"
+
 #include<wrl.h>
-#include<DirectXMath.h>
 #include<memory>
 namespace OrcaGraphics
 {
@@ -22,14 +23,14 @@ namespace OrcaGraphics
         // ------------------------------- 定数バッファ ------------------------------
         struct alignas(256)CbData
         {
-            DirectX::XMFLOAT4X4 View{};
-            DirectX::XMFLOAT4X4 Proj{};
+            Math::Matrix View{};
+            Math::Matrix Proj{};
         };
         std::unique_ptr<Resource::ConstantBuffer> mCb{};
         CbData* mCbData{};
 
-        DirectX::XMFLOAT3 mTarget{};
-        DirectX::XMFLOAT4 mOrientation{ 0.0f,0.0f,0.0f,1.0f };
+        Math::Vector3 mTarget{};
+        Math::Quaternion mOrientation{};
 
     private:
         void InputMove(float Dt_); // 入力から移動させる

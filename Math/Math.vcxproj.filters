@@ -13,6 +13,15 @@
     <Filter Include="HashSystem">
       <UniqueIdentifier>{28d12713-e4f9-44a8-99c6-15fdc60781d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Matrix">
+      <UniqueIdentifier>{50dc0e96-df85-4119-95aa-854425e53704}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MathIncluder">
+      <UniqueIdentifier>{b4d2a914-97d4-447e-b91f-fe47bda934ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pch">
+      <UniqueIdentifier>{d7e9d311-f5a8-4f3d-a573-749ff4bd1174}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\Quaternion.h">
@@ -24,6 +33,24 @@
     <ClInclude Include="SourceCode\Vector.h">
       <Filter>Vector</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\MathMinimum.h">
+      <Filter>MathIncluder</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\MatrixHelper.h">
+      <Filter>Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Matrix.h">
+      <Filter>Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Vector3.h">
+      <Filter>Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Vector4.h">
+      <Filter>Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\pch.h">
+      <Filter>pch</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\Quaternion.cpp">
@@ -34,6 +61,21 @@
     </ClCompile>
     <ClCompile Include="SourceCode\Vector.cpp">
       <Filter>Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\MatrixHelper.cpp">
+      <Filter>Matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Matrix.cpp">
+      <Filter>Matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Vector3.cpp">
+      <Filter>Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Vector4.cpp">
+      <Filter>Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\pch.cpp">
+      <Filter>pch</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

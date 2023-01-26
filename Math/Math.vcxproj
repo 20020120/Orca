@@ -19,13 +19,27 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SourceCode\MathMinimum.h" />
+    <ClInclude Include="SourceCode\Matrix.h" />
+    <ClInclude Include="SourceCode\MatrixHelper.h" />
+    <ClInclude Include="SourceCode\pch.h" />
     <ClInclude Include="SourceCode\Quaternion.h" />
     <ClInclude Include="SourceCode\Vector.h" />
+    <ClInclude Include="SourceCode\Vector3.h" />
     <ClInclude Include="SourceCode\VectorOperator.h" />
+    <ClInclude Include="SourceCode\Vector4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SourceCode\Matrix.cpp" />
+    <ClCompile Include="SourceCode\MatrixHelper.cpp" />
+    <ClCompile Include="SourceCode\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="SourceCode\Quaternion.cpp" />
     <ClCompile Include="SourceCode\Vector.cpp" />
+    <ClCompile Include="SourceCode\Vector3.cpp" />
+    <ClCompile Include="SourceCode\Vector4.cpp" />
     <ClCompile Include="SourceCode\VectorOperator.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -129,8 +143,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -146,8 +161,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>

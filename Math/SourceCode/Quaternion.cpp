@@ -1,28 +1,41 @@
+#include"pch.h"
 #include"Quaternion.h"
 
-DirectX::XMFLOAT3 Math::Quaternion::Front(const DirectX::XMFLOAT4& Orientation_)
+Math::Quaternion::Quaternion()
+    :XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
+{}
+
+Math::Quaternion::Quaternion(const Vector4& RHS_)
+    :XMFLOAT4(RHS_)
+{}
+
+Math::Quaternion::Quaternion(float x, float y, float z, float w)
+    :XMFLOAT4(x,y,z,w)
+{}
+
+Math::Vector3 Math::Quaternion::Front() const
 {
-    const DirectX::XMVECTOR O = DirectX::XMLoadFloat4(&Orientation_);
+    const DirectX::XMVECTOR O = XMLoadFloat4(this);
     const DirectX::XMMATRIX R{ DirectX::XMMatrixRotationQuaternion(O) };
-    DirectX::XMFLOAT3 front{};
-    DirectX::XMStoreFloat3(&front, R.r[2]);
+    Vector3 front;
+    XMStoreFloat3(&front, R.r[2]);
     return front;
 }
 
-DirectX::XMFLOAT3 Math::Quaternion::Right(const DirectX::XMFLOAT4& Orientation_)
+Math::Vector3 Math::Quaternion::Up() const
 {
-    const DirectX::XMVECTOR O = DirectX::XMLoadFloat4(&Orientation_);
+    const DirectX::XMVECTOR O = XMLoadFloat4(this);
     const DirectX::XMMATRIX R{ DirectX::XMMatrixRotationQuaternion(O) };
-    DirectX::XMFLOAT3 right{};
-    DirectX::XMStoreFloat3(&right, R.r[0]);
-    return right;
+    Vector3 up;
+    XMStoreFloat3(&up, R.r[1]);
+    return up;
 }
 
-DirectX::XMFLOAT3 Math::Quaternion::Up(const DirectX::XMFLOAT4& Orientation_)
+Math::Vector3 Math::Quaternion::Right() const
 {
-    const DirectX::XMVECTOR O = DirectX::XMLoadFloat4(&Orientation_);
+    const DirectX::XMVECTOR O = XMLoadFloat4(this);
     const DirectX::XMMATRIX R{ DirectX::XMMatrixRotationQuaternion(O) };
-    DirectX::XMFLOAT3 up{};
-    DirectX::XMStoreFloat3(&up, R.r[1]);
-    return up;
+    Vector3 right;
+    XMStoreFloat3(&right, R.r[0]);
+    return right;
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include<DirectXMath.h>
-namespace Math
+namespace MathHelper
 {
     namespace Vector
     {

@@ -1,13 +1,20 @@
 #pragma once
+#include "Component.h"
+
 #include<memory>
 #include<vector>
 #include<string>
+
+
+namespace Component
+{ // ---------------------------------- 前方宣言 ---------------------------------
+    class Component;
+}
+
 namespace ComponentSystem
 {
-    // ---------------------------------- 前方宣言 ---------------------------------
-    class Component;
 
-    class GameObject final 
+    class GameObject final :public std::enable_shared_from_this<GameObject>
     {
     public:
         explicit GameObject(const std::string& Name_);
@@ -25,7 +32,7 @@ namespace ComponentSystem
         std::string GetName()const; 
     private:
         std::string mName{};    // 名前
-        std::vector <std::shared_ptr<Component>> mComponents{}; // 所持しているコンポ―ンネント
+        std::vector <std::shared_ptr<Component::Component>> mComponents{}; // 所持しているコンポ―ンネント
 
         // ------------------------------ オプション変数 ------------------------------
         bool mIsAlive{ true };  // 生存判定
@@ -37,7 +44,9 @@ namespace ComponentSystem
 template <class ... T>
 void ComponentSystem::GameObject::AddComponent(T&&... Arg_)
 {
-    mComponents.emplace_back(std::make_shared<T>(std::forward<T>(Arg_)...));
+    const std::shared_ptr<Component::Component> component = std::make_shared<T>(std::forward<T>(Arg_)...);
+    component->SetGameObject(shared_from_this());
+    mComponents.emplace_back();
 }
 
 // ------------------------------- コンポーネントを取得する関数 ------------------------------
@@ -46,8 +55,7 @@ std::shared_ptr<T> ComponentSystem::GameObject::GetComponent() const
 {
     for (auto& ptr : mComponents)
     {
-        auto com = std::dynamic_pointer_cast<T>(ptr);
-        if (com)
+        if (auto com = std::dynamic_pointer_cast<T>(ptr))
             return com;
     }
     return nullptr;

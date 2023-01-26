@@ -1,11 +1,19 @@
 #pragma once
-#include<DirectXMath.h>
+#include"Vector3.h"
+#include"Vector4.h"
+
 namespace Math
 {
-    namespace Quaternion
+    struct Quaternion : DirectX::XMFLOAT4
     {
-        DirectX::XMFLOAT3 Front(const DirectX::XMFLOAT4& Orientation_);
-        DirectX::XMFLOAT3 Right(const DirectX::XMFLOAT4& Orientation_);
-        DirectX::XMFLOAT3 Up(const DirectX::XMFLOAT4& Orientation_);
-    }
+        Quaternion();
+        Quaternion(const Vector4& RHS_);
+        Quaternion(float x, float y, float z, float w);
+
+        // ------------------------------- ÉwÉãÉpÅ[ä÷êî ------------------------------
+        [[nodiscard]] Vector3 Front()const;
+        [[nodiscard]] Vector3 Up() const;
+        [[nodiscard]] Vector3 Right() const;
+    };
 }
+
