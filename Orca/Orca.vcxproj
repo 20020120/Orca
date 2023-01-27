@@ -105,13 +105,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\Math\SourceCode;..\ComponentSystem\SourceCode;..\ImGui\SourceCode;..\Shader\SourceCode;..\OrcaCommon\SourceCode;..\Graphics\SourceCode;..\ConsoleLogWindow\SourceCode;..\Model\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\StandardComponents\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\ImGui\SourceCode;..\Shader\SourceCode;..\OrcaCommon\SourceCode;..\Graphics\SourceCode;..\ConsoleLogWindow\SourceCode;..\Model\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ConsoleLogWindow.lib;Graphics.lib;Model.lib;Math.lib;Shader.lib;ComponentSystem.lib;ImGui.lib;d3d12.lib;dxgi.lib;dxguid.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ConsoleLogWindow.lib;Graphics.lib;Model.lib;Math.lib;Shader.lib;ComponentSystem.lib;StandardComponents.lib;ImGui.lib;d3d12.lib;dxgi.lib;dxguid.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -123,7 +123,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\Math\SourceCode;..\ComponentSystem\SourceCode;..\ImGui\SourceCode;..\Shader\SourceCode;..\OrcaCommon\SourceCode;..\Graphics\SourceCode;..\ConsoleLogWindow\SourceCode;..\Model\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\StandardComponents\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\ImGui\SourceCode;..\Shader\SourceCode;..\OrcaCommon\SourceCode;..\Graphics\SourceCode;..\ConsoleLogWindow\SourceCode;..\Model\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -131,7 +131,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ConsoleLogWindow.lib;Graphics.lib;Model.lib;Math.lib;Shader.lib;ComponentSystem.lib;ImGui.lib;d3d12.lib;dxgi.lib;dxguid.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ConsoleLogWindow.lib;Graphics.lib;Model.lib;Math.lib;Shader.lib;ComponentSystem.lib;StandardComponents.lib;ImGui.lib;d3d12.lib;dxgi.lib;dxguid.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

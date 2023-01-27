@@ -18,8 +18,9 @@ namespace ComponentSystem
     {
     public:
         explicit GameObject(const std::string& Name_);
+        ~GameObject() = default;
 
-        template<class... T>
+        template<class Type,class... T>
         void AddComponent(T&&... Arg_);
 
         template<class T>
@@ -37,16 +38,17 @@ namespace ComponentSystem
         // ------------------------------ オプション変数 ------------------------------
         bool mIsAlive{ true };  // 生存判定
         bool mOpenGui{};
+        std::shared_ptr<Component::Component> mpGuiComponent{};
     };
 }
 
 // ------------------------------- コンポーネントを追加する関数 ------------------------------
-template <class ... T>
+template <class Type,class ... T>
 void ComponentSystem::GameObject::AddComponent(T&&... Arg_)
 {
-    const std::shared_ptr<Component::Component> component = std::make_shared<T>(std::forward<T>(Arg_)...);
+    const std::shared_ptr<Component::Component> component = std::make_shared<Type>(std::forward<T>(Arg_)...);
     component->SetGameObject(shared_from_this());
-    mComponents.emplace_back();
+    mComponents.emplace_back(std::move(component));
 }
 
 // ------------------------------- コンポーネントを取得する関数 ------------------------------

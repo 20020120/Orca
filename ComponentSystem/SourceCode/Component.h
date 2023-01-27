@@ -29,7 +29,7 @@ namespace Component
        void SetGameObject(const std::shared_ptr<ComponentSystem::GameObject>& pGameObject_);
 
    protected:
-       uint32_t mUpdatePriority{}; // 更新優先度（数字が大きいほど更新優先度が高い）
-       std::shared_ptr<ComponentSystem::GameObject> mpGameObject{};
+       const uint32_t mUpdatePriority; // 更新優先度（数字が大きいほど更新優先度が高い）
+       std::weak_ptr<ComponentSystem::GameObject> mpGameObject{};
    };
 }

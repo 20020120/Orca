@@ -13,7 +13,7 @@ Math::Matrix::Matrix()
 
 // ----------------------------------- ÉwÉãÉpÅ[ä÷êî ----------------------------------
 
-Math::Matrix Math::Matrix::CreateWorld(const Vector3& Position_, const Vector3& Scale_, const Vector4& Orientation_)
+Math::Matrix Math::Matrix::CreateWorld(const Vector3& Position_, const Vector3& Scale_, const Quaternion& Orientation_)
 {
     const Matrix s = ComputeScaleMatrix(Scale_);
     const Matrix r = ComputeRotationMatrix(Orientation_);
@@ -39,7 +39,7 @@ Math::Matrix Math::Matrix::ComputeScaleMatrix(const Vector3& Scale_)
     return dst;
 }
 
-Math::Matrix Math::Matrix::ComputeRotationMatrix(const Vector4& Orientation_)
+Math::Matrix Math::Matrix::ComputeRotationMatrix(const Quaternion& Orientation_)
 {
     Matrix dst{};
     const auto m = DirectX::XMMatrixRotationQuaternion(XMLoadFloat4(&Orientation_));

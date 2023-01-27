@@ -2,7 +2,6 @@
 #include"GameObject.h"
 
 #include"GuiInclude.h"
-
 ComponentSystem::GameObject::GameObject(const std::string& Name_)
 {
     mName = Name_;
@@ -10,9 +9,9 @@ ComponentSystem::GameObject::GameObject(const std::string& Name_)
 
 void ComponentSystem::GameObject::GuiMenu(float Dt_)
 {
-    if (ImGui::TreeNode(mName.c_str()))
+    for (const auto& com : mComponents)
     {
-        ImGui::TreePop();
+        com->GuiMenu(Dt_);
     }
 }
 

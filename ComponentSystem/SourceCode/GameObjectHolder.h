@@ -24,7 +24,7 @@ namespace ComponentSystem
         GameObjectHolder& operator =(GameObjectHolder&& LHS_) = delete;
 
         // ------------------------------- ヘルパー関数 ------------------------------
-        void AddGameObject(const std::string& Name_);   // ゲームオブジェクトを追加
+        std::shared_ptr<GameObject> AddGameObject(const std::string& Name_);   // ゲームオブジェクトを追加
 
 
         // ----------------------------- 恒常的に呼ばれる関数 ----------------------------

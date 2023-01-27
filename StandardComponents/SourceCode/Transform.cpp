@@ -1,5 +1,21 @@
 #include"Transform.h"
 #include"GuiInclude.h"
+
+Component::Transform::Transform()
+    :Component(1)
+{}
+
+Component::Transform::Transform(const Math::Vector3& Position_, const Math::Vector3& Scale_,
+    const Math::Quaternion& Orientation_)
+    :Component(1)
+,mPosition(Position_)
+,mScale(Scale_)
+,mOrientation(Orientation_)
+{}
+
+Component::Transform::~Transform()
+{}
+
 void Component::Transform::Update(float Dt_)
 {
     mTransform = Math::Matrix::CreateWorld(mPosition, mScale, mOrientation);

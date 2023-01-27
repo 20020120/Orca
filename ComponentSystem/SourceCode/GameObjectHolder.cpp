@@ -1,10 +1,12 @@
 #include "pch.h"
 #include"GameObjectHolder.h"
 #include"GuiInclude.h"
-void ComponentSystem::GameObjectHolder::AddGameObject(const std::string& Name_)
+std::shared_ptr<ComponentSystem::GameObject> ComponentSystem::GameObjectHolder::AddGameObject(const std::string& Name_)
 {
     // ---------------------------- ゲームオブジェクトを追加する関数 ---------------------------
-    mHolder.emplace_back(std::make_shared<GameObject>(Name_));
+    auto gameObject = std::make_shared<GameObject>(Name_);
+    mHolder.emplace_back(gameObject);
+    return gameObject;
 }
 
 void ComponentSystem::GameObjectHolder::Update(float Dt_)
@@ -18,9 +20,10 @@ void ComponentSystem::GameObjectHolder::GuiMenu(float Dt_)
 
     OrcaGui::MainMenu("System", GuiName, &mOpenGui);
     // -------------------------------------------------------------------------
-    ImVec2 childWindowPos = {};
+    
     if (mOpenGui)
     {
+        ImVec2 childWindowPos{};
         // -------------------------------- 一覧表示 -------------------------------
         {
             OrcaGui::ScopedWindow window(GuiName);

@@ -6,6 +6,8 @@
 #include"DescriptorPool.h"
 #include"Camera.h"
 #include"ShaderDesc.h"
+#include"Transform.h"
+
 #include"ImGuiSetting.h"
 #include"../Imgui/imgui.h"
 
@@ -116,7 +118,10 @@ bool FrameWork::Initialize()
     mpCamera->Initialize();
     mpObj->Initialize(L"../Resource/Obj/Bison/Bison.obj");
 
-    mGameObjects.AddGameObject("Test");
+    const auto gameObject = mGameObjects.AddGameObject("Test");
+    gameObject->AddComponent<Component::Transform>();
+
+
 
     OrcaGraphics::Shader::ShaderDesc shaderDesc{};
     shaderDesc.mVsFileName = L"../Resource/Shader/ObjVs.cso";
@@ -132,6 +137,8 @@ bool FrameWork::Initialize()
 void FrameWork::Update(float Dt_)
 {
     ImGuiSetting::Renderer::NewFrame();
+
+    ImGui::ShowDemoWindow();
 
     // カメラ行列を更新
     mpCamera->Update(Dt_);
