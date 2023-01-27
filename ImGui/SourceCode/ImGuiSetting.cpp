@@ -46,7 +46,7 @@ void ImGuiSetting::Renderer::CreateImGui(HWND Hwnd_, ID3D12Device* pDevice_,
         mpDescriptorHandle->HandleCPU,
         mpDescriptorHandle->HandleGPU
     );
-    ImGui::StyleColorsClassic();
+    ImGui::StyleColorsDark();
 }
 
 void ImGuiSetting::Renderer::IOSettings(HWND Hwnd_)
