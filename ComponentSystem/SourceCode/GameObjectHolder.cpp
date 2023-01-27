@@ -11,7 +11,10 @@ std::shared_ptr<ComponentSystem::GameObject> ComponentSystem::GameObjectHolder::
 
 void ComponentSystem::GameObjectHolder::Update(float Dt_)
 {
-
+    for (const auto& obj : mHolder)
+    {
+        obj->Update(Dt_);
+    }
 }
 
 void ComponentSystem::GameObjectHolder::GuiMenu(float Dt_)
@@ -23,7 +26,7 @@ void ComponentSystem::GameObjectHolder::GuiMenu(float Dt_)
     
     if (mOpenGui)
     {
-        ImVec2 childWindowPos{};
+        ImVec2 childWindowPos;
         // -------------------------------- ˆê——•\Ž¦ -------------------------------
         {
             OrcaGui::ScopedWindow window(GuiName);
@@ -35,11 +38,15 @@ void ComponentSystem::GameObjectHolder::GuiMenu(float Dt_)
 
             for (const auto& obj : mHolder)
             {
-                if (ImGui::Button(obj->GetName().c_str()))
+                if(ImGui::Button(obj->GetName().c_str()))
                 {
-                    mpGuiObject = obj;
-                    ImGui::SetNextWindowPos(childWindowPos);
+                    if (mpGuiObject != obj)
+                    {
+                        mpGuiObject = obj;
+                        ImGui::SetNextWindowPos(childWindowPos);
+                    }
                 }
+                obj->HolderGuiMenu(mpGuiObject, childWindowPos.x, childWindowPos.y);
             }
             ImGui::Separator();
             if (ImGui::Button("Close"))

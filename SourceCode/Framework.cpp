@@ -119,7 +119,10 @@ bool FrameWork::Initialize()
     mpObj->Initialize(L"../Resource/Obj/Bison/Bison.obj");
 
     const auto gameObject = mGameObjects.AddGameObject("Test");
+    const auto child = gameObject->AddChildObject("Child");
+
     gameObject->AddComponent<Component::Transform>();
+    child->AddComponent<Component::Transform>();
 
 
 
@@ -137,8 +140,6 @@ bool FrameWork::Initialize()
 void FrameWork::Update(float Dt_)
 {
     ImGuiSetting::Renderer::NewFrame();
-
-    ImGui::ShowDemoWindow();
 
     // カメラ行列を更新
     mpCamera->Update(Dt_);

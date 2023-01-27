@@ -4,6 +4,7 @@
 #include<memory>
 #include<vector>
 #include<string>
+#include<functional>
 
 
 namespace Component
@@ -20,20 +21,27 @@ namespace ComponentSystem
         explicit GameObject(const std::string& Name_);
         ~GameObject() = default;
 
-        template<class Type,class... T>
+        template<class Type, class... T>
         void AddComponent(T&&... Arg_);
 
         template<class T>
         std::shared_ptr<T> GetComponent()const;
+        std::shared_ptr<GameObject> AddChildObject(const std::string& Name_);   // ゲームオブジェクトを追加
+        std::shared_ptr<GameObject> GetParent()const;
 
+        void Update(float Dt_);
         void Delete();
+        
         void GuiMenu(float Dt_);
+        void HolderGuiMenu(std::shared_ptr<GameObject>& pGuiObject_, float x, float y, int NestCounts_ = 0);
 
         // -------------------------------- ゲッター -------------------------------
-        std::string GetName()const; 
+        std::string GetName()const;
     private:
         std::string mName{};    // 名前
         std::vector <std::shared_ptr<Component::Component>> mComponents{}; // 所持しているコンポ―ンネント
+        std::vector<std::shared_ptr<GameObject>> mChildObjects{};   // 子オブジェクト
+        std::weak_ptr<GameObject> mpParent{};
 
         // ------------------------------ オプション変数 ------------------------------
         bool mIsAlive{ true };  // 生存判定
@@ -48,7 +56,7 @@ void ComponentSystem::GameObject::AddComponent(T&&... Arg_)
 {
     const std::shared_ptr<Component::Component> component = std::make_shared<Type>(std::forward<T>(Arg_)...);
     component->SetGameObject(shared_from_this());
-    mComponents.emplace_back(std::move(component));
+    mComponents.emplace_back(component);
 }
 
 // ------------------------------- コンポーネントを取得する関数 ------------------------------

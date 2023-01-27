@@ -3,6 +3,7 @@
 #include"MathMinimum.h"
 #include"Quaternion.h"
 
+#include<memory>
 // ------------------------------ 姿勢を制御するコンポ―ンネント ------------------------------
 namespace Component
 {
@@ -11,7 +12,7 @@ namespace Component
     public:
         // ------------------------------ コンストラクタ ------------------------------
         Transform();
-        Transform(
+        explicit Transform(
             const Math::Vector3& Position_,
             const Math::Vector3& Scale_ = { 1.0f,1.0f,1.0f },
             const Math::Quaternion& Orientation_ = { 0.0f,0.0f,0.0f,1.0f });
@@ -30,5 +31,10 @@ namespace Component
 
         bool mIsGlobal{ false };    // 行列の空間を指定する
         std::shared_ptr<Transform> mpParentTransform{}; // 親の行列
+
+    private:
+        // ---------------------- 初期化時に親オブジェクトから親の行列を検索する ----------------------
+        void GetParentTransform();
+        bool mCheckHasParent{ false };
     };
 }
