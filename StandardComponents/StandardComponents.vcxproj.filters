@@ -16,15 +16,60 @@
     <Filter Include="Transform">
       <UniqueIdentifier>{7a831992-a6d6-4f0f-91ae-f7581f3798c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ObjRenderer">
+      <UniqueIdentifier>{b1fe09fc-3530-489b-83d3-a759d287e799}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjMesh">
+      <UniqueIdentifier>{fa80d657-d187-4296-9f4b-460823794426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{1eaba920-8f7d-4f91-bda9-0a7324b2548a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems">
+      <UniqueIdentifier>{ab9dcdf6-a6de-406c-aca6-3dfc54539d07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\BaseSystem">
+      <UniqueIdentifier>{222f353f-2272-465f-ad65-07926362a994}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\RenderSystem">
+      <UniqueIdentifier>{b9baecb2-c4a7-41f1-9f0c-528b703a3303}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\Transform.h">
       <Filter>Transform</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\ObjMesh.h">
+      <Filter>ObjMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\ObjRenderer.h">
+      <Filter>ObjRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Renderer.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\RendererSystem.h">
+      <Filter>Systems\RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\SystemBase.h">
+      <Filter>Systems\BaseSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\Transform.cpp">
       <Filter>Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\ObjMesh.cpp">
+      <Filter>ObjMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\ObjRenderer.cpp">
+      <Filter>ObjRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Renderer.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\RendererSystem.cpp">
+      <Filter>Systems\RenderSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -13,6 +13,9 @@
     <Filter Include="GameObjectHolder">
       <UniqueIdentifier>{e008a7a1-eb75-43c2-8f52-c27e89067d1d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ComponentMacro">
+      <UniqueIdentifier>{7339c1e0-10d9-4dd0-8f04-8de32c52e7ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\pch.h">
@@ -26,6 +29,9 @@
     </ClInclude>
     <ClInclude Include="SourceCode\GameObjectHolder.h">
       <Filter>GameObjectHolder</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\ComponentMacro.h">
+      <Filter>ComponentMacro</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

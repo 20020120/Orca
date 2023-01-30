@@ -4,9 +4,9 @@
 #include "LogWindow.h"
 #include"GraphicsForGameLoop.h"
 #include"DescriptorPool.h"
-#include"Camera.h"
 #include"ShaderDesc.h"
 #include"Transform.h"
+#include"ObjMesh.h"
 
 #include"ImGuiSetting.h"
 #include"../Imgui/imgui.h"
@@ -122,9 +122,8 @@ bool FrameWork::Initialize()
     const auto child = gameObject->AddChildObject("Child");
 
     gameObject->AddComponent<Component::Transform>();
+    gameObject->AddComponent<Component::ObjMesh>(L"../Resource/Obj/Bison/Bison.obj");
     child->AddComponent<Component::Transform>();
-
-
 
     OrcaGraphics::Shader::ShaderDesc shaderDesc{};
     shaderDesc.mVsFileName = L"../Resource/Shader/ObjVs.cso";
@@ -183,6 +182,7 @@ bool FrameWork::Finalize()
 {
     mpCamera.reset();
     mpObj.reset();
+    mGameObjects.Finalize();
     ImGuiSetting::Renderer::Cleanup();
     OrcaGraphics::GraphicsForGameLoop::Finalize();
     return true;

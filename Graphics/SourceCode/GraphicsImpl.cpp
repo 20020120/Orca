@@ -86,7 +86,6 @@ void OrcaGraphics::GraphicsImpl::CloseCmdList()
 
     // リソースバリア
     mpCommandList->ResourceBarrier(1, &barrier);
-
     // コマンドの記録を終了
     mpCommandList->Close();
 

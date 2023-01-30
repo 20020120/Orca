@@ -1,6 +1,7 @@
 #pragma once
 #include<cstdint>
 #include<memory>
+#include<string>
 
 namespace ComponentSystem
 {
@@ -13,7 +14,7 @@ namespace Component
    class Component
    {
    public:
-       Component(uint32_t UpdatePriority_);
+       explicit Component(uint32_t UpdatePriority_);
        virtual ~Component() = default;
 
 
@@ -27,6 +28,8 @@ namespace Component
 
        // ------------------------------- セッター関数 -------------------------------
        void SetGameObject(const std::shared_ptr<ComponentSystem::GameObject>& pGameObject_);
+
+       bool GetIsAlive()const;
 
    protected:
        const uint32_t mUpdatePriority; // 更新優先度（数字が大きいほど更新優先度が高い）

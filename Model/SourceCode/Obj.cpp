@@ -182,7 +182,7 @@ void Model::Obj::CreateVertexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice
     const std::vector<VertexData>& Vertices_)
 {
     // ------------------------------ 頂点バッファを作成する ------------------------------
-   // ヒーププロパティの設定
+    // ヒーププロパティの設定
     D3D12_HEAP_PROPERTIES prp{};
     prp.Type = D3D12_HEAP_TYPE_UPLOAD;
     prp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;

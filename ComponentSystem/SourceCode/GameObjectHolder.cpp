@@ -64,3 +64,9 @@ void ComponentSystem::GameObjectHolder::GuiMenu(float Dt_)
         }
     }
 }
+
+void ComponentSystem::GameObjectHolder::Finalize()
+{
+    mpGuiObject.reset();
+    mHolder.clear();
+}

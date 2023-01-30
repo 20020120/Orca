@@ -19,9 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SourceCode\ObjMesh.h" />
+    <ClInclude Include="SourceCode\ObjRenderer.h" />
+    <ClInclude Include="SourceCode\Renderer.h" />
+    <ClInclude Include="SourceCode\RendererSystem.h" />
+    <ClInclude Include="SourceCode\SystemBase.h" />
     <ClInclude Include="SourceCode\Transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SourceCode\ObjMesh.cpp" />
+    <ClCompile Include="SourceCode\ObjRenderer.cpp" />
+    <ClCompile Include="SourceCode\Renderer.cpp" />
+    <ClCompile Include="SourceCode\RendererSystem.cpp" />
     <ClCompile Include="SourceCode\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -128,7 +137,8 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\ImGui\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Graphics\SourceCode;..\Model\SourceCode;..\ImGui\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -147,7 +157,8 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\ImGui\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Graphics\SourceCode;..\Model\SourceCode;..\ImGui\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>

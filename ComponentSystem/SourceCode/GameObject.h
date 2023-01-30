@@ -37,6 +37,7 @@ namespace ComponentSystem
 
         // -------------------------------- ゲッター -------------------------------
         std::string GetName()const;
+        bool GetIsAlive()const;
     private:
         std::string mName{};    // 名前
         std::vector <std::shared_ptr<Component::Component>> mComponents{}; // 所持しているコンポ―ンネント
@@ -45,7 +46,6 @@ namespace ComponentSystem
 
         // ------------------------------ オプション変数 ------------------------------
         bool mIsAlive{ true };  // 生存判定
-        bool mOpenGui{};
         std::shared_ptr<Component::Component> mpGuiComponent{};
     };
 }

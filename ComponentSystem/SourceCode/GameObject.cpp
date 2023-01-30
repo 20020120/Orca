@@ -1,7 +1,8 @@
 #include"pch.h"
 #include"GameObject.h"
-
 #include"GuiInclude.h"
+
+#include<typeinfo>
 ComponentSystem::GameObject::GameObject(const std::string& Name_)
 {
     mName = Name_;
@@ -70,4 +71,9 @@ void ComponentSystem::GameObject::HolderGuiMenu(std::shared_ptr<GameObject>& pGu
 std::string ComponentSystem::GameObject::GetName() const
 {
     return mName;
+}
+
+bool ComponentSystem::GameObject::GetIsAlive() const
+{
+    return mIsAlive;
 }

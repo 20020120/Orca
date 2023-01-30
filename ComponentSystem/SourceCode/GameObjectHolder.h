@@ -31,6 +31,7 @@ namespace ComponentSystem
         void Update(float Dt_); // 更新
         void GuiMenu(float Dt_); // ImGuiのメニューを表示
 
+        void Finalize();    // 終了処理
     private:
         std::vector<std::shared_ptr<GameObject>> mHolder{};
 
