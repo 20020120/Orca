@@ -34,6 +34,7 @@ namespace ComponentSystem
         void Finalize();    // 終了処理
     private:
         std::vector<std::shared_ptr<GameObject>> mHolder{};
+        std::vector<std::shared_ptr<GameObject>> mInitializer{}; // 初期化用コンテナ
 
         // ------------------------------ オプション変数 ------------------------------
         bool mOpenGui{};    //Guiを開いているかどうか

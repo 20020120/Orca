@@ -39,4 +39,7 @@ void Component::ObjRenderer::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12Graph
     if(mpTransform.expired()||mpObjMesh.expired())
         return;
 
+    const auto& resource = mpObjMesh.lock()->GetResource();
+    resource.mCbData->World = mpTransform.lock()->mTransform.Transpose();
+    resource.StackGraphicsCmd(pCmdList_);
 }

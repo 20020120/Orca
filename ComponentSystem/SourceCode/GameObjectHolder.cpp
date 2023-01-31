@@ -5,12 +5,20 @@ std::shared_ptr<ComponentSystem::GameObject> ComponentSystem::GameObjectHolder::
 {
     // ---------------------------- ゲームオブジェクトを追加する関数 ---------------------------
     auto gameObject = std::make_shared<GameObject>(Name_);
-    mHolder.emplace_back(gameObject);
+    mInitializer.emplace_back(gameObject);
     return gameObject;
 }
 
 void ComponentSystem::GameObjectHolder::Update(float Dt_)
 {
+    // ----------------------------- 最初のフレームで初期化する -----------------------------
+    for(const auto& obj: mInitializer)
+    {
+        obj->Start();
+        mHolder.emplace_back(obj);
+    }
+    mInitializer.clear();
+
     for (const auto& obj : mHolder)
     {
         obj->Update(Dt_);

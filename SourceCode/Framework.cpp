@@ -6,7 +6,11 @@
 #include"DescriptorPool.h"
 #include"ShaderDesc.h"
 #include"Transform.h"
+#include"ObjRenderer.h"
 #include"ObjMesh.h"
+
+// -------------------------------- システムをインクルード --------------------------------
+#include"RendererSystem.h"
 
 #include"ImGuiSetting.h"
 #include"../Imgui/imgui.h"
@@ -106,7 +110,6 @@ bool FrameWork::Initialize()
     OrcaDebug::LogWindow::OpenWindow();
     // 描画管理クラスの実体を生成
     mpCamera = std::make_unique<OrcaGraphics::Camera>();
-    mpObj = std::make_unique<Model::Obj>();
 
     // ------------------------------ 以下、初期化関数を呼ぶ ------------------------------
     OrcaGraphics::GraphicsForGameLoop::Initialize(mHwnd);
@@ -116,13 +119,14 @@ bool FrameWork::Initialize()
         OrcaGraphics::GraphicsForGameLoop::GetDescriptorPool(OrcaGraphics::POOL_TYPE_RES));
 
     mpCamera->Initialize();
-    mpObj->Initialize(L"../Resource/Obj/Bison/Bison.obj");
-
+    
     const auto gameObject = mGameObjects.AddGameObject("Test");
     const auto child = gameObject->AddChildObject("Child");
 
     gameObject->AddComponent<Component::Transform>();
     gameObject->AddComponent<Component::ObjMesh>(L"../Resource/Obj/Bison/Bison.obj");
+    gameObject->AddComponent<Component::ObjRenderer>();
+
     child->AddComponent<Component::Transform>();
 
     OrcaGraphics::Shader::ShaderDesc shaderDesc{};
@@ -142,9 +146,11 @@ void FrameWork::Update(float Dt_)
 
     // カメラ行列を更新
     mpCamera->Update(Dt_);
-    mpObj->Update(Dt_);
 
     mGameObjects.Update(Dt_);
+
+    // -------------------------------- システムを更新 --------------------------------
+    System::RenderSystem::Instance().Update(Dt_);
 
     // ----------------------------- ImGuiのメニューを更新 -----------------------------
     GuiMenu(Dt_);
@@ -169,7 +175,7 @@ void FrameWork::Render(float Dt_)
     // シェーダーをセットする
     mpPipeline->StackGraphicsCmd(cmdList);
     mpCamera->StackGraphicsCmd(cmdList);
-    mpObj->StackGraphicsCmd(cmdList);
+    System::RenderSystem::Instance().Render(cmdList);
 
 
     // ImGuiはコマンドの最後に積むこと！
@@ -181,7 +187,6 @@ void FrameWork::Render(float Dt_)
 bool FrameWork::Finalize()
 {
     mpCamera.reset();
-    mpObj.reset();
     mGameObjects.Finalize();
     ImGuiSetting::Renderer::Cleanup();
     OrcaGraphics::GraphicsForGameLoop::Finalize();

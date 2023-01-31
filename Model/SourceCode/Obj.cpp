@@ -52,7 +52,7 @@ void Model::Obj::Update(float Dt_)
     //aa->World = mCbData.World;
 }
 
-void Model::Obj::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_)
+void Model::Obj::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) const
 {
     // -------------------------------- コマンドを積む --------------------------------
     mCb->Bind(pCmdList_);

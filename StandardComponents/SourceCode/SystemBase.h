@@ -62,7 +62,4 @@ void System::Base::SystemBase<ComType, SystemType>::BaseUpdate(float Dt_)
         }
     }
     mEraser.clear();
-
-
-
 }

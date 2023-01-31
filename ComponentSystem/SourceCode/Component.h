@@ -14,7 +14,7 @@ namespace Component
    class Component
    {
    public:
-       explicit Component(uint32_t UpdatePriority_);
+       explicit Component(uint32_t UpdatePriority_ = 0);
        virtual ~Component() = default;
 
 
@@ -22,6 +22,8 @@ namespace Component
        Component(Component&& LHS_) = delete;
        Component operator=(const Component& RHS_) = delete;
        Component& operator=(Component&& LHS_) = delete;
+
+       virtual void Start() {}      // XV‚Ì’¼‘O‚Éˆê‰ñ‚¾‚¯ŒÄ‚Î‚ê‚é
 
        virtual void Update(float Dt_) {}
        virtual void GuiMenu(float Dt_){}

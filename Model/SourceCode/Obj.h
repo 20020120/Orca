@@ -32,7 +32,7 @@ namespace Model
         // 初期化
         void Initialize(const wchar_t* ObjPath_);
         void Update(float Dt_); // 更新
-        void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_); // 描画コマンドを積む
+        void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) const; // 描画コマンドを積む
     private:
         static void Parse(const wchar_t* ObjPath_, std::vector<VertexData>& Vertices_, std::vector<uint32_t>& Indices_,
             std::wstring& TextureName_);
@@ -63,8 +63,11 @@ namespace Model
         {
             DirectX::XMFLOAT4X4 World{};
         };
+    public:
         Cb_Obj* mCbData{};
+    private:
         std::unique_ptr<OrcaGraphics::Resource::ConstantBuffer> mCb{};
+
 
        // -------------------------------- テクスチャ -------------------------------
        OrcaGraphics::Texture mTexture{};

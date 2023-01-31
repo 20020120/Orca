@@ -10,6 +10,14 @@ Math::Matrix::Matrix()
 {
 }
 
+Math::Matrix Math::Matrix::Transpose() const
+{
+    const auto M = XMMatrixTranspose(XMLoadFloat4x4(this));
+    Matrix m;
+    XMStoreFloat4x4(&m, M);
+    return m;
+}
+
 
 // ----------------------------------- ƒwƒ‹ƒp[ŠÖ” ----------------------------------
 

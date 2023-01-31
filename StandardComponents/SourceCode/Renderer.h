@@ -6,16 +6,24 @@
 // ------------------------------------ 前方宣言 -----------------------------------
 struct ID3D12GraphicsCommandList;
 
+namespace System
+{
+    class RenderSystem;
+}
+
 
 // -------------------------------- 描画クラスの基底クラス --------------------------------
 namespace Component
 {
-    class Renderer :public Component , public std::enable_shared_from_this<Renderer>
+    class Renderer :public std::enable_shared_from_this<Renderer>, public Component
     {
+        friend class System::RenderSystem;
     public:
         Renderer();
         ~Renderer() override = default;
 
+        void Start() override;
+    private:
         virtual void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) = 0;
     };
 }

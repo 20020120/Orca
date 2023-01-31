@@ -12,6 +12,7 @@ namespace Component
         explicit ObjMesh(std::wstring FilePath_);
         ~ObjMesh() override;
 
+        [[nodiscard]] Model::Obj& GetResource();
         void GuiMenu(float Dt_) override;
     private:
         Model::Obj mObjResource{};

@@ -12,7 +12,7 @@ namespace Math
         Matrix();
 
         // ------------------------------- ƒwƒ‹ƒp[ŠÖ” ------------------------------
-
+        Matrix Transpose()const;
 
         // -------------------------------- Ã“IŠÖ” -------------------------------
         static Matrix CreateWorld(const Vector3& Position_, const Vector3& Scale_, const Quaternion& Orientation_);

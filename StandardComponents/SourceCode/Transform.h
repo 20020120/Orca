@@ -22,19 +22,19 @@ namespace Component
 
         void Update(float Dt_) override;
         void GuiMenu(float Dt_) override;
-
-    private:
+    
         Math::Vector3 mPosition{};
         Math::Vector3 mScale{ 1.0f,1.0f,1.0f };
         Math::Quaternion mOrientation{ 0.0f,0.0f,0.0f,1.0f };
         Math::Matrix mTransform{};
-
+    private:
         bool mIsGlobal{ false };    // 行列の空間を指定する
         std::shared_ptr<Transform> mpParentTransform{}; // 親の行列
 
     private:
         // ---------------------- 初期化時に親オブジェクトから親の行列を検索する ----------------------
         void GetParentTransform();
+    private:
         bool mCheckHasParent{ false };
     };
 }
