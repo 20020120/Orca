@@ -57,6 +57,9 @@
     <ClInclude Include="SourceCode\Coordinate.h">
       <Filter>Coordinate</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\Vector2.h">
+      <Filter>Vector</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\Quaternion.cpp">
@@ -82,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="SourceCode\pch.cpp">
       <Filter>pch</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Vector2.cpp">
+      <Filter>Vector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

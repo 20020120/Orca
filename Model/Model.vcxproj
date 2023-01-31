@@ -32,6 +32,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SourceCode\ModelResource.h" />
     <ClInclude Include="SourceCode\Obj.h" />
     <ClInclude Include="SourceCode\ObjResource.h" />
     <ClInclude Include="SourceCode\pch.h" />

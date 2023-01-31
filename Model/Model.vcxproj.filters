@@ -19,6 +19,12 @@
     <Filter Include="ObjResource">
       <UniqueIdentifier>{cbdeda29-529f-40b8-b124-250a0ebc75f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fbx">
+      <UniqueIdentifier>{b94c17fe-31fc-479f-ba82-7cf5e2d10b3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ModelResource">
+      <UniqueIdentifier>{fffa29f3-b5c7-4730-b3db-5702c740e129}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\pch.cpp">
@@ -40,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="SourceCode\ObjResource.h">
       <Filter>ObjResource</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\ModelResource.h">
+      <Filter>ModelResource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
