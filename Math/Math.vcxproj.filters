@@ -22,6 +22,9 @@
     <Filter Include="pch">
       <UniqueIdentifier>{d7e9d311-f5a8-4f3d-a573-749ff4bd1174}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Coordinate">
+      <UniqueIdentifier>{c8ffce89-3190-4ae0-b749-ae6482dbc973}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\Quaternion.h">
@@ -50,6 +53,9 @@
     </ClInclude>
     <ClInclude Include="SourceCode\pch.h">
       <Filter>pch</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Coordinate.h">
+      <Filter>Coordinate</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

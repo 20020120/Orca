@@ -29,8 +29,8 @@ namespace ComponentSystem
         std::shared_ptr<GameObject> AddChildObject(const std::string& Name_);   // ゲームオブジェクトを追加
         std::shared_ptr<GameObject> GetParent()const;
 
-        void Start();
-        void Update(float Dt_);
+        void Start() const;
+        void Update(float Dt_) const;
         void Delete();
         
         void GuiMenu(float Dt_);

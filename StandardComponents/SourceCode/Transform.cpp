@@ -15,34 +15,32 @@ Component::Transform::Transform(const Math::Vector3& Position_, const Math::Vect
     , mOrientation(Orientation_)
 {}
 
-Component::Transform::~Transform()
-{}
+Component::Transform::~Transform() = default;
 
 void Component::Transform::Update(float Dt_)
 {
     // 親オブジェクトの存在を確認する
     GetParentTransform();
-    
+    Math::Matrix parentMatrix{};
     mTransform = Math::Matrix::CreateWorld(mPosition, mScale, mOrientation);
-    if(mIsGlobal)
+
+    // ----------------------------- 親の影響を受けるとき -----------------------------
+    if(!mIsGlobal&& mpParentTransform)
     {
-        return;
+        parentMatrix = mpParentTransform->mTransform;
     }
-
-    // ----------------------------- ローカル空間で計算するとき -----------------------------
-    if(!mpParentTransform)  // 親がいない時終了
-        return;
-
     // 親子関係を適用
-    auto parentTransform = mpParentTransform->mTransform;
-    mTransform = parentTransform * mTransform;
+    mTransform = parentMatrix * mTransform;
+    // -------------------------------- 座標系を整える --------------------------------
+    ApplyCoordinate();
+
 }
 
 void Component::Transform::GuiMenu(float Dt_)
 {
     if(ImGui::TreeNode("Transform"))
     {
-        ImGui::DragFloat3("Position", &mPosition.x);
+        ImGui::DragFloat3("Position", &mPosition.x, 0.1f);
         ImGui::DragFloat3("Scale", &mScale.x);
         ImGui::DragFloat4("Orientation", &mOrientation.x);
 
@@ -51,6 +49,29 @@ void Component::Transform::GuiMenu(float Dt_)
         ImGui::RadioButton("HasParent", mpParentTransform != nullptr);
         ImGui::TreePop();
     }
+}
+
+void Component::Transform::SetCoordinate(Math::Coordinate Coord_)
+{
+    mCoordinate = Coord_;
+}
+
+void Component::Transform::ApplyCoordinate()
+{
+    constexpr DirectX::XMFLOAT4X4 coordTransform[]{
+       { -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 },	        // 0:RHS Y-UP
+       { 1 , 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 },		    // 1:LHS Y-UP
+       { -1, 0, 0, 0, 0, 0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1 },	    // 2:RHS Z-UP
+       { 1 , 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1 },		    // 3:LHS Z-UP
+       { 1 , 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1 },		// 4:LHS -Y-UP
+       { 1 , 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1 },		// 4:ReverseZ
+       { 1 , 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 },		// 5:YMinusLHS
+    };
+
+    constexpr float scaleFactor = 1.0f;
+    const auto C{ XMLoadFloat4x4(&coordTransform[static_cast<int>(mCoordinate)]) *
+        DirectX::XMMatrixScaling(scaleFactor, scaleFactor, scaleFactor) };
+    XMStoreFloat4x4(&mTransform, C * XMLoadFloat4x4(&mTransform));
 }
 
 void Component::Transform::GetParentTransform()

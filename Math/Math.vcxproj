@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SourceCode\Coordinate.h" />
     <ClInclude Include="SourceCode\MathMinimum.h" />
     <ClInclude Include="SourceCode\Matrix.h" />
     <ClInclude Include="SourceCode\MatrixHelper.h" />

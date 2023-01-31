@@ -128,6 +128,8 @@ bool FrameWork::Initialize()
     gameObject->AddComponent<Component::ObjRenderer>();
 
     child->AddComponent<Component::Transform>();
+    child->AddComponent<Component::ObjMesh>(L"../Resource/Obj/Bison/Bison.obj");
+    child->AddComponent<Component::ObjRenderer>();
 
     OrcaGraphics::Shader::ShaderDesc shaderDesc{};
     shaderDesc.mVsFileName = L"../Resource/Shader/ObjVs.cso";

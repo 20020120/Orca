@@ -23,15 +23,19 @@ std::shared_ptr<ComponentSystem::GameObject> ComponentSystem::GameObject::GetPar
     return mpParent.lock();
 }
 
-void ComponentSystem::GameObject::Start()
+void ComponentSystem::GameObject::Start() const
 {
     for(const auto& com: mComponents)
     {
         com->Start();
     }
+    for (const auto& child : mChildObjects)
+    {
+        child->Start();
+    }
 }
 
-void ComponentSystem::GameObject::Update(float Dt_)
+void ComponentSystem::GameObject::Update(float Dt_) const
 {
     for (const auto& com : mComponents)
     {
