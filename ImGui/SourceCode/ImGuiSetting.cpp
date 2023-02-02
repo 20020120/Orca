@@ -21,10 +21,9 @@ void ImGuiSetting::Renderer::CreateImGui(HWND Hwnd_, ID3D12Device* pDevice_,
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-
-    //ImGui::GetIO().Fonts->AddFontFromFileTTF(
-    //    path_japanese.c_str(), 18.0f, nullptr,
-    //    glyphRangesJapanese);
+    
+    ImGui::GetIO().Fonts->AddFontFromFileTTF(
+        "../Resource/Font/GenShinGothic-Bold.ttf", 18.0f, nullptr);
     //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
     //ImGuiStyle& style = ImGui::GetStyle();
@@ -46,7 +45,7 @@ void ImGuiSetting::Renderer::CreateImGui(HWND Hwnd_, ID3D12Device* pDevice_,
         mpDescriptorHandle->HandleCPU,
         mpDescriptorHandle->HandleGPU
     );
-    ImGui::StyleColorsDark();
+    ImGui::StyleColorsLight();
 }
 
 void ImGuiSetting::Renderer::IOSettings(HWND Hwnd_)

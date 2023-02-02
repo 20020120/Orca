@@ -34,6 +34,9 @@
     <Filter Include="Systems\RenderSystem">
       <UniqueIdentifier>{b9baecb2-c4a7-41f1-9f0c-528b703a3303}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FbxMesh">
+      <UniqueIdentifier>{5aca8067-8c23-4a34-8113-d9bcb468183a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\Transform.h">
@@ -54,6 +57,9 @@
     <ClInclude Include="SourceCode\SystemBase.h">
       <Filter>Systems\BaseSystem</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\FbxMesh.h">
+      <Filter>FbxMesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\Transform.cpp">
@@ -70,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="SourceCode\RendererSystem.cpp">
       <Filter>Systems\RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\FbxMesh.cpp">
+      <Filter>FbxMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

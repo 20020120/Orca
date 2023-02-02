@@ -63,5 +63,8 @@ private:
 	ComponentSystem::GameObjectHolder mGameObjects{};
 
 	void CalculateFrameStats();
+
+	// ------------------------------ ImGuiのエディタウインドウ -----------------------------
+
 };
 

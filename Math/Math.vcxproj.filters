@@ -10,9 +10,6 @@
     <Filter Include="Vector">
       <UniqueIdentifier>{ee92d03a-4bd7-4382-9187-3c6bff398930}</UniqueIdentifier>
     </Filter>
-    <Filter Include="HashSystem">
-      <UniqueIdentifier>{28d12713-e4f9-44a8-99c6-15fdc60781d5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Matrix">
       <UniqueIdentifier>{50dc0e96-df85-4119-95aa-854425e53704}</UniqueIdentifier>
     </Filter>

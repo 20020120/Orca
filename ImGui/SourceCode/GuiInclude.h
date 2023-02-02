@@ -4,3 +4,12 @@
 #include"../ImGui/imgui.h"
 #include"ImGuiHelper.h"
 #include"ScopedGui.h"
+
+
+// ------------------------------------ É}ÉNÉç ------------------------------------
+#define ORCA_GUI_TREE(Name,source)\
+    if(ImGui::TreeNode((const char*)(Name)))\
+    {\
+    source\
+    ImGui::TreePop();\
+    }

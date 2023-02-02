@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\Constructors.h" />
+    <ClInclude Include="SourceCode\Encoding.h" />
     <ClInclude Include="SourceCode\MacroMinmam.h" />
     <ClInclude Include="SourceCode\Misc.h" />
     <ClInclude Include="SourceCode\OrcaException.h" />
@@ -28,6 +29,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SourceCode\Encoding.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

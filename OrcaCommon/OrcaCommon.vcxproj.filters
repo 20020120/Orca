@@ -7,8 +7,21 @@
     <ClInclude Include="SourceCode\ShaderType.h" />
     <ClInclude Include="SourceCode\Constructors.h" />
     <ClInclude Include="SourceCode\Misc.h" />
+    <ClInclude Include="SourceCode\Encoding.h">
+      <Filter>Encoding</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Encoding">
+      <UniqueIdentifier>{67650d00-55ef-44b9-a568-139a3b935e00}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SourceCode\Encoding.cpp">
+      <Filter>Encoding</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -16,6 +16,9 @@
     <Filter Include="Framework">
       <UniqueIdentifier>{a9a90612-650f-4396-b878-92ed3a6377d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BluePrints">
+      <UniqueIdentifier>{c2c4a351-9dd4-4689-8f8d-57292aeaeb76}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\WinMain.cpp">
@@ -27,6 +30,9 @@
     <ClCompile Include="SourceCode\Framework.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\CharacterBuilder.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\HighResolutionTimer.h">
@@ -34,6 +40,9 @@
     </ClInclude>
     <ClInclude Include="SourceCode\Framework.h">
       <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\CharacterBuilder.h">
+      <Filter>BluePrints</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

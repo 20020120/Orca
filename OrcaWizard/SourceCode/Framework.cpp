@@ -5,9 +5,7 @@
 #include"GraphicsForGameLoop.h"
 #include"DescriptorPool.h"
 #include"ShaderDesc.h"
-#include"Transform.h"
-#include"ObjRenderer.h"
-#include"ObjMesh.h"
+#include"CharacterBuilder.h"
 
 // -------------------------------- システムをインクルード --------------------------------
 #include"RendererSystem.h"
@@ -119,18 +117,8 @@ bool FrameWork::Initialize()
         OrcaGraphics::GraphicsForGameLoop::GetDescriptorPool(OrcaGraphics::POOL_TYPE_RES));
 
     mpCamera->Initialize();
-    
-    const auto gameObject = mGameObjects.AddGameObject("Test");
-    //const auto child = gameObject->AddChildObject("Child");
-
-    gameObject->AddComponent<Component::Transform>();
-    gameObject->AddComponent<Component::ObjMesh>(L"../Resource/Obj/Bison/Bison.obj");
-    gameObject->AddComponent<Component::ObjRenderer>();
-
-    //child->AddComponent<Component::Transform>();
-    //child->AddComponent<Component::ObjMesh>(L"../Resource/Obj/Bison/Bison.obj");
-    //child->AddComponent<Component::ObjRenderer>();
-
+    OrcaWizard::CharacterBuilder(mGameObjects);
+  
     OrcaGraphics::Shader::ShaderDesc shaderDesc{};
     shaderDesc.mVsFileName = L"../Resource/Shader/ObjVs.cso";
     shaderDesc.mPsFileName = L"../Resource/Shader/ObjPs.cso";

@@ -2442,7 +2442,7 @@ void ImGuiTextFilter::Build()
 bool ImGuiTextFilter::PassFilter(const char* text, const char* text_end) const
 {
     if (Filters.empty())
-        return true;
+        return false;
 
     if (text == NULL)
         text = "";
