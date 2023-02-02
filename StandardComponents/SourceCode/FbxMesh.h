@@ -35,8 +35,7 @@ namespace Component
     private:
         void GuiMenu_Nodes();
         void GuiMenu_Node(const Node* pNode_);
-        void GuiMenu_Materials(const std::vector<Model::FbxModelResource::Material>& Materials_);
-        void GuiMenu_Vertices(const std::vector<Model::FbxModelResource::Vertex>& Vertices_);
+        void GuiMenu_Materials(std::vector<Model::FbxModelResource::Material>& Materials_) const;
         void GuiMenu_Animations(const std::vector<Model::FbxModelResource::Animation>& Animations_);
 
     };

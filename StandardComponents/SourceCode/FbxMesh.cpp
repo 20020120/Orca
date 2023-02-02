@@ -34,9 +34,13 @@ Component::FbxMesh::~FbxMesh()
 
 void Component::FbxMesh::GuiMenu(float Dt_)
 {
-	ORCA_GUI_TREE("FbxMesh",
+	if (ImGui::TreeNode("FbxMesh"))
+	{
 		GuiMenu_Nodes();
-       )
+		GuiMenu_Materials(mResource.mMaterials);
+		GuiMenu_Animations(mResource.mAnimations);
+		ImGui::TreePop();
+	}
 }
 
 void Component::FbxMesh::GuiMenu_Nodes()
@@ -73,7 +77,7 @@ void Component::FbxMesh::GuiMenu_Nodes()
 void Component::FbxMesh::GuiMenu_Node(const Node* pNode_)
 {
 	// 矢印をクリック、またはノードをダブルクリックで階層を開く
-	ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+	ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow;
 
 	// 子がいない場合は矢印をつけない
     const size_t child_count = pNode_->mChildren.size();
@@ -81,9 +85,7 @@ void Component::FbxMesh::GuiMenu_Node(const Node* pNode_)
 	{
 		nodeFlags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 	}
-
 	// ツリーノードを表示
-
     // 開かれている場合、子階層も同じ処理を行う
 	if (const bool opened = ImGui::TreeNodeEx(pNode_, nodeFlags, pNode_->mName.c_str()); opened && child_count > 0)
 	{
@@ -95,15 +97,35 @@ void Component::FbxMesh::GuiMenu_Node(const Node* pNode_)
 	}
 }
 
-void Component::FbxMesh::GuiMenu_Materials(const std::vector<Model::FbxModelResource::Material>& Materials_)
+void Component::FbxMesh::GuiMenu_Materials(std::vector<Model::FbxModelResource::Material>& Materials_) const
 {
-}
-
-void Component::FbxMesh::GuiMenu_Vertices(const std::vector<Model::FbxModelResource::Vertex>& Vertices_)
-{
+	// 矢印をクリック、またはノードをダブルクリックで階層を開く
+    constexpr ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow;
+	if (ImGui::TreeNodeEx("Materials",nodeFlags))
+	{
+		for (auto& material : Materials_)
+		{
+			if (ImGui::TreeNode(material.mName.c_str()))
+			{
+				ImGui::Text(material.mTextureFileName.c_str());
+				ImGui::DragFloat4("Color", &material.mColor.x);
+				ImGui::TreePop();
+			}
+		}
+		ImGui::TreePop();
+	}
 }
 
 void Component::FbxMesh::GuiMenu_Animations(const std::vector<Model::FbxModelResource::Animation>& Animations_)
 {
-
+	// 矢印をクリック、またはノードをダブルクリックで階層を開く
+	constexpr ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow;
+	if (ImGui::TreeNodeEx("Animation", nodeFlags))
+	{
+		for (const auto& anim : Animations_)
+		{
+			ImGui::Text(anim.mName.c_str());
+		}
+		ImGui::TreePop();
+	}
 }

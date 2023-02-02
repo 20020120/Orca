@@ -147,6 +147,5 @@ namespace Model
 		std::vector<Material>	mMaterials;
 		std::vector<Mesh>		mMeshes;
 		std::vector<Animation>	mAnimations;
-
     };
 }
