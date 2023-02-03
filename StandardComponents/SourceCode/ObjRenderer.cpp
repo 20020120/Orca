@@ -5,11 +5,19 @@
 #include"ObjMesh.h"
 
 #include"RendererSystem.h"
+#include"Dx12ResourceHolder.h"
 #include"GuiInclude.h"
 
 Component::ObjRenderer::ObjRenderer()
     :Renderer(OrcaGraphics::Shader::ShaderType::Sample)
 {}
+
+void Component::ObjRenderer::Start()
+{
+    Renderer::Start();
+    // ------------------------------- ƒŠƒ\[ƒXî•ñ‚ð¶¬ -------------------------------
+    OrcaGraphics::Dx12ResourceHolder::Add(mShaderType, mpGameObject.lock()->GetName());
+}
 
 void Component::ObjRenderer::Update(float Dt_)
 {

@@ -119,15 +119,6 @@ bool FrameWork::Initialize()
 
     mpCamera->Initialize();
     OrcaWizard::CharacterBuilder(mGameObjects);
-  
-    OrcaGraphics::Shader::ShaderDesc shaderDesc{};
-    shaderDesc.mVsFileName = L"../Resource/Shader/ObjVs.cso";
-    shaderDesc.mPsFileName = L"../Resource/Shader/ObjPs.cso";
-    shaderDesc.mShaderType = OrcaGraphics::Shader::ShaderType::Sample;
-    shaderDesc.mBlendState = OrcaGraphics::PipelineTypes::BlendState::Sample;
-    shaderDesc.mRasterizerState = OrcaGraphics::PipelineTypes::RasterizerState::Sample;
-    shaderDesc.mDepthStencilState = OrcaGraphics::PipelineTypes::DepthStencilState::Sample;
-    mpPipeline = std::make_unique<OrcaGraphics::RenderPipeline>(shaderDesc);
     return true;
 }
 
@@ -159,7 +150,7 @@ void FrameWork::Render(float Dt_)
 
     // コマンドリスト開放
     OrcaGraphics::GraphicsForGameLoop::OpenCmdList();
-    // コマンドリストにテストコマンドを積む
+    
     OrcaGraphics::GraphicsForGameLoop::StackCmdList();
     ImGuiSetting::Renderer::Render();
 

@@ -1,7 +1,6 @@
 #pragma once
-#include "Dx12ResourceInfo.h"
 #include"ShaderType.h"
-
+#include<string>
 #include<map>
 #include <unordered_map>
 #include<memory>

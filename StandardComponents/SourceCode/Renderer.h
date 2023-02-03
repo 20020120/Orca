@@ -24,6 +24,7 @@ namespace Component
         void Start() override;
     private:
         virtual void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) = 0;
+    protected:
         OrcaGraphics::Shader::ShaderType mShaderType;
     };
 }

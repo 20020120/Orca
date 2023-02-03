@@ -59,12 +59,9 @@ private:
 	float mDeltaTime{ 0.0f };
 	int hConsole = 0;
 	std::unique_ptr<OrcaGraphics::Camera> mpCamera{};	// カメラ
-	std::unique_ptr<OrcaGraphics::RenderPipeline> mpPipeline{};
 	ComponentSystem::GameObjectHolder mGameObjects{};
 
 	void CalculateFrameStats();
-
-	// ------------------------------ ImGuiのエディタウインドウ -----------------------------
 
 };
 

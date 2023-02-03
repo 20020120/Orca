@@ -14,6 +14,7 @@ namespace Component
         ObjRenderer();
         ~ObjRenderer() override = default;
 
+        void Start() override;
         void Update(float Dt_) override;
         void GuiMenu(float Dt_) override;
         void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) override;

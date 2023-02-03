@@ -19,7 +19,7 @@ namespace OrcaGraphics
         class Dx12ResourceInfoCreator
         {
             // std::unordered_map<HLSL‚Å‚Ì•Ï”–¼, Resource::Dx12ResourceInfo>;
-            using ResourcesType = std::unordered_map<std::string, Resource::Dx12ResourceInfo>;
+            using ResourcesType = std::unordered_map<std::string, Dx12ResourceInfo>;
         public:
             // —v‘f‚ğV‹Kì¬‚·‚é
             static void AddResourceInfo(const Shader::ShaderType& ShaderType_, OrcaComPtr(ID3D12ShaderReflection) pReflector_, uint32_t MaxResources_);

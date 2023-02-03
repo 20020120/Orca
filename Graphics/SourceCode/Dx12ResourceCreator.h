@@ -9,6 +9,7 @@ namespace OrcaGraphics
     namespace Resource
     {
         class ConstantBuffer;
+        class Texture;
         class Dx12Resource;
     }
 }
@@ -30,8 +31,9 @@ namespace OrcaGraphics
             static void Add(std::unordered_map<std::string, std::shared_ptr<Dx12Resource>>& Holder_,
                 std::shared_ptr<Dx12Resource> pResource_);
 
-            // ------------------------- 各リソースを生成するかんすう ------------------------
+            // ------------------------- 各リソースを生成する関数 ------------------------
             static std::shared_ptr<ConstantBuffer> CreateConstantBuffer(const Dx12ResourceInfo& Info_);
+            static std::shared_ptr<Texture> CreateTexture(const Dx12ResourceInfo& Info_);
         };
     }
 }

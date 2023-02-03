@@ -45,7 +45,7 @@ void OrcaGraphics::Resource::Dx12ResourceInfoCreator::AddResourceInfo(const Shad
 
 const OrcaGraphics::Resource::Dx12ResourceInfoCreator::ResourcesType& OrcaGraphics::Resource::Dx12ResourceInfoCreator::GetResourceMap(const Shader::ShaderType& ShaderType_)
 {
-    return mHolder.at(ShaderType_);
+    return mHolder[ShaderType_];
 }
 
 OrcaGraphics::Resource::ResourceType OrcaGraphics::Resource::Dx12ResourceInfoCreator::GetResourceType(

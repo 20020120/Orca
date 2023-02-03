@@ -9,11 +9,12 @@
 #include"OrcaException.h"
 #include"GraphicsLogger.h"
 
-OrcaGraphics::Texture::Texture()
+OrcaGraphics::Resource::Texture::Texture()
+    :Dx12Resource(Graphics::GetDescriptorPool(POOL_TYPE_RES),)
 {}
 
 
-bool OrcaGraphics::Texture::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_,
+bool OrcaGraphics::Resource::Texture::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_,
     const D3D12_RESOURCE_DESC* pDesc_, bool IsCube_)
 {
     // 引数チェック
@@ -53,7 +54,7 @@ bool OrcaGraphics::Texture::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDev
     return true;
 }
 
-bool OrcaGraphics::Texture::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_,
+bool OrcaGraphics::Resource::Texture::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_,
     const wchar_t* FileName_, DirectX::ResourceUploadBatch& Batch_)
 {
     // 引数チェック
@@ -73,17 +74,17 @@ bool OrcaGraphics::Texture::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDev
     return true;
 }
 
-D3D12_CPU_DESCRIPTOR_HANDLE OrcaGraphics::Texture::GetHandleCPU() const
+D3D12_CPU_DESCRIPTOR_HANDLE OrcaGraphics::Resource::Texture::GetHandleCPU() const
 {
     return mpHandle->HandleCPU;
 }
 
-D3D12_GPU_DESCRIPTOR_HANDLE OrcaGraphics::Texture::GetHandleGPU() const
+D3D12_GPU_DESCRIPTOR_HANDLE OrcaGraphics::Resource::Texture::GetHandleGPU() const
 {
     return mpHandle->HandleGPU;
 }
 
-void OrcaGraphics::Texture::LoadTextureFromFile(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* FileName_,
+void OrcaGraphics::Resource::Texture::LoadTextureFromFile(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* FileName_,
     DirectX::ResourceUploadBatch& Batch_)
 {
     // ----------------------------- テクスチャの種類を判定する -----------------------------
@@ -105,7 +106,7 @@ void OrcaGraphics::Texture::LoadTextureFromFile(Microsoft::WRL::ComPtr<ID3D12Dev
 
 }
 
-void OrcaGraphics::Texture::DDSLoadTexture(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* FileName_,
+void OrcaGraphics::Resource::Texture::DDSLoadTexture(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* FileName_,
     DirectX::ResourceUploadBatch& Batch_)
 {
     // ---------------------------- DDSファイルをロードする関数 ----------------------------
@@ -127,7 +128,7 @@ void OrcaGraphics::Texture::DDSLoadTexture(Microsoft::WRL::ComPtr<ID3D12Device> 
     pDevice_->CreateShaderResourceView(mpResource.Get(), &viewDesc, mpHandle->HandleCPU);
 }
 
-void OrcaGraphics::Texture::WICLoadTexture(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* FileName_,
+void OrcaGraphics::Resource::Texture::WICLoadTexture(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* FileName_,
     DirectX::ResourceUploadBatch& Batch_)
 {
     // ---------------------------- DDSファイル以外をロードする関数 ----------------------------
@@ -150,7 +151,7 @@ void OrcaGraphics::Texture::WICLoadTexture(Microsoft::WRL::ComPtr<ID3D12Device> 
     pDevice_->CreateShaderResourceView(mpResource.Get(), &srvDesc, mpHandle->HandleCPU);
 }
 
-D3D12_SHADER_RESOURCE_VIEW_DESC OrcaGraphics::Texture::GetViewDesc(bool IsCube_) const
+D3D12_SHADER_RESOURCE_VIEW_DESC OrcaGraphics::Resource::Texture::GetViewDesc(bool IsCube_) const
 {
 
     auto desc = mpResource->GetDesc();
