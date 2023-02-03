@@ -29,8 +29,7 @@ Component::FbxMesh::FbxMesh(const char* FileName_)
 }
 
 Component::FbxMesh::~FbxMesh()
-{
-}
+{}
 
 void Component::FbxMesh::GuiMenu(float Dt_)
 {
@@ -116,7 +115,7 @@ void Component::FbxMesh::GuiMenu_Materials(std::vector<Model::FbxModelResource::
 	}
 }
 
-void Component::FbxMesh::GuiMenu_Animations(const std::vector<Model::FbxModelResource::Animation>& Animations_)
+void Component::FbxMesh::GuiMenu_Animations(const std::vector<Model::FbxModelResource::Animation>& Animations_) const
 {
 	// 矢印をクリック、またはノードをダブルクリックで階層を開く
 	constexpr ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow;

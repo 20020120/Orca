@@ -3,7 +3,6 @@
 #include"GraphicsMacro.h"
 #include"ShaderDesc.h"
 #include"ShaderBuilder.h"
-#include"Dx12ResourceInfo.h"
 
 #include<map>
 #include<tuple>

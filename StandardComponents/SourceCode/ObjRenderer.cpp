@@ -8,7 +8,7 @@
 #include"GuiInclude.h"
 
 Component::ObjRenderer::ObjRenderer()
-    :Renderer()
+    :Renderer(OrcaGraphics::Shader::ShaderType::Sample)
 {}
 
 void Component::ObjRenderer::Update(float Dt_)

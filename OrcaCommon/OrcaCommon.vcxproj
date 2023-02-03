@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="SourceCode\Constructors.h" />
     <ClInclude Include="SourceCode\Encoding.h" />
+    <ClInclude Include="SourceCode\MacroMemory.h" />
     <ClInclude Include="SourceCode\MacroMinmam.h" />
     <ClInclude Include="SourceCode\Misc.h" />
     <ClInclude Include="SourceCode\OrcaException.h" />

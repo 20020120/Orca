@@ -111,6 +111,7 @@ bool FrameWork::Initialize()
 
     // ------------------------------ 以下、初期化関数を呼ぶ ------------------------------
     OrcaGraphics::GraphicsForGameLoop::Initialize(mHwnd);
+    System::RenderSystem::Instance().OnAwake();
 
     // ------------------------------- ImGuiを初期化 -------------------------------
     ImGuiSetting::Renderer::CreateImGui(mHwnd, OrcaGraphics::GraphicsForGameLoop::GetDevice().Get(),
@@ -163,7 +164,7 @@ void FrameWork::Render(float Dt_)
     ImGuiSetting::Renderer::Render();
 
     // シェーダーをセットする
-    mpPipeline->StackGraphicsCmd(cmdList);
+    System::RenderSystem::Instance().Begin(cmdList);
     mpCamera->StackGraphicsCmd(cmdList);
     System::RenderSystem::Instance().Render(cmdList);
 

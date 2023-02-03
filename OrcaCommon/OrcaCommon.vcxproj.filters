@@ -10,6 +10,7 @@
     <ClInclude Include="SourceCode\Encoding.h">
       <Filter>Encoding</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\MacroMemory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,6 +1,6 @@
 #pragma once
 #include"Component.h"
-
+#include"ShaderType.h"
 #include<wrl.h>
 
 // ------------------------------------ ‘O•ûéŒ¾ -----------------------------------
@@ -19,11 +19,11 @@ namespace Component
     {
         friend class System::RenderSystem;
     public:
-        Renderer();
+        explicit Renderer(const OrcaGraphics::Shader::ShaderType& ShaderType_);
         ~Renderer() override = default;
-
         void Start() override;
     private:
         virtual void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) = 0;
+        OrcaGraphics::Shader::ShaderType mShaderType;
     };
 }

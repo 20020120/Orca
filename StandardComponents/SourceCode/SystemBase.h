@@ -10,6 +10,7 @@ namespace System
         class SystemBase
         {
         public:
+            virtual void OnAwake() = 0; // À‘Ì‰»
             void Add(std::shared_ptr<ComType> pComponent_); // —v‘f‚ğ’Ç‰Á‚·‚é
             void BaseUpdate(float Dt_); // ‹¤’Ê‚ÌXVˆ—
 
@@ -19,12 +20,12 @@ namespace System
 
 
             // -----------------------------------------------------------------
-        private:
+        protected:
             SystemBase() = default;
-        public:
+        protected:
             ~SystemBase() = default;
+        public:
             static SystemType& Instance();
-
         };
     }
 }

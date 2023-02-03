@@ -8,6 +8,7 @@ namespace OrcaGraphics
         {
             Unknown,    // –¢İ’èi‰Šú’lj
             Sample,
+            OrcaWizard,
         };
     }
 }

@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\FbxMesh.h" />
+    <ClInclude Include="SourceCode\MeshRenderer.h" />
     <ClInclude Include="SourceCode\ObjMesh.h" />
     <ClInclude Include="SourceCode\ObjRenderer.h" />
     <ClInclude Include="SourceCode\Renderer.h" />
@@ -29,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\FbxMesh.cpp" />
+    <ClCompile Include="SourceCode\MeshRenderer.cpp" />
     <ClCompile Include="SourceCode\ObjMesh.cpp" />
     <ClCompile Include="SourceCode\ObjRenderer.cpp" />
     <ClCompile Include="SourceCode\Renderer.cpp" />
@@ -139,7 +141,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\FbxSdk\include;..\Graphics\SourceCode;..\Model\SourceCode;..\ImGui\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Shader\SourceCode;..\FbxSdk\include;..\Graphics\SourceCode;..\Model\SourceCode;..\ImGui\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -159,7 +161,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\FbxSdk\include;..\Graphics\SourceCode;..\Model\SourceCode;..\ImGui\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Shader\SourceCode;..\FbxSdk\include;..\Graphics\SourceCode;..\Model\SourceCode;..\ImGui\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
