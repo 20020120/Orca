@@ -1,6 +1,6 @@
 #pragma once
 #include"Renderer.h"
-
+#include"Matrix.h"
 // ---------------------------- ObjMeshを描画するためのレンダラー ---------------------------
 
 namespace Component
@@ -10,6 +10,13 @@ namespace Component
 
     class ObjRenderer :public Renderer
     {
+        // ------------------------------- 定数バッファ ------------------------------
+        struct alignas(256)Cb_Obj
+        {
+            Math::Matrix World{};
+        };
+    public:
+        Cb_Obj* mCbData{};
     public:
         ObjRenderer();
         ~ObjRenderer() override = default;
@@ -22,8 +29,6 @@ namespace Component
         // ------------------------- 必要なコンポーネントをキャッシュする ------------------------
         std::weak_ptr<ObjMesh> mpObjMesh{};
         std::weak_ptr<Transform> mpTransform{};
-        // ------------------------------ オプション変数 ------------------------------
-        bool mCacheComponents{ false };
     };
 
 }

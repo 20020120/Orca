@@ -1,6 +1,9 @@
 #include"ObjMesh.h"
 
 #include <utility>
+
+#include "Dx12ResourceHolder.h"
+#include "GameObject.h"
 #include"Obj.h"
 #include"GuiInclude.h"
 Component::ObjMesh::ObjMesh(std::wstring FilePath_)
@@ -23,4 +26,8 @@ void Component::ObjMesh::GuiMenu(float Dt_)
     {
         ImGui::TreePop();
     }
+}
+
+void Component::ObjMesh::OnStart()
+{
 }

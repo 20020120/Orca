@@ -9,8 +9,8 @@
 #include"OrcaException.h"
 #include"GraphicsLogger.h"
 
-OrcaGraphics::Resource::Texture::Texture(uint32_t RootIndex_)
-    :Dx12Resource(Graphics::GetDescriptorPool(POOL_TYPE_RES),RootIndex_)
+OrcaGraphics::Resource::Texture::Texture(std::string Name_,uint32_t RootIndex_)
+    :Dx12Resource(Name_,Graphics::GetDescriptorPool(POOL_TYPE_RES),RootIndex_)
 {}
 
 

@@ -20,7 +20,7 @@ namespace OrcaGraphics
         class Texture final :public Dx12Resource
         {
         public:
-            Texture(uint32_t RootIndex_);
+            Texture(std::string Name_, uint32_t RootIndex_);
             Texture(const Texture&) = delete;
             void operator=(const Texture&) = delete;
 

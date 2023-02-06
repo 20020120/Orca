@@ -6,8 +6,7 @@
 #include <d3d12shader.h>
 
 void OrcaGraphics::Resource::Dx12ResourceInfoCreator::AddResourceInfo(const Shader::ShaderType& ShaderType_,
-                                                        Microsoft::WRL::ComPtr<ID3D12ShaderReflection> pReflector_,
-    uint32_t MaxResources_)
+Microsoft::WRL::ComPtr<ID3D12ShaderReflection> pReflector_,uint32_t MaxResources_,uint32_t& StartIndex_)
 {
     HRESULT hr;
     // ------------------------------ リフレクション情報を取得 -----------------------------
@@ -25,7 +24,7 @@ void OrcaGraphics::Resource::Dx12ResourceInfoCreator::AddResourceInfo(const Shad
         if (info.mType == ResourceType::Sampler) // ダイナミックサンプラー実装時に必要
             continue;
 
-        info.mRootIndex = i;
+        info.mRootIndex = StartIndex_++;
         // 定数バッファのみサイズを取得
         if (info.mType == ResourceType::ConstantBuffer)
         {

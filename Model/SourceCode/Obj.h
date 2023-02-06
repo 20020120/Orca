@@ -31,18 +31,15 @@ namespace Model
 
         // 初期化
         void Initialize(const wchar_t* ObjPath_);
-        void Update(float Dt_); // 更新
         void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) const; // 描画コマンドを積む
+        std::wstring GetTextureName()const;
     private:
         static void Parse(const wchar_t* ObjPath_, std::vector<VertexData>& Vertices_, std::vector<uint32_t>& Indices_,
             std::wstring& TextureName_);
         void CreateVertexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const std::vector<VertexData>& Vertices_);
         void CreateIndexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const std::vector<uint32_t>& Indices_);
-        void CreateConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, OrcaGraphics::DescriptorPool* pPool_);
         void CreateTexture(OrcaComPtr(ID3D12Device) pDevice_, OrcaGraphics::DescriptorPool* pPool_,
             OrcaComPtr(ID3D12CommandQueue) pCommandQueue_, std::wstring TexturePath_);
-
-        void CreateDx12Resource();
     private:
         // ------------------------------- 頂点読み込み ------------------------------
         struct VertexData
@@ -57,17 +54,7 @@ namespace Model
         // ----------------------------- インデックスバッファ ----------------------------
         Microsoft::WRL::ComPtr<ID3D12Resource> mpIndexBuffer{};
         D3D12_INDEX_BUFFER_VIEW mIbView{};
-
-        // ------------------------------- 定数バッファ ------------------------------
-        struct alignas(256)Cb_Obj
-        {
-            DirectX::XMFLOAT4X4 World{};
-        };
-    public:
-        Cb_Obj* mCbData{};
-    private:
-        std::unique_ptr<OrcaGraphics::Resource::ConstantBuffer> mCb{};
-        // -------------------------------- テクスチャ -------------------------------
-        std::unique_ptr< OrcaGraphics::Resource::Texture>  mTexture{};
+        // ------------------------------ テクスチャの名前 -----------------------------
+        std::wstring mTextureName{};
     };
 }

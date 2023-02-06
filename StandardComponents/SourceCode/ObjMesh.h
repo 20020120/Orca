@@ -1,7 +1,7 @@
 #pragma once
 #include"Component.h"
 #include"Obj.h"
-
+#include"ShaderType.h"
 #include<string>
 
 namespace Component
@@ -14,8 +14,10 @@ namespace Component
 
         [[nodiscard]] Model::Obj& GetResource();
         void GuiMenu(float Dt_) override;
+        void OnStart() override;
     private:
         Model::Obj mObjResource{};
         std::wstring mFilePath{};
+        OrcaGraphics::Shader::ShaderType mShaderType{};
     };
 }

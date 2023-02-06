@@ -6,8 +6,8 @@
 #include"GraphicsLogger.h"
 #include"GraphicsMacro.h"
 #include"Graphics.h"
-OrcaGraphics::Resource::ConstantBuffer::ConstantBuffer(size_t Size_, UINT RootParamIndex_)
-    :Dx12Resource(Graphics::GetDescriptorPool(POOL_TYPE_RES), RootParamIndex_)
+OrcaGraphics::Resource::ConstantBuffer::ConstantBuffer(std::string Name_, size_t Size_, UINT RootParamIndex_)
+    :Dx12Resource(Name_,Graphics::GetDescriptorPool(POOL_TYPE_RES), RootParamIndex_)
 {
     Initialize(Graphics::GetDevice(), Graphics::GetDescriptorPool(POOL_TYPE_RES), Size_);
 }

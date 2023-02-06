@@ -19,11 +19,11 @@ namespace OrcaGraphics
         {
         public:
             // 共通の初期化
-            Dx12Resource(DescriptorPool* pDescriptorPool_, UINT RootParamIndex);
+            Dx12Resource(std::string Name_, DescriptorPool* pDescriptorPool_, UINT RootParamIndex);
             virtual ~Dx12Resource();
 
             void Bind(OrcaComPtr(ID3D12GraphicsCommandList) pCmdList_) const; // GPUにバインド
-            OrcaNodiscard std::string GetName()const;
+            std::string GetName()const;
         private:
             UINT mRootParamIndex{}; // ルートパラメーターの番号
         protected:

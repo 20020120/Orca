@@ -11,7 +11,7 @@ OrcaGraphics::Camera::~Camera()
 void OrcaGraphics::Camera::Initialize()
 {
     // 定数バッファを初期化
-    mCb = std::make_unique<Resource::ConstantBuffer>(sizeof(CbData), 0);
+    mCb = std::make_unique<Resource::ConstantBuffer>("Camera", sizeof(CbData), 0);
     mCb->Mapping(reinterpret_cast<void**>(&mCbData));
 }
 

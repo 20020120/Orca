@@ -16,20 +16,17 @@ void Component::ObjRenderer::OnStart()
 {
     Renderer::OnStart();
     // ------------------------------- リソース情報を生成 -------------------------------
-    OrcaGraphics::Dx12ResourceHolder::Add(mShaderType, mpGameObject.lock()->GetName());
+    mResourceHandle = OrcaGraphics::Dx12ResourceHolder::Add(mShaderType);
+    mpTransform = mpGameObject.lock()->GetComponent<Transform>();
+    mpObjMesh = mpGameObject.lock()->GetComponent<ObjMesh>();
+    // ----------------------------- リソース情報をマッピングする ----------------------------
+    OrcaGraphics::Dx12ResourceHolder::CbMapping(mResourceHandle, "Obj", &mCbData);
+    OrcaGraphics::Dx12ResourceHolder::TexLoad(mResourceHandle, std::tuple("gDiffuseTexture", mpObjMesh.lock()->GetResource().GetTextureName()));
 }
 
 void Component::ObjRenderer::Update(float Dt_)
 {
-    // ---------------------------- コンポーネントをキャッシュする ----------------------------
-    if (!mCacheComponents)
-    {
-        mCacheComponents = true;
-        if (mpGameObject.expired())
-            return;
-        mpTransform = mpGameObject.lock()->GetComponent<Transform>();
-        mpObjMesh = mpGameObject.lock()->GetComponent<ObjMesh>();
-    }
+    mCbData->World = mpTransform.lock()->mTransform.Transpose();
 }
 
 void Component::ObjRenderer::GuiMenu(float Dt_)
@@ -38,6 +35,7 @@ void Component::ObjRenderer::GuiMenu(float Dt_)
     {
         ImGui::RadioButton("Cached_Transform", !mpTransform.expired());
         ImGui::RadioButton("Cached_ObjMesh", !mpObjMesh.expired());
+        ImGui::Text("ResourceHandle:%d", mResourceHandle);
         ImGui::TreePop();
     }
 }
@@ -48,6 +46,6 @@ void Component::ObjRenderer::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12Graph
         return;
 
     const auto& resource = mpObjMesh.lock()->GetResource();
-    resource.mCbData->World = mpTransform.lock()->mTransform.Transpose();
+    OrcaGraphics::Dx12ResourceHolder::StackGraphicsCmd(pCmdList_.Get(), mResourceHandle);
     resource.StackGraphicsCmd(pCmdList_);
 }

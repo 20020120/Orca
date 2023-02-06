@@ -63,9 +63,12 @@ OrcaGraphics::RenderPipeline::RenderPipeline(const Shader::ShaderDesc& ShaderDes
     getDescriptorRange(vsBuilder.GetReflector(), vsBuilder.GetShaderDesc().BoundResources, Shader::ShaderStage::VS);
     getDescriptorRange(psBuilder.GetReflector(), psBuilder.GetShaderDesc().BoundResources, Shader::ShaderStage::PS);
 
+    uint32_t startIndex{};
     // ---------------------------- シェーダーのリソース情報を取得 ----------------------------
-    Resource::Dx12ResourceInfoCreator::AddResourceInfo(ShaderDesc_.mShaderType, vsBuilder.GetReflector(), vsBuilder.GetShaderDesc().BoundResources);
-    Resource::Dx12ResourceInfoCreator::AddResourceInfo(ShaderDesc_.mShaderType, psBuilder.GetReflector(), psBuilder.GetShaderDesc().BoundResources);
+    Resource::Dx12ResourceInfoCreator::AddResourceInfo(ShaderDesc_.mShaderType, vsBuilder.GetReflector(),
+        vsBuilder.GetShaderDesc().BoundResources, startIndex);
+    Resource::Dx12ResourceInfoCreator::AddResourceInfo(ShaderDesc_.mShaderType, psBuilder.GetReflector(),
+        psBuilder.GetShaderDesc().BoundResources, startIndex);
 
 
     // ------------------------ ここ以下のシェーダーは読み込みに失敗してもいいよ -----------------------

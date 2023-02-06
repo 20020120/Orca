@@ -37,13 +37,13 @@ std::shared_ptr<OrcaGraphics::Resource::ConstantBuffer> OrcaGraphics::Resource::
     const Dx12ResourceInfo& Info_)
 {
     // ------------------------------- 定数バッファを作成 -------------------------------
-    return std::make_shared<ConstantBuffer>(Info_.mBufferSize, Info_.mRootIndex);
+    return std::make_shared<ConstantBuffer>(Info_.mName, Info_.mBufferSize, Info_.mRootIndex);
 }
 
 std::shared_ptr<OrcaGraphics::Resource::Texture> OrcaGraphics::Resource::Dx12ResourceCreator::CreateTexture(
     const Dx12ResourceInfo& Info_)
 {
-    return std::make_shared<Texture>(Info_.mRootIndex);
+    return std::make_shared<Texture>(Info_.mName, Info_.mRootIndex);
 }
 
 //std::shared_ptr<OrcaGraphics::Resource::Texture> OrcaGraphics::Resource::Dx12ResourceCreator::CreateTexture(

@@ -22,7 +22,9 @@ namespace OrcaGraphics
             using ResourcesType = std::unordered_map<std::string, Dx12ResourceInfo>;
         public:
             // óvëfÇêVãKçÏê¨Ç∑ÇÈ
-            static void AddResourceInfo(const Shader::ShaderType& ShaderType_, OrcaComPtr(ID3D12ShaderReflection) pReflector_, uint32_t MaxResources_);
+            static void AddResourceInfo(const Shader::ShaderType& ShaderType_,
+                OrcaComPtr(ID3D12ShaderReflection) pReflector_, 
+                uint32_t MaxResources_, uint32_t& StartIndex_);
             static const ResourcesType& GetResourceMap(const Shader::ShaderType& ShaderType_);
         private:
 

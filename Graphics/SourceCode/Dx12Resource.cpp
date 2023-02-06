@@ -4,8 +4,9 @@
 #include "OrcaException.h"
 #include"DescriptorPool.h"
 
-OrcaGraphics::Resource::Dx12Resource::Dx12Resource(DescriptorPool * pDescriptorPool_, UINT RootParamIndex)
+OrcaGraphics::Resource::Dx12Resource::Dx12Resource(std::string Name_, DescriptorPool* pDescriptorPool_, UINT RootParamIndex)
     :mRootParamIndex(RootParamIndex)
+    ,mName(Name_)
 {
     Orca_NotNullException(mpPool);
     Orca_NotNullException(mpHandle);

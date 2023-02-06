@@ -14,7 +14,7 @@ void Component::MeshRenderer::OnStart()
 {
     Renderer::OnStart();
     // ------------------------- シェーダーの種類に応じたリソース情報を生成 -------------------------
-    OrcaGraphics::Dx12ResourceHolder::Add(mShaderType, mpGameObject.lock()->GetName());
+    //OrcaGraphics::Dx12ResourceHolder::Add(mShaderType);
 }
 
 void Component::MeshRenderer::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_)

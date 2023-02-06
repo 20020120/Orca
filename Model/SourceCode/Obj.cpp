@@ -31,33 +31,15 @@ void Model::Obj::Initialize(const wchar_t* ObjPath_)
     CreateVertexBuffer(OrcaGraphics::Graphics::GetDevice(), vertices);
     // インデックスバッファを作成する
     CreateIndexBuffer(pDevice, indices);
-    // 定数バッファを作成
-    CreateConstantBuffer(pDevice, OrcaGraphics::Graphics::GetDescriptorPool(OrcaGraphics::POOL_TYPE_RES));
-    // テクスチャを作成(このクラスはテスト用なのでテクスチャは１枚しか扱えない)
-    CreateTexture(pDevice, OrcaGraphics::Graphics::GetDescriptorPool(OrcaGraphics::POOL_TYPE_RES),
-        OrcaGraphics::Graphics::GetCommandQueue(), textureName);
+    mTextureName = textureName;
 
     // -------------------------------- 変数を初期化する -------------------------------
     m_VertexCounts = static_cast<UINT>(vertices.size());
 }
 
-void Model::Obj::Update(float Dt_)
-{
-    static float angle = 0.0f;
-    angle += DirectX::XMConvertToRadians(60.0f) * Dt_;
-    auto W = DirectX::XMMatrixScaling(1.0f, 1.0f, 1.0f) * DirectX::XMMatrixRotationY(angle) *
-        DirectX::XMMatrixTranslation(0.0f, 0.0f, 5.0f);
-    W = DirectX::XMMatrixTranspose(W);
-    DirectX::XMStoreFloat4x4(&mCbData->World, W);
-    //auto aa = static_cast<Cb_Obj*>(mCb->p);
-    //aa->World = mCbData.World;
-}
-
 void Model::Obj::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) const
 {
     // -------------------------------- コマンドを積む --------------------------------
-    mCb->Bind(pCmdList_);
-    mTexture->Bind(pCmdList_);
     pCmdList_->IASetVertexBuffers(0, 1, &mVbView);
     pCmdList_->IASetIndexBuffer(&mIbView);
     pCmdList_->DrawIndexedInstanced(m_VertexCounts, 1, 0, 0, 0);
@@ -282,28 +264,21 @@ void Model::Obj::CreateIndexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_
     mIbView.SizeInBytes = static_cast<UINT>(sizeof(uint32_t)*Indices_.size());
 }
 
-void Model::Obj::CreateConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, OrcaGraphics::DescriptorPool* pPool_)
-{
-    mCb = std::make_unique<OrcaGraphics::Resource::ConstantBuffer>(sizeof(Cb_Obj), 1);
-    mCb->Mapping(reinterpret_cast<void**>(&mCbData));
-}
 
 void Model::Obj::CreateTexture(OrcaComPtr(ID3D12Device) pDevice_, OrcaGraphics::DescriptorPool* pPool_,
     OrcaComPtr(ID3D12CommandQueue) pCommandQueue_, std::wstring TexturePath_)
 {
-    // テクスチャを作成
-    DirectX::ResourceUploadBatch batch(pDevice_.Get());
-    batch.Begin();
-    // リソースを生成
-    mTexture = std::make_unique<OrcaGraphics::Resource::Texture>(2);
-    mTexture->Load(TexturePath_.c_str(), batch);
-
-    // コマンドを実行
-    const auto future = batch.End(pCommandQueue_.Get());
-    future.wait();
+   // // テクスチャを作成
+   // DirectX::ResourceUploadBatch batch(pDevice_.Get());
+   // batch.Begin();
+   // // リソースを生成
+   // mTexture = std::make_unique<OrcaGraphics::Resource::Texture>(2);
+   // mTexture->Load(TexturePath_.c_str(), batch);
+   // // コマンドを実行
+   // const auto future = batch.End(pCommandQueue_.Get());
+   // future.wait();
 }
-
-void Model::Obj::CreateDx12Resource()
+std::wstring Model::Obj::GetTextureName() const
 {
-
+    return mTextureName;
 }

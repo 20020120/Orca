@@ -13,7 +13,7 @@ namespace OrcaGraphics
         class ConstantBuffer :public Dx12Resource
         {
         public:
-            ConstantBuffer(size_t Size_, UINT RootParamIndex_);
+            ConstantBuffer(std::string Name_, size_t Size_, UINT RootParamIndex_);
             ~ConstantBuffer() override = default;
             ConstantBuffer(const ConstantBuffer&) = delete;
             void operator =(const ConstantBuffer&) = delete;
