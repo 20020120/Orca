@@ -23,7 +23,7 @@ void ImGuiSetting::Renderer::CreateImGui(HWND Hwnd_, ID3D12Device* pDevice_,
     ImGui::CreateContext();
     
     ImGui::GetIO().Fonts->AddFontFromFileTTF(
-        "../Resource/Font/TsunagiGothic.ttf", 18.0f, nullptr);
+        "../Resource/Font/TsunagiGothic.ttf", 12.0f, nullptr);
     //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
     //ImGuiStyle& style = ImGui::GetStyle();
