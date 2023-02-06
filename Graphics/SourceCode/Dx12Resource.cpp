@@ -12,6 +12,8 @@ OrcaGraphics::Resource::Dx12Resource::Dx12Resource(DescriptorPool * pDescriptorP
 
     mpPool = pDescriptorPool_;
     mpPool->AddRef();
+    mpHandle = mpPool->AllocHandle();
+    Orca_NullException(mpHandle);
 }
 
 OrcaGraphics::Resource::Dx12Resource::~Dx12Resource()

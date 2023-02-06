@@ -10,6 +10,7 @@
 #include"GraphicsLogger.h"
 #include"DescriptorPool.h"
 #include"Graphics.h"
+#include"MacroMemory.h"
 
 Model::Obj::~Obj()
 {
@@ -56,7 +57,7 @@ void Model::Obj::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandLi
 {
     // -------------------------------- コマンドを積む --------------------------------
     mCb->Bind(pCmdList_);
-    pCmdList_->SetGraphicsRootDescriptorTable(2, mTexture.GetHandleGPU());
+    mTexture->Bind(pCmdList_);
     pCmdList_->IASetVertexBuffers(0, 1, &mVbView);
     pCmdList_->IASetIndexBuffer(&mIbView);
     pCmdList_->DrawIndexedInstanced(m_VertexCounts, 1, 0, 0, 0);
@@ -294,7 +295,8 @@ void Model::Obj::CreateTexture(OrcaComPtr(ID3D12Device) pDevice_, OrcaGraphics::
     DirectX::ResourceUploadBatch batch(pDevice_.Get());
     batch.Begin();
     // リソースを生成
-    mTexture.Initialize(pDevice_, pPool_, TexturePath_.c_str(), batch);
+    mTexture = std::make_unique<OrcaGraphics::Resource::Texture>(2);
+    mTexture->Load(TexturePath_.c_str(), batch);
 
     // コマンドを実行
     const auto future = batch.End(pCommandQueue_.Get());

@@ -21,7 +21,7 @@ namespace OrcaGraphics
 
         static void Add(const Shader::ShaderType& ShaderType_,
             const std::string& ObjectName_);  // シェーダーのリソース情報を新規に追加する
-        
+        static void Finalize(); // 終了処理
     private:
         inline static HolderType mHolder{};
         

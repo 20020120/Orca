@@ -23,7 +23,7 @@ namespace Component
        Component operator=(const Component& RHS_) = delete;
        Component& operator=(Component&& LHS_) = delete;
 
-       virtual void Start() {}      // 更新の直前に一回だけ呼ばれる
+       virtual void OnStart() {}      // 更新の直前に一回だけ呼ばれる
 
        virtual void Update(float Dt_) {}
        virtual void GuiMenu(float Dt_){}

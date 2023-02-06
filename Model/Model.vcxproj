@@ -25,7 +25,6 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="SourceCode\ObjResource.cpp" />
     <ClCompile Include="SourceCode\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -37,7 +36,6 @@
     <ClInclude Include="SourceCode\FbxModelResource.h" />
     <ClInclude Include="SourceCode\ModelResource.h" />
     <ClInclude Include="SourceCode\Obj.h" />
-    <ClInclude Include="SourceCode\ObjResource.h" />
     <ClInclude Include="SourceCode\pch.h" />
   </ItemGroup>
   <ItemGroup>

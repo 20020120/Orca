@@ -33,9 +33,6 @@
     <ClCompile Include="SourceCode\Obj.cpp">
       <Filter>Obj</Filter>
     </ClCompile>
-    <ClCompile Include="SourceCode\ObjResource.cpp">
-      <Filter>ObjResource</Filter>
-    </ClCompile>
     <ClCompile Include="SourceCode\FbxModelResource.cpp">
       <Filter>Fbx</Filter>
     </ClCompile>
@@ -49,9 +46,6 @@
     </ClInclude>
     <ClInclude Include="SourceCode\Obj.h">
       <Filter>Obj</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceCode\ObjResource.h">
-      <Filter>ObjResource</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\ModelResource.h">
       <Filter>ModelResource</Filter>

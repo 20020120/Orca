@@ -6,7 +6,7 @@ Component::Renderer::Renderer(const OrcaGraphics::Shader::ShaderType& ShaderType
     , mShaderType(ShaderType_)
 {}
 
-void Component::Renderer::Start()
+void Component::Renderer::OnStart()
 {
     System::RenderSystem::Instance().Add(shared_from_this());
 }

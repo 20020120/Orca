@@ -4,11 +4,12 @@
 #include "LogWindow.h"
 #include"GraphicsForGameLoop.h"
 #include"DescriptorPool.h"
-#include"ShaderDesc.h"
+
 #include"CharacterBuilder.h"
 
 // -------------------------------- システムをインクルード --------------------------------
 #include"RendererSystem.h"
+#include "Dx12ResourceHolder.h"
 
 #include"ImGuiSetting.h"
 #include"../Imgui/imgui.h"
@@ -171,6 +172,7 @@ bool FrameWork::Finalize()
     mpCamera.reset();
     mGameObjects.Finalize();
     ImGuiSetting::Renderer::Cleanup();
+    OrcaGraphics::Dx12ResourceHolder::Finalize();
     OrcaGraphics::GraphicsForGameLoop::Finalize();
     return true;
 }

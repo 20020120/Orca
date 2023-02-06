@@ -21,7 +21,7 @@ namespace Component
     public:
         explicit Renderer(const OrcaGraphics::Shader::ShaderType& ShaderType_);
         ~Renderer() override = default;
-        void Start() override;
+        void OnStart() override;
     private:
         virtual void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) = 0;
     protected:

@@ -27,7 +27,7 @@ void ComponentSystem::GameObject::Start() const
 {
     for(const auto& com: mComponents)
     {
-        com->Start();
+        com->OnStart();
     }
     for (const auto& child : mChildObjects)
     {

@@ -21,6 +21,7 @@ namespace Component
     public:
         explicit MeshRenderer(const OrcaGraphics::Shader::ShaderType& ShaderType_);
         ~MeshRenderer() override = default;
+        void OnStart() override;
     private:
         void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_)override;
     };

@@ -6,6 +6,9 @@
 #include<d3d12.h>
 #include<wrl.h>
 #include<ResourceUploadBatch.h>
+
+#include "Dx12ResourceInfo.h"
+
 namespace OrcaGraphics
 {
     // ëOï˚êÈåæ
@@ -14,25 +17,19 @@ namespace OrcaGraphics
     namespace Resource
     {
 
-        class Texture :public Dx12Resource
+        class Texture final :public Dx12Resource
         {
         public:
-            Texture();
+            Texture(uint32_t RootIndex_);
             Texture(const Texture&) = delete;
             void operator=(const Texture&) = delete;
 
             bool Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_,
                 const D3D12_RESOURCE_DESC* pDesc_, bool IsCube_);
-            bool Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_,
-                const wchar_t* FileName_, DirectX::ResourceUploadBatch& Batch_);
 
-            OrcaNodiscard D3D12_CPU_DESCRIPTOR_HANDLE GetHandleCPU()const;
-            OrcaNodiscard D3D12_GPU_DESCRIPTOR_HANDLE GetHandleGPU()const;
+            void Load(const wchar_t* FileName_, DirectX::ResourceUploadBatch& Batch_);
+
         private:
-            Microsoft::WRL::ComPtr<ID3D12Resource> mpResource{};
-            DescriptorHandle* mpHandle{};
-            DescriptorPool* mpPool{};
-
             // ------------------------------- ÉwÉãÉpÅ[ä÷êî ------------------------------
             void LoadTextureFromFile(OrcaComPtr(ID3D12Device) pDevice_, const wchar_t* FileName_, DirectX::ResourceUploadBatch& Batch_);
 

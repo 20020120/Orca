@@ -40,6 +40,12 @@ std::shared_ptr<OrcaGraphics::Resource::ConstantBuffer> OrcaGraphics::Resource::
     return std::make_shared<ConstantBuffer>(Info_.mBufferSize, Info_.mRootIndex);
 }
 
+std::shared_ptr<OrcaGraphics::Resource::Texture> OrcaGraphics::Resource::Dx12ResourceCreator::CreateTexture(
+    const Dx12ResourceInfo& Info_)
+{
+    return std::make_shared<Texture>(Info_.mRootIndex);
+}
+
 //std::shared_ptr<OrcaGraphics::Resource::Texture> OrcaGraphics::Resource::Dx12ResourceCreator::CreateTexture(
 //    const Dx12ResourceInfo& Info_)
 //{

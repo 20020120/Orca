@@ -53,7 +53,7 @@ void OrcaGraphics::Resource::ConstantBuffer::Initialize(OrcaComPtr(ID3D12Device)
     desc.Flags = D3D12_RESOURCE_FLAG_NONE;
 
     // リソースを生成.
-    auto hr = pDevice_->CreateCommittedResource(
+    const auto hr = pDevice_->CreateCommittedResource(
         &prop,
         D3D12_HEAP_FLAG_NONE,
         &desc,
@@ -64,7 +64,5 @@ void OrcaGraphics::Resource::ConstantBuffer::Initialize(OrcaComPtr(ID3D12Device)
 
     mDesc.BufferLocation = mpResource->GetGPUVirtualAddress();
     mDesc.SizeInBytes = static_cast<UINT>(sizeAligned);
-    // ハンドルを初期化
-    mpHandle = mpPool->AllocHandle();
     pDevice_->CreateConstantBufferView(&mDesc, mpHandle->HandleCPU);
 }

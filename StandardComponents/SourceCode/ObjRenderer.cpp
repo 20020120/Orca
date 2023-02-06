@@ -12,9 +12,9 @@ Component::ObjRenderer::ObjRenderer()
     :Renderer(OrcaGraphics::Shader::ShaderType::Sample)
 {}
 
-void Component::ObjRenderer::Start()
+void Component::ObjRenderer::OnStart()
 {
-    Renderer::Start();
+    Renderer::OnStart();
     // ------------------------------- ƒŠƒ\[ƒXî•ñ‚ð¶¬ -------------------------------
     OrcaGraphics::Dx12ResourceHolder::Add(mShaderType, mpGameObject.lock()->GetName());
 }

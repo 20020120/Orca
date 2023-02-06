@@ -67,9 +67,7 @@ namespace Model
         Cb_Obj* mCbData{};
     private:
         std::unique_ptr<OrcaGraphics::Resource::ConstantBuffer> mCb{};
-
-
-       // -------------------------------- テクスチャ -------------------------------
-       OrcaGraphics::Texture mTexture{};
+        // -------------------------------- テクスチャ -------------------------------
+        std::unique_ptr< OrcaGraphics::Resource::Texture>  mTexture{};
     };
 }

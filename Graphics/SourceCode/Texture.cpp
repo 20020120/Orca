@@ -9,8 +9,8 @@
 #include"OrcaException.h"
 #include"GraphicsLogger.h"
 
-OrcaGraphics::Resource::Texture::Texture()
-    :Dx12Resource(Graphics::GetDescriptorPool(POOL_TYPE_RES),)
+OrcaGraphics::Resource::Texture::Texture(uint32_t RootIndex_)
+    :Dx12Resource(Graphics::GetDescriptorPool(POOL_TYPE_RES),RootIndex_)
 {}
 
 
@@ -54,34 +54,10 @@ bool OrcaGraphics::Resource::Texture::Initialize(Microsoft::WRL::ComPtr<ID3D12De
     return true;
 }
 
-bool OrcaGraphics::Resource::Texture::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_,
-    const wchar_t* FileName_, DirectX::ResourceUploadBatch& Batch_)
+void OrcaGraphics::Resource::Texture::Load(const wchar_t* FileName_, DirectX::ResourceUploadBatch& Batch_)
 {
-    // 引数チェック
-    Orca_NullException(pDevice_);
-    Orca_NullException(pPool_);
-
-    // ディスクリプタプールを設定
-    mpPool = pPool_;
-    mpPool->AddRef();
-
-    mpHandle = pPool_->AllocHandle();
-    Orca_NullException(mpHandle);
-
     // テクスチャをロードする
-    LoadTextureFromFile(pDevice_, FileName_, Batch_);
-
-    return true;
-}
-
-D3D12_CPU_DESCRIPTOR_HANDLE OrcaGraphics::Resource::Texture::GetHandleCPU() const
-{
-    return mpHandle->HandleCPU;
-}
-
-D3D12_GPU_DESCRIPTOR_HANDLE OrcaGraphics::Resource::Texture::GetHandleGPU() const
-{
-    return mpHandle->HandleGPU;
+    LoadTextureFromFile(Graphics::GetDevice(), FileName_, Batch_);
 }
 
 void OrcaGraphics::Resource::Texture::LoadTextureFromFile(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* FileName_,
