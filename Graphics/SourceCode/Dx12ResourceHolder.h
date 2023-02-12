@@ -52,8 +52,7 @@ namespace OrcaGraphics
     void Dx12ResourceHolder::CbMapping(const uint64_t Handle_, std::string VariableName_, T** MappedPtr_)
     {
         const auto& resource = mHolder.at(Handle_).at(VariableName_);
-        const auto& cb = std::dynamic_pointer_cast<Resource::ConstantBuffer>(resource);
-        if(cb)
+        if(const auto& cb = std::dynamic_pointer_cast<Resource::ConstantBuffer>(resource))
         {
             cb->Mapping(reinterpret_cast<void**>(MappedPtr_));
         }

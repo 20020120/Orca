@@ -7,8 +7,8 @@ namespace OrcaGraphics
         enum class ShaderType
         {
             Unknown,    // 未設定（初期値）
-            Sample,
-            OrcaWizard,
+            Sample, // サンプル用
+            Lambert, // ランバート
         };
     }
 }

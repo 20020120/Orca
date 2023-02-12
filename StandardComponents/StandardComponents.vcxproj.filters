@@ -40,6 +40,9 @@
     <Filter Include="MeshRenderer">
       <UniqueIdentifier>{904cca5f-68d7-4cd0-9592-72c4072f736e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FbxRemderer">
+      <UniqueIdentifier>{059f4fd0-72b5-4bd1-ba40-427cd352bd31}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\Transform.h">
@@ -66,6 +69,9 @@
     <ClInclude Include="SourceCode\MeshRenderer.h">
       <Filter>MeshRenderer</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\FbxRenderer.h">
+      <Filter>FbxRemderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\Transform.cpp">
@@ -88,6 +94,9 @@
     </ClCompile>
     <ClCompile Include="SourceCode\MeshRenderer.cpp">
       <Filter>MeshRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\FbxRenderer.cpp">
+      <Filter>FbxRemderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

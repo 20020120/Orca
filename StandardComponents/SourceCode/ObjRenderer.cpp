@@ -15,8 +15,6 @@ Component::ObjRenderer::ObjRenderer()
 void Component::ObjRenderer::OnStart()
 {
     Renderer::OnStart();
-    // ------------------------------- リソース情報を生成 -------------------------------
-    mResourceHandle = OrcaGraphics::Dx12ResourceHolder::Add(mShaderType);
     mpTransform = mpGameObject.lock()->GetComponent<Transform>();
     mpObjMesh = mpGameObject.lock()->GetComponent<ObjMesh>();
     // ----------------------------- リソース情報をマッピングする ----------------------------

@@ -23,6 +23,7 @@
     <ClCompile Include="SourceCode\ConstantBuffer.cpp" />
     <ClCompile Include="SourceCode\DescriptorHandle.cpp" />
     <ClCompile Include="SourceCode\DescriptorPool.cpp" />
+    <ClCompile Include="SourceCode\Dx12IndexBuffer.cpp" />
     <ClCompile Include="SourceCode\Dx12ResourceCreator.cpp" />
     <ClCompile Include="SourceCode\Dx12ResourceInfoCreator.cpp" />
     <ClCompile Include="SourceCode\Dx12ResourceGetter.cpp" />
@@ -44,10 +45,12 @@
     <ClInclude Include="SourceCode\ConstantBuffer.h" />
     <ClInclude Include="SourceCode\DescriptorHandle.h" />
     <ClInclude Include="SourceCode\DescriptorPool.h" />
+    <ClInclude Include="SourceCode\Dx12IndexBuffer.h" />
     <ClInclude Include="SourceCode\Dx12ResourceCreator.h" />
     <ClInclude Include="SourceCode\Dx12ResourceInfoCreator.h" />
     <ClInclude Include="SourceCode\Dx12ResourceGetter.h" />
     <ClInclude Include="SourceCode\Dx12ResourceInfo.h" />
+    <ClInclude Include="SourceCode\Dx12VertexBuffer.h" />
     <ClInclude Include="SourceCode\Graphics.h" />
     <ClInclude Include="SourceCode\GraphicsForGameLoop.h" />
     <ClInclude Include="SourceCode\GraphicsImpl.h" />

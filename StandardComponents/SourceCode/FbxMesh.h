@@ -6,11 +6,14 @@ namespace Component
 {
     class FbxMesh final :public Component
     {
+        friend class FbxRenderer;
     public:
         explicit FbxMesh(const char* FileName_);
         ~FbxMesh()override;
         
         FbxMesh() = delete;
+
+        void Update(float Dt_) override;
         void GuiMenu(float Dt_) override;
 
         // ------------------------------- ï`âÊÉäÉ\Å[ÉX ------------------------------
@@ -37,6 +40,5 @@ namespace Component
         void GuiMenu_Node(const Node* pNode_);
         void GuiMenu_Materials(std::vector<Model::FbxModelResource::Material>& Materials_) const;
         void GuiMenu_Animations(const std::vector<Model::FbxModelResource::Animation>& Animations_) const;
-
     };
 }

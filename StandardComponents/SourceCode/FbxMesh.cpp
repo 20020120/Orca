@@ -1,9 +1,9 @@
-#include"FbxMesh.h"
+#include "FbxMesh.h"
 
-#include"GuiInclude.h"
+#include "GuiInclude.h"
 Component::FbxMesh::FbxMesh(const char* FileName_)
 {
-    mResource.Load(FileName_);
+	mResource.Load(FileName_);
 	// ノード
 	const std::vector<Model::ModelResource::Node>& resNodes = mResource.GetNodes();
 
@@ -26,10 +26,22 @@ Component::FbxMesh::FbxMesh(const char* FileName_)
 		}
 		mNodeNames.emplace_back(std::make_tuple(src.mName, &dst));
 	}
+	// ----------------------------- 描画用のDx12のリソースを作成 -----------------------------
+	for (auto& mesh : mResource.mMeshes)
+	{
+		mesh.mVertexBuffer.Create(mesh.mVertices);
+		mesh.mIndexBuffer.Create(mesh.mIndices);
+	}
 }
 
 Component::FbxMesh::~FbxMesh()
 {}
+
+void Component::FbxMesh::Update(float Dt_)
+{
+ // ----------------------------------- 更新関数 -----------------------------------
+
+}
 
 void Component::FbxMesh::GuiMenu(float Dt_)
 {

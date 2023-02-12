@@ -46,6 +46,12 @@
     <Filter Include="Dx12ResourceCreator">
       <UniqueIdentifier>{13477d3f-0e3c-4123-8e1d-4fc8bc27041e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Dx12VertexBuffer">
+      <UniqueIdentifier>{7b1e9602-a6bd-4d15-b72a-8f7b4d91209a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dx12IndexBuffer">
+      <UniqueIdentifier>{29cdbc33-c3fe-449e-bf5f-eaf4dc161369}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\pch.cpp">
@@ -95,6 +101,9 @@
     </ClCompile>
     <ClCompile Include="SourceCode\Dx12ResourceCreator.cpp">
       <Filter>Dx12ResourceCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Dx12IndexBuffer.cpp">
+      <Filter>Dx12IndexBuffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +159,12 @@
     <ClInclude Include="SourceCode\GraphicsMinimum.h" />
     <ClInclude Include="SourceCode\Dx12ResourceCreator.h">
       <Filter>Dx12ResourceCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Dx12VertexBuffer.h">
+      <Filter>Dx12VertexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Dx12IndexBuffer.h">
+      <Filter>Dx12IndexBuffer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

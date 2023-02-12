@@ -108,9 +108,6 @@ bool FrameWork::Initialize()
 {
     // コンソールウィンドを開く
     OrcaDebug::LogWindow::OpenWindow();
-    // 描画管理クラスの実体を生成
-    mpCamera = std::make_unique<OrcaGraphics::Camera>();
-
     // ------------------------------ 以下、初期化関数を呼ぶ ------------------------------
     OrcaGraphics::GraphicsForGameLoop::Initialize(mHwnd);
 

@@ -24,7 +24,6 @@ CONST LPCWSTR APPLICATION_NAME{ L"Orc" };
 namespace OrcaGraphics
 {
 	class Graphics;
-	class Camera;
 }
 
 
@@ -58,7 +57,6 @@ private:
 	uint32_t mFrames{ 0 };
 	float mDeltaTime{ 0.0f };
 	int hConsole = 0;
-	std::unique_ptr<OrcaGraphics::Camera> mpCamera{};	// ÉJÉÅÉâ
 	ComponentSystem::GameObjectHolder mGameObjects{};
 
 	void CalculateFrameStats();

@@ -1,14 +1,17 @@
 #pragma once
-#include"Vector2.h"
-#include"Vector3.h"
+#include "Vector2.h"
+#include "Vector3.h"
 #include "Vector4.h"
-#include"Matrix.h"
-#include"Quaternion.h"
+#include "Matrix.h"
+#include "Quaternion.h"
+#include "Dx12VertexBuffer.h"
+#include "Dx12IndexBuffer.h"
 
 #include <string>
 #include <vector>
-#include <wrl.h>
 #include <DirectXMath.h>
+
+struct ID3D12GraphicsCommandList;
 
 // -------------------------------- モデルのリソースデータ --------------------------------
 namespace Model
@@ -85,8 +88,10 @@ namespace Model
 			Math::Vector3						mBoundsMin;
 			Math::Vector3						mBoundsMax;
 
-			//Microsoft::WRL::ComPtr<ID3D12Buffer>	vertexBuffer;
-			//Microsoft::WRL::ComPtr<ID3D12Buffer>	indexBuffer;
+			OrcaGraphics::Resource::VertexBuffer mVertexBuffer{};
+			OrcaGraphics::Resource::IndexBuffer mIndexBuffer{};
+
+			void StackGraphicsCmd(ID3D12GraphicsCommandList* pCmdList_)const;
 
 			//template<class Archive>
 			//void serialize(Archive& archive, int version);

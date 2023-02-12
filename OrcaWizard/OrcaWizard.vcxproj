@@ -145,9 +145,11 @@
     <ClCompile Include="SourceCode\Framework.cpp" />
     <ClCompile Include="SourceCode\HighResolutionTimer.cpp" />
     <ClCompile Include="SourceCode\WinMain.cpp" />
+    <ClCompile Include="SourceCode\WizardEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\CharacterBuilder.h" />
+    <ClInclude Include="SourceCode\WizardEditor.h" />
     <ClInclude Include="SourceCode\Framework.h" />
     <ClInclude Include="SourceCode\HighResolutionTimer.h" />
   </ItemGroup>

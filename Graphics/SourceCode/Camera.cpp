@@ -40,6 +40,11 @@ void OrcaGraphics::Camera::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12Graphic
     mCb->Bind(pCmdList_);
 }
 
+void OrcaGraphics::Camera::Finalize()
+{
+    mCb.reset();
+}
+
 void OrcaGraphics::Camera::InputMove(float Dt_)
 {
     // “ü—Í‚©‚çƒJƒƒ‰‚ğˆÚ“®‚³‚¹‚éŠÖ”

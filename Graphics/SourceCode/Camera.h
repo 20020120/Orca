@@ -1,18 +1,22 @@
 #pragma once
 
-#include"ConstantBuffer.h"
-#include"MathMinimum.h"
-#include"Quaternion.h"
+#include "ConstantBuffer.h"
+#include "MathMinimum.h"
+#include "Quaternion.h" 
 
-#include<wrl.h>
-#include<memory>
+#include <wrl.h>
+#include <memory>
 namespace OrcaGraphics
 {
     // カメラを制御する
     class Camera
     {
     public:
-        Camera() = default;
+        static Camera& Instance()
+        {
+            static Camera camera{};
+            return camera;
+        }
         ~Camera();
 
         void Initialize(); // 初期化
@@ -20,6 +24,8 @@ namespace OrcaGraphics
         void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) const; // 描画コマンドを積む
         void Finalize();    // 終了処理
     private:
+        Camera() = default;
+
         // ------------------------------- 定数バッファ ------------------------------
         struct alignas(256)CbData
         {

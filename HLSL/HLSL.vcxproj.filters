@@ -25,6 +25,9 @@
     <Filter Include="HLSLMacro\Obj">
       <UniqueIdentifier>{5437f286-5eed-425f-b467-80956d0da92b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mesh_Lambert">
+      <UniqueIdentifier>{b3e7719c-fefb-498a-8d96-ecaab9f07a8e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SourceCode\SimpleVs.hlsl">
@@ -45,6 +48,12 @@
     <FxCompile Include="SourceCode\ObjPs.hlsl">
       <Filter>Obj</Filter>
     </FxCompile>
+    <FxCompile Include="SourceCode\LambertVs.hlsl">
+      <Filter>Mesh_Lambert</Filter>
+    </FxCompile>
+    <FxCompile Include="SourceCode\LambertPs.hlsl">
+      <Filter>Mesh_Lambert</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="SourceCode\Simple.hlsli">
@@ -61,6 +70,9 @@
     </None>
     <None Include="SourceCode\SamplerStates.hlsli">
       <Filter>SamplerStates</Filter>
+    </None>
+    <None Include="SourceCode\Lambert.hlsli">
+      <Filter>Mesh_Lambert</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

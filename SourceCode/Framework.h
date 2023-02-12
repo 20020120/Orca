@@ -59,7 +59,6 @@ private:
 	uint32_t mFrames{ 0 };
 	float mDeltaTime{ 0.0f };
 	int hConsole = 0;
-	std::unique_ptr<OrcaGraphics::Camera> mpCamera{};	// ƒJƒƒ‰
 	std::unique_ptr<OrcaGraphics::RenderPipeline> mpPipeline{};
 	ComponentSystem::GameObjectHolder mGameObjects{};
 

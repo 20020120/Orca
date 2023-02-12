@@ -19,5 +19,4 @@ void Component::MeshRenderer::OnStart()
 
 void Component::MeshRenderer::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_)
 {
-
 }

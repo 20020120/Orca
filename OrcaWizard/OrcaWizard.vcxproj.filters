@@ -19,6 +19,9 @@
     <Filter Include="BluePrints">
       <UniqueIdentifier>{c2c4a351-9dd4-4689-8f8d-57292aeaeb76}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WizardGui">
+      <UniqueIdentifier>{782956fa-b630-4b66-85e4-0224a02bdf23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\WinMain.cpp">
@@ -33,6 +36,9 @@
     <ClCompile Include="SourceCode\CharacterBuilder.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\WizardEditor.cpp">
+      <Filter>WizardGui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\HighResolutionTimer.h">
@@ -43,6 +49,9 @@
     </ClInclude>
     <ClInclude Include="SourceCode\CharacterBuilder.h">
       <Filter>BluePrints</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\WizardEditor.h">
+      <Filter>WizardGui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

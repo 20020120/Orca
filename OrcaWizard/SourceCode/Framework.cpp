@@ -107,9 +107,6 @@ bool FrameWork::Initialize()
 {
     // コンソールウィンドを開く
     OrcaDebug::LogWindow::OpenWindow();
-    // 描画管理クラスの実体を生成
-    mpCamera = std::make_unique<OrcaGraphics::Camera>();
-
     // ------------------------------ 以下、初期化関数を呼ぶ ------------------------------
     OrcaGraphics::GraphicsForGameLoop::Initialize(mHwnd);
     System::RenderSystem::Instance().OnAwake();
@@ -118,7 +115,8 @@ bool FrameWork::Initialize()
     ImGuiSetting::Renderer::CreateImGui(mHwnd, OrcaGraphics::GraphicsForGameLoop::GetDevice().Get(),
         OrcaGraphics::GraphicsForGameLoop::GetDescriptorPool(OrcaGraphics::POOL_TYPE_RES));
 
-    mpCamera->Initialize();
+    OrcaGraphics::Camera::Instance().Initialize();
+
     OrcaWizard::CharacterBuilder(mGameObjects);
     return true;
 }
@@ -128,7 +126,7 @@ void FrameWork::Update(float Dt_)
     ImGuiSetting::Renderer::NewFrame();
 
     // カメラ行列を更新
-    mpCamera->Update(Dt_);
+    OrcaGraphics::Camera::Instance().Update(Dt_);
 
     mGameObjects.Update(Dt_);
 
@@ -157,7 +155,6 @@ void FrameWork::Render(float Dt_)
 
     // シェーダーをセットする
     System::RenderSystem::Instance().Begin(cmdList);
-    mpCamera->StackGraphicsCmd(cmdList);
     System::RenderSystem::Instance().Render(cmdList);
 
 
@@ -169,7 +166,7 @@ void FrameWork::Render(float Dt_)
 
 bool FrameWork::Finalize()
 {
-    mpCamera.reset();
+    OrcaGraphics::Camera::Instance().Finalize();
     mGameObjects.Finalize();
     ImGuiSetting::Renderer::Cleanup();
     OrcaGraphics::Dx12ResourceHolder::Finalize();
