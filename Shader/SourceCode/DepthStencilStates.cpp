@@ -4,7 +4,7 @@
 D3D12_DEPTH_STENCIL_DESC OrcaGraphics::PipelineObject::DepthStencilStates::GetDepthStencilState(
     const Shader::ShaderDesc& ShaderDesc_)
 {
-    switch (ShaderDesc_.mDepthStencilState)
+    switch (ShaderDesc_.m_DepthStencilState)
     {
     case PipelineTypes::DepthStencilState::Sample:
         return GetSampleDepthStencilState();

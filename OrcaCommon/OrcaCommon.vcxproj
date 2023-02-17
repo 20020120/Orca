@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SourceCode\Binary.h" />
     <ClInclude Include="SourceCode\Constructors.h" />
     <ClInclude Include="SourceCode\Encoding.h" />
     <ClInclude Include="SourceCode\MacroMemory.h" />
@@ -32,6 +33,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SourceCode\Binary.cpp" />
     <ClCompile Include="SourceCode\Encoding.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

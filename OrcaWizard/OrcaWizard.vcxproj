@@ -111,7 +111,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ConsoleLogWindow.lib;Graphics.lib;Model.lib;Math.lib;Shader.lib;ComponentSystem.lib;StandardComponents.lib;OrcaCommon.lib;ImGui.lib;d3d12.lib;dxgi.lib;dxguid.lib;d3dcompiler.lib;libfbxsdk-md.lib</AdditionalDependencies>
+      <AdditionalDependencies>ConsoleLogWindow.lib;Graphics.lib;Model.lib;Math.lib;Shader.lib;ComponentSystem.lib;StandardComponents.lib;OrcaCommon.lib;ImGui.lib;d3d12.lib;dxgi.lib;dxguid.lib;dxcompiler.lib;d3dcompiler.lib;libfbxsdk-md.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EntryPointSymbol>
       </EntryPointSymbol>
@@ -134,7 +134,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ConsoleLogWindow.lib;Graphics.lib;Model.lib;Math.lib;Shader.lib;ComponentSystem.lib;StandardComponents.lib;OrcaCommon.lib;ImGui.lib;d3d12.lib;dxgi.lib;dxguid.lib;d3dcompiler.lib;libfbxsdk-md.lib</AdditionalDependencies>
+      <AdditionalDependencies>ConsoleLogWindow.lib;Graphics.lib;Model.lib;Math.lib;Shader.lib;ComponentSystem.lib;StandardComponents.lib;OrcaCommon.lib;ImGui.lib;d3d12.lib;dxgi.lib;dxguid.lib;dxcompiler.lib;d3dcompiler.lib;libfbxsdk-md.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EntryPointSymbol>
       </EntryPointSymbol>

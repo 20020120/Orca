@@ -34,3 +34,35 @@ std::vector<D3D12_INPUT_ELEMENT_DESC> OrcaGraphics::InputLayout::InputLayout::Cr
 
     return inputElementDescs;
 }
+
+std::vector<D3D12_INPUT_ELEMENT_DESC> OrcaGraphics::InputLayout::InputLayout::CreateInputElementDesc(
+    ID3D12ShaderReflection** pReflector_, const D3D12_SHADER_DESC& Desc_)
+{
+    std::vector<D3D12_INPUT_ELEMENT_DESC> inputElementDescs{};
+
+    // ------------------------------ リフレクション情報を取得 -----------------------------
+    const auto pReflector = *pReflector_;
+    inputElementDescs.reserve(Desc_.InputParameters);
+
+    for (unsigned int i = 0; i < Desc_.InputParameters; ++i) {
+        D3D12_SIGNATURE_PARAMETER_DESC sigDesc;
+        pReflector->GetInputParameterDesc(i, &sigDesc);
+
+        //フォーマットを取得
+        const auto format = OrcaGraphics::Shader::ReflectionHelpers::GetDxgiFormat(sigDesc.ComponentType, sigDesc.Mask);
+        D3D12_INPUT_ELEMENT_DESC elementDesc;
+        const int semanticsLen = { static_cast<int>(std::strlen(sigDesc.SemanticName) + 1) };
+        const auto pTmp = new char[semanticsLen]();
+        std::memcpy(pTmp, sigDesc.SemanticName, semanticsLen);
+        elementDesc.SemanticName = pTmp;
+        elementDesc.SemanticIndex = 0;
+        elementDesc.Format = format;
+        elementDesc.InputSlot = 0;
+        elementDesc.AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+        elementDesc.InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
+        elementDesc.InstanceDataStepRate = 0;
+        inputElementDescs.emplace_back(elementDesc);
+    }
+
+    return inputElementDescs;
+}

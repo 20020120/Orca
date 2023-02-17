@@ -37,6 +37,9 @@
     <Filter Include="RenderPipelineHolder">
       <UniqueIdentifier>{666fe153-855d-4003-aaa4-6ad050e23361}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{ac4e85fb-b318-40d1-b379-1d5425b2d849}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\ReflectionHelpers.h">
@@ -73,6 +76,9 @@
     <ClInclude Include="SourceCode\RenderPipelineHolder.h">
       <Filter>RenderPipelineHolder</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\Shader.h">
+      <Filter>Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\ReflectionHelpers.cpp">
@@ -101,6 +107,9 @@
     </ClCompile>
     <ClCompile Include="SourceCode\RenderPipelineHolder.cpp">
       <Filter>RenderPipelineHolder</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Shader.cpp">
+      <Filter>Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

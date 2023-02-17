@@ -3,7 +3,7 @@
 D3D12_BLEND_DESC OrcaGraphics::PipelineObject::BlendStates::GetBlendDesc(const Shader::ShaderDesc& ShaderDesc_)
 {
     // ------------------------------ ブレンドステートを取得 ------------------------------
-    switch (ShaderDesc_.mBlendState)
+    switch (ShaderDesc_.m_BlendState)
     {
     case PipelineTypes::BlendState::Sample:
         return GetSampleBlendState();

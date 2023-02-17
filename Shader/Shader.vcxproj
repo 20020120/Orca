@@ -28,6 +28,7 @@
     <ClInclude Include="SourceCode\RenderPipelineHolder.h" />
     <ClInclude Include="SourceCode\RenderPipline.h" />
     <ClInclude Include="SourceCode\SamplerStates.h" />
+    <ClInclude Include="SourceCode\Shader.h" />
     <ClInclude Include="SourceCode\ShaderBuilder.h" />
     <ClInclude Include="SourceCode\ShaderDesc.h" />
     <ClInclude Include="SourceCode\ShaderMinimun.h" />
@@ -41,6 +42,7 @@
     <ClCompile Include="SourceCode\RenderPipelineHolder.cpp" />
     <ClCompile Include="SourceCode\RenderPipline.cpp" />
     <ClCompile Include="SourceCode\SamplerStates.cpp" />
+    <ClCompile Include="SourceCode\Shader.cpp" />
     <ClCompile Include="SourceCode\ShaderBuilder.cpp" />
   </ItemGroup>
   <ItemGroup>

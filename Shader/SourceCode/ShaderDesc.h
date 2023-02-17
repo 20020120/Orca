@@ -11,17 +11,17 @@ namespace OrcaGraphics
     {
         struct ShaderDesc
         {
-            ShaderType mShaderType{ ShaderType::Unknown };
-            std::wstring mVsFileName{};
-            std::wstring mPsFileName{};
-            std::wstring mGsFileName{};
-            std::wstring mDsFileName{};
-            std::wstring mHsFileName{};
-            std::wstring mCsFileName{};
+            ShaderType m_ShaderType{ ShaderType::Unknown };
+            std::wstring m_VsFileName{};
+            std::wstring m_PsFileName{};
+            std::wstring m_GsFileName{};
+            std::wstring m_DsFileName{};
+            std::wstring m_HsFileName{};
+            std::wstring m_CsFileName{};
             
-            PipelineTypes::BlendState mBlendState{};
-            PipelineTypes::DepthStencilState mDepthStencilState{};
-            PipelineTypes::RasterizerState mRasterizerState{};
+            PipelineTypes::BlendState m_BlendState{};
+            PipelineTypes::DepthStencilState m_DepthStencilState{};
+            PipelineTypes::RasterizerState m_RasterizerState{};
         };
     }
 }

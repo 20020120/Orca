@@ -4,7 +4,7 @@ D3D12_RASTERIZER_DESC OrcaGraphics::PipelineObject::RasterizerStates::GetRasteri
     const Shader::ShaderDesc& ShaderDesc_)
 {
     // ----------------------------- ラスタライザステートを取得 -----------------------------
-    switch (ShaderDesc_.mRasterizerState)
+    switch (ShaderDesc_.m_RasterizerState)
     {
     case PipelineTypes::RasterizerState::Sample:
         return GetSampleRasterizerState();

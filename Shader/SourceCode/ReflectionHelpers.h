@@ -15,10 +15,13 @@ namespace OrcaGraphics
 
     namespace Shader
     {
+        class Shader;
+
         class ReflectionHelpers
         {
             // ----------------------------- 公開先クラス ----------------------------
             friend InputLayout::InputLayout;
+            friend Shader;
             friend RenderPipeline;
 
             // --------------------- シェーダー情報を受け取るためのヘルパー関数 ---------------------

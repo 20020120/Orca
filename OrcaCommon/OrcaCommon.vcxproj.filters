@@ -11,6 +11,9 @@
       <Filter>Encoding</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\MacroMemory.h" />
+    <ClInclude Include="SourceCode\Binary.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -19,10 +22,16 @@
     <Filter Include="Encoding">
       <UniqueIdentifier>{67650d00-55ef-44b9-a568-139a3b935e00}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Binary">
+      <UniqueIdentifier>{2ff0661f-5151-4791-b0b2-16d2581f8ca6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\Encoding.cpp">
       <Filter>Encoding</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Binary.cpp">
+      <Filter>Binary</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
