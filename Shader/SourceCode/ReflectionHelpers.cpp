@@ -110,7 +110,7 @@ D3D12_DESCRIPTOR_RANGE OrcaGraphics::Shader::ReflectionHelpers::GetDescriptorRan
     // ディスクリプタレンジを作成
     D3D12_DESCRIPTOR_RANGE descriptorRange;
     // リソースの種類を判別
-    descriptorRange.RangeType = ReflectionHelpers::GetDescriptorRangeType(BindDesc_.Type, BindDesc_.Dimension);
+    descriptorRange.RangeType = GetDescriptorRangeType(BindDesc_.Type, BindDesc_.Dimension);
     descriptorRange.NumDescriptors = 1;
     // スロットを判別
     descriptorRange.BaseShaderRegister = BindDesc_.BindPoint;

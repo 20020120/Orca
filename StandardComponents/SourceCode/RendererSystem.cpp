@@ -9,6 +9,11 @@ void System::RenderSystem::OnAwake()
     ORCA_MAKE_UNIQUE(mpShaderHolder);
 }
 
+void System::RenderSystem::Finalize()
+{
+    mpShaderHolder.reset();
+}
+
 void System::RenderSystem::Update(float Dt_)
 {
     BaseUpdate(Dt_);

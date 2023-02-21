@@ -19,8 +19,8 @@ namespace Component
         // ------------------------------- 定数バッファ ------------------------------
         struct alignas(256) ResourceIndex
         {
-            int CameraCBufferIndex;
-            int ObjectCBufferIndex;
+            uint32_t CameraCBufferIndex;
+            uint32_t ObjectCBufferIndex;
         };
       
     public:
@@ -32,8 +32,7 @@ namespace Component
         void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) override;
     private:
         // ------------------------------- 定数バッファ ------------------------------
-        std::unique_ptr<OrcaGraphics::Resource::ConstantBuffer> mpCBuffer{};
-        ResourceIndex* mpCbData{};
+        ResourceIndex mpCbData{};
         // ------------------------- 必要なコンポーネントをキャッシュする ------------------------
         std::weak_ptr<ObjMesh> mpObjMesh{};
     };

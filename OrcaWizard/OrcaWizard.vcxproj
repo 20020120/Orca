@@ -117,8 +117,12 @@
       </EntryPointSymbol>
     </Link>
     <PreBuildEvent>
-      <Command>..\Tools\Dxc\DxcApp.exe ..\HLSL\SourceCode ..\Resource\Shader</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>..\Tools\Dxc\DxcApp.exe ..\HLSL\SourceCode ..\Resource\Shader..\Tools\Dxc\DxcApp.exe ..\HLSL\SourceCode ..\Resource\Shader</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -143,8 +147,12 @@
       </EntryPointSymbol>
     </Link>
     <PreBuildEvent>
-      <Command>..\Tools\Dxc\DxcApp.exe ..\HLSL\SourceCode ..\Resource\Shader</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>..\Tools\Dxc\DxcApp.exe ..\HLSL\SourceCode ..\Resource\Shader..\Tools\Dxc\DxcApp.exe ..\HLSL\SourceCode ..\Resource\Shader</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\CharacterBuilder.cpp" />

@@ -24,6 +24,7 @@ namespace OrcaGraphics
             // -------------------- バインドするためのデータや、リフレクションデータ -------------------
             struct Data
             {
+                ~Data();
                 void* m_pBin{};        // シェーダーの先頭アドレス
                 size_t m_BinSize{};    // バイナリのサイズ
                 void* m_pRef{};
@@ -36,13 +37,11 @@ namespace OrcaGraphics
         public:
             // ------------------------------ 初期化 ------------------------------
             explicit Shader(IDxcUtils* pUtils_, const ShaderDesc& ShaderDesc_);
-
+            ~Shader();
             // コマンドをセット
             void Set(ID3D12GraphicsCommandList* pCmdList_);
 
             void CreateRootRootSignature(IDxcUtils* pUtils_, const ShaderDesc& Desc_);   // ルートシグネチャを作成
-            void CreatePSO(const std::vector<D3D12_INPUT_ELEMENT_DESC>& InputElementDescs_, 
-                const ShaderDesc& ShaderDesc_);   // パイプラインステートオブジェクトを作成
         private:
             // --------------------------- 各シェーダーのデータ --------------------------
             Data m_Vs{};

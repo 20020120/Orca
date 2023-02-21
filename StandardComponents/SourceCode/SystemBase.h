@@ -20,11 +20,11 @@ namespace System
 
 
             // -----------------------------------------------------------------
-        protected:
+            protected:
             SystemBase() = default;
-        protected:
+            protected:
             ~SystemBase() = default;
-        public:
+            public:
             static SystemType& Instance();
         };
     }

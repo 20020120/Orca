@@ -19,6 +19,19 @@
 #include "Graphics.h"
 #include "RasterizerStates.h"
 
+OrcaGraphics::Shader::Shader::Data::~Data()
+{
+    if (m_pBin)
+    {
+        delete m_pBin;
+        m_pBin = nullptr;
+    }
+    if (m_pRef)
+    {
+        delete m_pRef;
+        m_pRef = nullptr;
+    }
+}
 OrcaGraphics::Shader::Shader::Shader(IDxcUtils* pUtils_, const ShaderDesc& ShaderDesc_)
     :m_ShaderType(ShaderDesc_.m_ShaderType)
 {
@@ -34,22 +47,19 @@ OrcaGraphics::Shader::Shader::Shader(IDxcUtils* pUtils_, const ShaderDesc& Shade
         OrcaBinary::Load(psFileName.c_str(), &m_Ps.m_pBin, m_Ps.m_BinSize);
         OrcaBinary::Load(psFileName.replace_extension("ref").c_str(), &m_Ps.m_pRef, m_Ps.m_RefSize);
     }
-
     // ------------------------------ ルートシグネチャを作成 ------------------------------
     CreateRootRootSignature(pUtils_, ShaderDesc_);
+}
 
-
-    // --------------------------------- PSOを作成 --------------------------------
-
-
-
-
-
+OrcaGraphics::Shader::Shader::~Shader()
+{
+   
 }
 
 void OrcaGraphics::Shader::Shader::Set(ID3D12GraphicsCommandList* pCmdList_)
 {
-
+    pCmdList_->SetGraphicsRootSignature(mpRootSignature.Get());
+    pCmdList_->SetPipelineState(mpPipelineState.Get());
 }
 
 void OrcaGraphics::Shader::Shader::CreateRootRootSignature(IDxcUtils* pUtils_, const ShaderDesc& Desc_)

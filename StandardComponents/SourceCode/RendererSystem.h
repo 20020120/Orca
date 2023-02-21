@@ -18,6 +18,7 @@ namespace System
         friend class Component::Renderer;
     public:
         void OnAwake() override;
+        void Finalize();
         void Update(float Dt_);
         void Begin(const Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& pCmdList_) const;
         void Render(const Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& pCmdList_) const;

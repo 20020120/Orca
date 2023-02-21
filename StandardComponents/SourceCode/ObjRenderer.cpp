@@ -18,10 +18,8 @@ void Component::ObjRenderer::OnStart()
     Renderer::OnStart();
     mpObjMesh = mpGameObject.lock()->GetComponent<ObjMesh>();
     // ----------------------------- リソース情報をマッピングする ----------------------------
-    mpCBuffer = std::make_unique<OrcaGraphics::Resource::ConstantBuffer>(&mpCbData);
-
-    mpCbData->ObjectCBufferIndex = mpObjMesh.lock()->GetDescriptorIndex();
-    mpCbData->CameraCBufferIndex = mpObjMesh.lock()->GetDescriptorIndex();
+    mpCbData.ObjectCBufferIndex = mpObjMesh.lock()->GetDescriptorIndex();
+    mpCbData.CameraCBufferIndex = mpObjMesh.lock()->GetDescriptorIndex();
 }
 
 void Component::ObjRenderer::GuiMenu(float Dt_)
@@ -38,10 +36,8 @@ void Component::ObjRenderer::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12Graph
 {
     if(mpObjMesh.expired())
         return;
-
     // ---------------------------- 描画に必要なデータを取得 ---------------------------
-
     const auto& resource = mpObjMesh.lock()->GetResource();
-    pCmdList_->SetGraphicsRootDescriptorTable(0, mpCBuffer->GetGpuHandle());
+    pCmdList_->SetGraphicsRoot32BitConstants(0, 2, reinterpret_cast<void*>(&mpCbData), 0);
     resource.StackGraphicsCmd(pCmdList_);
 }
