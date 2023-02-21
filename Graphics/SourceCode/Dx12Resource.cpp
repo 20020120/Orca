@@ -4,15 +4,14 @@
 #include "OrcaException.h"
 #include"DescriptorPool.h"
 
-OrcaGraphics::Resource::Dx12Resource::Dx12Resource(std::string Name_, DescriptorPool* pDescriptorPool_, UINT RootParamIndex)
-    :mRootParamIndex(RootParamIndex)
-    ,mName(Name_)
+OrcaGraphics::Resource::Dx12Resource::Dx12Resource(DescriptorPool* pDescriptorPool_)
 {
     Orca_NotNullException(mpPool);
     Orca_NotNullException(mpHandle);
 
     mpPool = pDescriptorPool_;
     mpPool->AddRef();
+    mDescriptorIndex = mpPool->GetCount();
     mpHandle = mpPool->AllocHandle();
     Orca_NullException(mpHandle);
 }
@@ -39,12 +38,12 @@ OrcaGraphics::Resource::Dx12Resource::~Dx12Resource()
     }
 }
 
-void OrcaGraphics::Resource::Dx12Resource::Bind(const OrcaComPtr(ID3D12GraphicsCommandList) pCmdList_) const
+uint32_t OrcaGraphics::Resource::Dx12Resource::GetDescriptorIndex() const
 {
-    pCmdList_->SetGraphicsRootDescriptorTable(mRootParamIndex, mpHandle->HandleGPU);
+    return mDescriptorIndex;
 }
 
-std::string OrcaGraphics::Resource::Dx12Resource::GetName() const
+D3D12_GPU_DESCRIPTOR_HANDLE OrcaGraphics::Resource::Dx12Resource::GetGpuHandle() const
 {
-    return mName;
+    return mpHandle->HandleGPU;
 }

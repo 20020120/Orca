@@ -1,6 +1,6 @@
 #pragma once
 #include"SystemBase.h"
-#include"RenderPipelineHolder.h"
+#include"ShaderHolder.h"
 #include<wrl.h>
 #include<memory>
 namespace Component
@@ -22,6 +22,6 @@ namespace System
         void Begin(const Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& pCmdList_) const;
         void Render(const Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& pCmdList_) const;
     private:
-        std::unique_ptr<OrcaGraphics::RenderPipeLineHolder> mpRenderPipeLineHolder{};
+        std::unique_ptr<OrcaGraphics::ShaderHolder> mpShaderHolder{};
     };
 }

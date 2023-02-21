@@ -73,7 +73,7 @@
     <ClInclude Include="SourceCode\InputLayout.h">
       <Filter>InputLayout</Filter>
     </ClInclude>
-    <ClInclude Include="SourceCode\RenderPipelineHolder.h">
+    <ClInclude Include="SourceCode\ShaderHolder.h">
       <Filter>RenderPipelineHolder</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\Shader.h">
@@ -105,7 +105,7 @@
     <ClCompile Include="SourceCode\InputLayout.cpp">
       <Filter>InputLayout</Filter>
     </ClCompile>
-    <ClCompile Include="SourceCode\RenderPipelineHolder.cpp">
+    <ClCompile Include="SourceCode\ShaderHolder.cpp">
       <Filter>RenderPipelineHolder</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\Shader.cpp">

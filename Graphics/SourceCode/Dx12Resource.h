@@ -1,7 +1,5 @@
 #pragma once
-//#include <d3d12.h>
 #include"GraphicsMacro.h"
-#include<string>
 
 struct ID3D12GraphicsCommandList;
 struct ID3D12Resource;
@@ -19,18 +17,18 @@ namespace OrcaGraphics
         {
         public:
             // 共通の初期化
-            Dx12Resource(std::string Name_, DescriptorPool* pDescriptorPool_, UINT RootParamIndex);
+            Dx12Resource(DescriptorPool* pDescriptorPool_);
             virtual ~Dx12Resource();
 
-            void Bind(OrcaComPtr(ID3D12GraphicsCommandList) pCmdList_) const; // GPUにバインド
-            std::string GetName()const;
+            // ------------------------------ ゲッター -----------------------------
+            [[nodiscard]] uint32_t GetDescriptorIndex()const;
+            [[nodiscard]] D3D12_GPU_DESCRIPTOR_HANDLE GetGpuHandle()const;
         private:
-            UINT mRootParamIndex{}; // ルートパラメーターの番号
+            UINT mDescriptorIndex{}; // ディスクリプタの生成順
         protected:
             DescriptorHandle* mpHandle{};
             DescriptorPool* mpPool{};
             OrcaComPtr(ID3D12Resource) mpResource {};
-            std::string mName{};
         };
     }
 }

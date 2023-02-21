@@ -130,7 +130,7 @@ void OrcaGraphics::Shader::Shader::CreateRootRootSignature(IDxcUtils* pUtils_, c
         desc.pParameters = rootParameters.data();
         desc.NumStaticSamplers = static_cast<UINT>(samplerStates.size());
         desc.pStaticSamplers = samplerStates.data();
-        desc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+        desc.Flags = D3D12_ROOT_SIGNATURE_FLAG_CBV_SRV_UAV_HEAP_DIRECTLY_INDEXED| D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
         // ---------------------------- ルートシグネチャをシリアライズ ----------------------------
         Microsoft::WRL::ComPtr<ID3DBlob> pBlob{};
@@ -187,5 +187,4 @@ void OrcaGraphics::Shader::Shader::CreateRootRootSignature(IDxcUtils* pUtils_, c
     {
         delete[] aaa.SemanticName;
     }
-
 }

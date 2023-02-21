@@ -9,9 +9,11 @@
 #include"OrcaException.h"
 #include"GraphicsLogger.h"
 
-OrcaGraphics::Resource::Texture::Texture(std::string Name_,uint32_t RootIndex_)
-    :Dx12Resource(Name_,Graphics::GetDescriptorPool(POOL_TYPE_RES),RootIndex_)
-{}
+OrcaGraphics::Resource::Texture::Texture(DirectX::ResourceUploadBatch& Batch_, const wchar_t* FileName_)
+    :Dx12Resource(Graphics::GetDescriptorPool(POOL_TYPE_RES))
+{
+    Load(FileName_, Batch_);
+}
 
 
 bool OrcaGraphics::Resource::Texture::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_,

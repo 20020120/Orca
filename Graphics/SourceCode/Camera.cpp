@@ -2,7 +2,6 @@
 #include"Camera.h"
 #include"VectorOperator.h"
 #include"Quaternion.h"
-#include"Vector.h"
 #include "ScreenConstants.h"
 OrcaGraphics::Camera::~Camera()
 {
@@ -11,8 +10,7 @@ OrcaGraphics::Camera::~Camera()
 void OrcaGraphics::Camera::Initialize()
 {
     // 定数バッファを初期化
-    mCb = std::make_unique<Resource::ConstantBuffer>("Camera", sizeof(CbData), 0);
-    mCb->Mapping(reinterpret_cast<void**>(&mCbData));
+    mCb = std::make_unique<Resource::ConstantBuffer>(&mCbData);
 }
 
 void OrcaGraphics::Camera::Update(float Dt_)
@@ -35,10 +33,11 @@ void OrcaGraphics::Camera::Update(float Dt_)
     DirectX::XMStoreFloat4x4(&mCbData->Proj, DirectX::XMMatrixTranspose(P));
 }
 
-void OrcaGraphics::Camera::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) const
+uint32_t OrcaGraphics::Camera::GetDescriptorIndex() const
 {
-    mCb->Bind(pCmdList_);
+    return mCb->GetDescriptorIndex();
 }
+
 
 void OrcaGraphics::Camera::Finalize()
 {

@@ -1,4 +1,4 @@
-#include"RenderPipelineHolder.h"
+#include"ShaderHolder.h"
 #include"RenderPipline.h"
 #include"MacroMemory.h"
 
@@ -6,16 +6,16 @@
 #include<d3d12.h>
 #include <dxcapi.h>
 
-void OrcaGraphics::RenderPipeLineHolder::Set(const Shader::ShaderType& Type_, 
+void OrcaGraphics::ShaderHolder::Set(const Shader::ShaderType& Type_,
                                              ID3D12GraphicsCommandList* pCmdList_) const
 {
     if (mCurrentShaderType == Type_)
         return;
     const auto& pPipeLine = mHolder.at(Type_);
-    pPipeLine->StackGraphicsCmd(pCmdList_);
+    pPipeLine->Set(pCmdList_);
 }
 
-OrcaGraphics::RenderPipeLineHolder::RenderPipeLineHolder()
+OrcaGraphics::ShaderHolder::ShaderHolder()
 {
     // コンパイラとユーティリティを生成
     OrcaComPtr(IDxcUtils) pUtils;
@@ -31,17 +31,18 @@ OrcaGraphics::RenderPipeLineHolder::RenderPipeLineHolder()
         shaderDesc.m_BlendState = PipelineTypes::BlendState::Sample;
         shaderDesc.m_RasterizerState = PipelineTypes::RasterizerState::Sample;
         shaderDesc.m_DepthStencilState = PipelineTypes::DepthStencilState::Sample;
-        auto* pShader = new Shader::Shader(pUtils.Get(),shaderDesc);
+        mHolder.try_emplace(Shader::ShaderType::Sample, std::make_unique<Shader::Shader>(pUtils.Get(), shaderDesc));
     }
-    {
-        Shader::ShaderDesc shaderDesc{};
-        shaderDesc.m_VsFileName = L"../Resource/Shader/lambertVs.cso";
-        shaderDesc.m_PsFileName = L"../Resource/Shader/lambertPs.cso";
-        shaderDesc.m_ShaderType = Shader::ShaderType::Lambert;
-        shaderDesc.m_BlendState = PipelineTypes::BlendState::Sample;
-        shaderDesc.m_RasterizerState = PipelineTypes::RasterizerState::Sample;
-        shaderDesc.m_DepthStencilState = PipelineTypes::DepthStencilState::Sample;
-        mHolder.try_emplace(Shader::ShaderType::Lambert, std::make_unique<RenderPipeline>(shaderDesc));
-    }
+    
+    //{
+    //    Shader::ShaderDesc shaderDesc{};
+    //    shaderDesc.m_VsFileName = L"../Resource/Shader/lambertVs.cso";
+    //    shaderDesc.m_PsFileName = L"../Resource/Shader/lambertPs.cso";
+    //    shaderDesc.m_ShaderType = Shader::ShaderType::Lambert;
+    //    shaderDesc.m_BlendState = PipelineTypes::BlendState::Sample;
+    //    shaderDesc.m_RasterizerState = PipelineTypes::RasterizerState::Sample;
+    //    shaderDesc.m_DepthStencilState = PipelineTypes::DepthStencilState::Sample;
+    //    mHolder.try_emplace(Shader::ShaderType::Lambert, std::make_unique<RenderPipeline>(shaderDesc));
+    //}
 
 }

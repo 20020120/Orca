@@ -6,6 +6,7 @@
 
 #include"RendererSystem.h"
 #include"Dx12ResourceHolder.h"
+#include"ConstantBuffer.h"
 #include"GuiInclude.h"
 
 Component::ObjRenderer::ObjRenderer()
@@ -15,23 +16,18 @@ Component::ObjRenderer::ObjRenderer()
 void Component::ObjRenderer::OnStart()
 {
     Renderer::OnStart();
-    mpTransform = mpGameObject.lock()->GetComponent<Transform>();
     mpObjMesh = mpGameObject.lock()->GetComponent<ObjMesh>();
     // ----------------------------- リソース情報をマッピングする ----------------------------
-    OrcaGraphics::Dx12ResourceHolder::CbMapping(mResourceHandle, "Obj", &mCbData);
-    OrcaGraphics::Dx12ResourceHolder::TexLoad(mResourceHandle, std::tuple("gDiffuseTexture", mpObjMesh.lock()->GetResource().GetTextureName()));
-}
+    mpCBuffer = std::make_unique<OrcaGraphics::Resource::ConstantBuffer>(&mpCbData);
 
-void Component::ObjRenderer::Update(float Dt_)
-{
-    mCbData->World = mpTransform.lock()->mTransform.Transpose();
+    mpCbData->ObjectCBufferIndex = mpObjMesh.lock()->GetDescriptorIndex();
+    mpCbData->CameraCBufferIndex = mpObjMesh.lock()->GetDescriptorIndex();
 }
 
 void Component::ObjRenderer::GuiMenu(float Dt_)
 {
     if (ImGui::TreeNode("ObjRenderer"))
     {
-        ImGui::RadioButton("Cached_Transform", !mpTransform.expired());
         ImGui::RadioButton("Cached_ObjMesh", !mpObjMesh.expired());
         ImGui::Text("ResourceHandle:%d", mResourceHandle);
         ImGui::TreePop();
@@ -40,10 +36,12 @@ void Component::ObjRenderer::GuiMenu(float Dt_)
 
 void Component::ObjRenderer::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_)
 {
-    if(mpTransform.expired()||mpObjMesh.expired())
+    if(mpObjMesh.expired())
         return;
 
+    // ---------------------------- 描画に必要なデータを取得 ---------------------------
+
     const auto& resource = mpObjMesh.lock()->GetResource();
-    OrcaGraphics::Dx12ResourceHolder::StackGraphicsCmd(pCmdList_.Get(), mResourceHandle);
+    pCmdList_->SetGraphicsRootDescriptorTable(0, mpCBuffer->GetGpuHandle());
     resource.StackGraphicsCmd(pCmdList_);
 }

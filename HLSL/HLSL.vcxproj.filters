@@ -42,18 +42,6 @@
     <FxCompile Include="SourceCode\SimpleTexVs.hlsl">
       <Filter>SimpleTex</Filter>
     </FxCompile>
-    <FxCompile Include="SourceCode\ObjVs.hlsl">
-      <Filter>Obj</Filter>
-    </FxCompile>
-    <FxCompile Include="SourceCode\ObjPs.hlsl">
-      <Filter>Obj</Filter>
-    </FxCompile>
-    <FxCompile Include="SourceCode\LambertVs.hlsl">
-      <Filter>Mesh_Lambert</Filter>
-    </FxCompile>
-    <FxCompile Include="SourceCode\LambertPs.hlsl">
-      <Filter>Mesh_Lambert</Filter>
-    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="SourceCode\Simple.hlsli">
@@ -74,10 +62,25 @@
     <None Include="SourceCode\Lambert.hlsli">
       <Filter>Mesh_Lambert</Filter>
     </None>
+    <None Include="SourceCode\LambertVs.hlsl">
+      <Filter>Mesh_Lambert</Filter>
+    </None>
+    <None Include="SourceCode\LambertPs.hlsl">
+      <Filter>Mesh_Lambert</Filter>
+    </None>
+    <None Include="SourceCode\ObjVs.hlsl">
+      <Filter>Obj</Filter>
+    </None>
+    <None Include="SourceCode\ObjPs.hlsl">
+      <Filter>Obj</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HLSLMacro\SamplerStateNames.h">
       <Filter>HLSLMacro\SamplerStates</Filter>
+    </ClInclude>
+    <ClInclude Include="HLSLMacro\Common.h">
+      <Filter>HLSLMacro</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

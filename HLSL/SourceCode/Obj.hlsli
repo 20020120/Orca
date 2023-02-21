@@ -1,6 +1,13 @@
 #ifndef Obj_HLSLI
 #define Obj_HLSLI
 
+struct ResourceIndex
+{
+	uint CameraCBufferIndex;
+	uint ObjectCBufferIndex;
+};
+ConstantBuffer<ResourceIndex> resourceIndex : register(b0);
+
 struct ObjVsIn
 {
 	float3 Position : POSITION;
@@ -15,11 +22,9 @@ struct ObjVsOut
 };
 
 // ----------------------------------- 定数バッファ ----------------------------------
-cbuffer Obj : register(b1)
+struct Obj
 {
 	float4x4 World;
-}
-
-
+};
 #endif
 

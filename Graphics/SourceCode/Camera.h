@@ -21,7 +21,7 @@ namespace OrcaGraphics
 
         void Initialize(); // 初期化
         void Update(float Dt_); // 更新
-        void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) const; // 描画コマンドを積む
+        [[nodiscard]] uint32_t GetDescriptorIndex()const;
         void Finalize();    // 終了処理
     private:
         Camera() = default;

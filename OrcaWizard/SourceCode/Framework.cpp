@@ -169,7 +169,6 @@ bool FrameWork::Finalize()
     OrcaGraphics::Camera::Instance().Finalize();
     mGameObjects.Finalize();
     ImGuiSetting::Renderer::Cleanup();
-    OrcaGraphics::Dx12ResourceHolder::Finalize();
     OrcaGraphics::GraphicsForGameLoop::Finalize();
     return true;
 }

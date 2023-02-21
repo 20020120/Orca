@@ -23,8 +23,6 @@ void Component::FbxRenderer::OnStart()
 	mpTransform = mpGameObject.lock()->GetComponent<Transform>();
 	mpFbxMesh = mpGameObject.lock()->GetComponent<FbxMesh>();
 	Renderer::OnStart();
-	// -------------------------------- リソースをマッピング --------------------------------
-	 OrcaGraphics::Dx12ResourceHolder::CbMapping(mResourceHandle, "Lambert", &mCb);
 }
 
 void Component::FbxRenderer::Update(float Dt_)
@@ -60,8 +58,7 @@ void Component::FbxRenderer::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12Graph
 	{
         // -------------------------------- 描画リソースを設定 --------------------------------
 		mesh.StackGraphicsCmd(pCmdList_.Get());
-		OrcaGraphics::Dx12ResourceHolder::StackGraphicsCmd(pCmdList_.Get(), mResourceHandle);
-		OrcaGraphics::Camera::Instance().StackGraphicsCmd(pCmdList_);
+		//OrcaGraphics::Camera::Instance().StackGraphicsCmd(pCmdList_);
 		for (const auto& subSet : mesh.mSubsets)
 		{
 			// 描画
