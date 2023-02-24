@@ -122,12 +122,19 @@ void OrcaGraphics::Shader::Shader::CreateRootRootSignature(IDxcUtils* pUtils_, c
     {
         auto& range = it->second;
         D3D12_ROOT_PARAMETER param;
-        param.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;		// パラメータ種別
-        //param.ShaderVisibility = static_cast<D3D12_SHADER_VISIBILITY>(shaderStage); // どのシェーダーから利用可能か
+        param.ParameterType = D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;		// パラメータ種別
         // TODO 一旦アクセス指定をオールにしているが個別設定のやり方を模索すること
         param.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;			// どのシェーダーから利用可能か
         param.DescriptorTable.NumDescriptorRanges = 1;					// ディスクリプタレンジ数
         param.DescriptorTable.pDescriptorRanges = &range;	            // ディスクリプタレンジのアドレス
+        struct ResourceIndex
+        {
+            uint32_t CameraCBufferIndex;
+            uint32_t ObjectCBufferIndex;
+        };
+        param.Constants.Num32BitValues = sizeof(ResourceIndex);
+        param.Constants.RegisterSpace = 0;
+        param.Constants.ShaderRegister = 0;
         rootParameters.emplace_back(param);
     }
     {
@@ -152,7 +159,7 @@ void OrcaGraphics::Shader::Shader::CreateRootRootSignature(IDxcUtils* pUtils_, c
         );
         OrcaDebug::GraphicsLog("ルートシグネチャをシリアライズ", hr);
 
-        auto pDevice = OrcaGraphics::Graphics::GetDevice();
+        auto pDevice = Graphics::GetDevice();
         // ルートシグネチャを生成
         hr = pDevice->CreateRootSignature(
             0,

@@ -1,0 +1,1 @@
+..\Tools\Dxc\DxcApp.exe ..\HLSL\SourceCode ..\Resource\Shader

@@ -5,7 +5,6 @@
 #include <Richedit.h>
 #include<wrl.h>
 #include<memory>
-#include"RenderPipline.h"
 #include"GameObjectHolder.h"
 
 #define  WM_DROPFILES    0x0233

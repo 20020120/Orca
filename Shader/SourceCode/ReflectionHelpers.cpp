@@ -116,6 +116,5 @@ D3D12_DESCRIPTOR_RANGE OrcaGraphics::Shader::ReflectionHelpers::GetDescriptorRan
     descriptorRange.BaseShaderRegister = BindDesc_.BindPoint;
     descriptorRange.RegisterSpace = BindDesc_.Space;
     descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
-    
     return descriptorRange;
 }

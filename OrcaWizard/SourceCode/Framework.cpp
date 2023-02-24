@@ -123,6 +123,7 @@ bool FrameWork::Initialize()
 
 void FrameWork::Update(float Dt_)
 {
+
     ImGuiSetting::Renderer::NewFrame();
 
     // カメラ行列を更新
@@ -162,6 +163,7 @@ void FrameWork::Render(float Dt_)
     ImGuiSetting::Renderer::RenderDrawData(cmdList.Get());
     // コマンドリストを閉じる
     OrcaGraphics::GraphicsForGameLoop::CloseCmdList();
+
 }
 
 bool FrameWork::Finalize()

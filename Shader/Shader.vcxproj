@@ -26,7 +26,6 @@
     <ClInclude Include="SourceCode\RasterizerStates.h" />
     <ClInclude Include="SourceCode\ReflectionHelpers.h" />
     <ClInclude Include="SourceCode\ShaderHolder.h" />
-    <ClInclude Include="SourceCode\RenderPipline.h" />
     <ClInclude Include="SourceCode\SamplerStates.h" />
     <ClInclude Include="SourceCode\Shader.h" />
     <ClInclude Include="SourceCode\ShaderBuilder.h" />
@@ -40,7 +39,6 @@
     <ClCompile Include="SourceCode\RasterizerStates.cpp" />
     <ClCompile Include="SourceCode\ReflectionHelpers.cpp" />
     <ClCompile Include="SourceCode\ShaderHolder.cpp" />
-    <ClCompile Include="SourceCode\RenderPipline.cpp" />
     <ClCompile Include="SourceCode\SamplerStates.cpp" />
     <ClCompile Include="SourceCode\Shader.cpp" />
     <ClCompile Include="SourceCode\ShaderBuilder.cpp" />

@@ -121,7 +121,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>..\Tools\Dxc\DxcApp.exe ..\HLSL\SourceCode ..\Resource\Shader..\Tools\Dxc\DxcApp.exe ..\HLSL\SourceCode ..\Resource\Shader</Command>
+      <Command>..\Tools\Dxc\DxcApp.exe ..\HLSL\SourceCode ..\Resource\Shader</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -151,7 +151,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>..\Tools\Dxc\DxcApp.exe ..\HLSL\SourceCode ..\Resource\Shader..\Tools\Dxc\DxcApp.exe ..\HLSL\SourceCode ..\Resource\Shader</Command>
+      <Command>..\Tools\Dxc\DxcApp.exe ..\HLSL\SourceCode ..\Resource\Shader</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -28,9 +28,6 @@
     <Filter Include="PipelineTypes">
       <UniqueIdentifier>{35ff1620-ee82-4047-9e0f-50a6bae4bc09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RenderPipline">
-      <UniqueIdentifier>{67784c32-a20f-437b-921c-7441fcafe130}</UniqueIdentifier>
-    </Filter>
     <Filter Include="InputLayout">
       <UniqueIdentifier>{1a03c60d-5eec-4351-9765-b7bcf86c6022}</UniqueIdentifier>
     </Filter>
@@ -67,9 +64,6 @@
     <ClInclude Include="SourceCode\PipelineTypes.h">
       <Filter>PipelineTypes</Filter>
     </ClInclude>
-    <ClInclude Include="SourceCode\RenderPipline.h">
-      <Filter>RenderPipline</Filter>
-    </ClInclude>
     <ClInclude Include="SourceCode\InputLayout.h">
       <Filter>InputLayout</Filter>
     </ClInclude>
@@ -98,9 +92,6 @@
     </ClCompile>
     <ClCompile Include="SourceCode\ShaderBuilder.cpp">
       <Filter>ShaderBuilder</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\RenderPipline.cpp">
-      <Filter>RenderPipline</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\InputLayout.cpp">
       <Filter>InputLayout</Filter>

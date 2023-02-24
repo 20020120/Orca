@@ -2,12 +2,12 @@
 #include"Camera.hlsli"
 #include"../HLSLMacro/Common.h"
 
-
 ObjVsOut main( ObjVsIn VsIn_ )
 {
-    // --------------------------------- �萔�o�b�t�@���擾 --------------------------------
-	const ConstantBuffer<Obj> objConstant = GetResourceDH[resourceIndex.ObjectCBufferIndex];
-	const ConstantBuffer<Camera> cameraConstant = GetResourceDH[resourceIndex.CameraCBufferIndex];
+	const ConstantBuffer<Obj> objConstant = GetResourceDH[2];
+	const ConstantBuffer<Camera> cameraConstant = GetResourceDH[1];
+
+
 	ObjVsOut vsOut;
 	const float4 localPos = float4(VsIn_.Position, 1.0);
 	const float4 worldPos = mul(localPos, objConstant.World);

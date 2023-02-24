@@ -1,12 +1,11 @@
 #include"ObjRenderer.h"
 
 #include"GameObject.h"
-#include"Transform.h"
 #include"ObjMesh.h"
 
 #include"RendererSystem.h"
 #include"Dx12ResourceHolder.h"
-#include"ConstantBuffer.h"
+#include"Camera.h"
 #include"GuiInclude.h"
 
 Component::ObjRenderer::ObjRenderer()
@@ -19,7 +18,7 @@ void Component::ObjRenderer::OnStart()
     mpObjMesh = mpGameObject.lock()->GetComponent<ObjMesh>();
     // ----------------------------- リソース情報をマッピングする ----------------------------
     mpCbData.ObjectCBufferIndex = mpObjMesh.lock()->GetDescriptorIndex();
-    mpCbData.CameraCBufferIndex = mpObjMesh.lock()->GetDescriptorIndex();
+    mpCbData.CameraCBufferIndex = OrcaGraphics::Camera::Instance().GetDescriptorIndex();
 }
 
 void Component::ObjRenderer::GuiMenu(float Dt_)
@@ -38,6 +37,6 @@ void Component::ObjRenderer::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12Graph
         return;
     // ---------------------------- 描画に必要なデータを取得 ---------------------------
     const auto& resource = mpObjMesh.lock()->GetResource();
-    pCmdList_->SetGraphicsRoot32BitConstants(0, 2, reinterpret_cast<void*>(&mpCbData), 0);
+    pCmdList_->SetGraphicsRoot32BitConstants(0, 2, &mpCbData, 0);
     resource.StackGraphicsCmd(pCmdList_);
 }

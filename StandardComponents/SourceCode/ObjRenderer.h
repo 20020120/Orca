@@ -17,7 +17,7 @@ namespace Component
     class ObjRenderer :public Renderer
     {
         // ------------------------------- 定数バッファ ------------------------------
-        struct alignas(256) ResourceIndex
+        struct ResourceIndex
         {
             uint32_t CameraCBufferIndex;
             uint32_t ObjectCBufferIndex;
