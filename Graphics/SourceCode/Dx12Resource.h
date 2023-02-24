@@ -23,8 +23,6 @@ namespace OrcaGraphics
             // ------------------------------ ゲッター -----------------------------
             [[nodiscard]] uint32_t GetDescriptorIndex()const;
             [[nodiscard]] D3D12_GPU_DESCRIPTOR_HANDLE GetGpuHandle()const;
-        private:
-            UINT mDescriptorIndex{}; // ディスクリプタの生成順
         protected:
             DescriptorHandle* mpHandle{};
             DescriptorPool* mpPool{};

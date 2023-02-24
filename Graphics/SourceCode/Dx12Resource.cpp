@@ -11,7 +11,6 @@ OrcaGraphics::Resource::Dx12Resource::Dx12Resource(DescriptorPool* pDescriptorPo
 
     mpPool = pDescriptorPool_;
     mpPool->AddRef();
-    mDescriptorIndex = mpPool->GetCount();
     mpHandle = mpPool->AllocHandle();
     Orca_NullException(mpHandle);
 }
@@ -40,7 +39,7 @@ OrcaGraphics::Resource::Dx12Resource::~Dx12Resource()
 
 uint32_t OrcaGraphics::Resource::Dx12Resource::GetDescriptorIndex() const
 {
-    return mDescriptorIndex;
+    return mpHandle->DescriptorIndex;
 }
 
 D3D12_GPU_DESCRIPTOR_HANDLE OrcaGraphics::Resource::Dx12Resource::GetGpuHandle() const

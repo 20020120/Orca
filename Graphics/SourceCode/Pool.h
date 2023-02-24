@@ -15,7 +15,7 @@ public:
     bool Initialize(uint32_t count);    // 初期化（確保するアイテム数）
     void Finalize();                    // 終了処理
 
-    T* Alloc(std::function<void(uint32_t, T*)> Func_ = nullptr);    // 確保する
+    T* Alloc(std::function<void(uint32_t,uint32_t, T*)> Func_ = nullptr);    // 確保する
     void Free(T* pValue);   // 開放する
 
     [[nodiscard]] uint32_t GetSize() const;   // 総アイテム数を取得する
@@ -134,7 +134,7 @@ void Pool<T>::Finalize()
 }
 
 template <typename T>
-T* Pool<T>::Alloc(std::function<void(uint32_t, T*)> Func_)
+T* Pool<T>::Alloc(std::function<void(uint32_t,uint32_t, T*)> Func_)
 {
     std::lock_guard<std::mutex> guard(m_Mutex);
 
@@ -150,15 +150,13 @@ T* Pool<T>::Alloc(std::function<void(uint32_t, T*)> Func_)
     item->m_pNext = m_pActive;
     item->m_pPrev->m_pNext = item->m_pNext->m_pPrev = item;
 
-    m_Count++;
-
     // メモリ割り当て.
     auto val = new (static_cast<void*>(item)) T();
 
     // 初期化の必要があれば呼び出す.
     if (Func_ != nullptr)
     {
-        Func_(item->m_Index, val);
+        Func_(m_Count++, item->m_Index, val);
     }
 
     return val;

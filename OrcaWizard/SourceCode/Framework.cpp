@@ -163,7 +163,6 @@ void FrameWork::Render(float Dt_)
     ImGuiSetting::Renderer::RenderDrawData(cmdList.Get());
     // コマンドリストを閉じる
     OrcaGraphics::GraphicsForGameLoop::CloseCmdList();
-
 }
 
 bool FrameWork::Finalize()

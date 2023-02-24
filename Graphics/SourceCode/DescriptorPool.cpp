@@ -69,7 +69,7 @@ uint32_t OrcaGraphics::DescriptorPool::GetCount() const
 OrcaGraphics::DescriptorHandle* OrcaGraphics::DescriptorPool::AllocHandle()
 {
     // ‰Šú‰»ŠÖ”‚Å‚·.
-    auto func = [&](uint32_t index, DescriptorHandle* pHandle)
+    auto func = [&](uint32_t count,uint32_t index, DescriptorHandle* pHandle)
     {
         auto handleCPU = m_pHeap->GetCPUDescriptorHandleForHeapStart();
         handleCPU.ptr += m_DescriptorSize * static_cast<unsigned long long>(index);
@@ -79,6 +79,7 @@ OrcaGraphics::DescriptorHandle* OrcaGraphics::DescriptorPool::AllocHandle()
 
         pHandle->HandleCPU = handleCPU;
         pHandle->HandleGPU = handleGPU;
+        pHandle->DescriptorIndex = count;
     };
 
     // ‰Šú‰»ŠÖ”‚ğÀs‚µ‚Ä‚©‚çƒnƒ“ƒhƒ‹‚ğ•Ô‹p‚µ‚Ü‚·.

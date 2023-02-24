@@ -4,8 +4,8 @@
 
 ObjVsOut main( ObjVsIn VsIn_ )
 {
-	const ConstantBuffer<Obj> objConstant = GetResourceDH[2];
-	const ConstantBuffer<Camera> cameraConstant = GetResourceDH[1];
+	const ConstantBuffer<Obj> objConstant = GetResourceDH[resourceIndex.ObjectCBufferIndex];
+	const ConstantBuffer<Camera> cameraConstant = GetResourceDH[resourceIndex.CameraCBufferIndex];
 
 
 	ObjVsOut vsOut;
