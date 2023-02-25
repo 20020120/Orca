@@ -31,9 +31,16 @@ namespace OrcaGraphics
                 size_t m_RefSize{};
                 D3D12_SHADER_DESC mShaderDesc{};
             };
-            
+            struct RootConstantInfo
+            {
+                D3D12_SHADER_BUFFER_DESC mShaderBufferDesc{};
+                uint32_t mRegisterSpace{};
+                uint32_t mBaseShaderRegister{};
+            };
+
             using DescriptorRanges = std::map<std::string, D3D12_DESCRIPTOR_RANGE>; // ディスクリプタの省略型
             using SamplerInfo = std::map<std::string, UINT>;   // 使うサンプラーステートの情報を取得する(名前/バインドスロット)
+            using RootConstants = std::map<std::string, RootConstantInfo>; // ルートコンスタントの情報を格納するバッファ
         public:
             // ------------------------------ 初期化 ------------------------------
             explicit Shader(IDxcUtils* pUtils_, const ShaderDesc& ShaderDesc_);

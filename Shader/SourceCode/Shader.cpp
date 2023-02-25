@@ -67,6 +67,7 @@ void OrcaGraphics::Shader::Shader::CreateRootRootSignature(IDxcUtils* pUtils_, c
     std::vector<D3D12_ROOT_PARAMETER> rootParameters{};
     SamplerInfo samplersInfo{};
     DescriptorRanges descriptorRanges{};
+    RootConstants rootConstants{};
     std::vector<D3D12_INPUT_ELEMENT_DESC> inputElementDescs{};
 
     // ディスクリプタレンジを取得するためのラムダ式
@@ -84,6 +85,17 @@ void OrcaGraphics::Shader::Shader::CreateRootRootSignature(IDxcUtils* pUtils_, c
                 continue;
             }
             descriptorRanges.try_emplace(bindDesc.Name, descriptorRange);
+            // 定数バッファの場合
+            if (descriptorRange.RangeType == D3D12_DESCRIPTOR_RANGE_TYPE_CBV)
+            {
+                if(const auto cbData = pReflector_->GetConstantBufferByIndex(i))
+                {
+                    D3D12_SHADER_BUFFER_DESC desc;
+                    cbData->GetDesc(&desc);
+                    RootConstantInfo info{ desc,descriptorRange.RegisterSpace,descriptorRange.BaseShaderRegister };
+                    rootConstants.try_emplace(desc.Name, info);
+                }
+            }
         }
     };
 
@@ -127,15 +139,15 @@ void OrcaGraphics::Shader::Shader::CreateRootRootSignature(IDxcUtils* pUtils_, c
         param.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;			// どのシェーダーから利用可能か
         param.DescriptorTable.NumDescriptorRanges = 1;					// ディスクリプタレンジ数
         param.DescriptorTable.pDescriptorRanges = &range;	            // ディスクリプタレンジのアドレス
-        struct ResourceIndex
+        // ルート定数バッファなら追加の設定を行う
+        if(rootConstants.contains(it->first))
         {
-            uint32_t CameraCBufferIndex;
-            uint32_t ObjectCBufferIndex;
-        };
-        param.Constants.Num32BitValues = sizeof(ResourceIndex);
-        param.Constants.RegisterSpace = 0;
-        param.Constants.ShaderRegister = 0;
-        rootParameters.emplace_back(param);
+            const auto& desc = rootConstants.at(it->first);
+            param.Constants.Num32BitValues = desc.mShaderBufferDesc.Size;
+            param.Constants.RegisterSpace = desc.mRegisterSpace;
+            param.Constants.ShaderRegister = desc.mBaseShaderRegister;
+            rootParameters.emplace_back(param);
+        }
     }
     {
         // ------------------------------ サンプラーステートを取得 -----------------------------
