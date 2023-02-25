@@ -7,8 +7,6 @@
 Component::FbxMesh::FbxMesh(const char* FileName_)
 {
 	mResource.Load(FileName_);
-	mResource.AddAnimation("../Resource/Model/Jammo/Animations/Attack.fbx");
-
  // ------------------------------------ ÉmÅ[Éh -----------------------------------
 	const std::vector<Model::ModelResource::Node>& resNodes = mResource.GetNodes();
 	mNodes.resize(resNodes.size());
@@ -227,12 +225,12 @@ void Component::FbxMesh::UpdateTransform()
 				auto w = mNodes.at(res_mesh->mNodeIndices.at(i)).mWorldTransform;
 				auto o = res_mesh->mOffsetTransforms.at(i);
 				auto res = o * w;
-			    mesh.mpCbData->mBoneTransforms[i] = res;
+			    mesh.mpCbData->mBoneTransforms[i] = res.Transpose();
 			}
 		}
 		else
 		{
-			mesh.mpCbData->mBoneTransforms[0] = mNodes.at(res_mesh->mNodeIndex).mWorldTransform;
+			mesh.mpCbData->mBoneTransforms[0] = mNodes.at(res_mesh->mNodeIndex).mWorldTransform.Transpose();
 		}
 	}
 }
