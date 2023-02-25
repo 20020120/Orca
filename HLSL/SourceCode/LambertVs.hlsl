@@ -1,26 +1,26 @@
 #include "Camera.hlsli"
 #include"Lambert.hlsli"
+#include"../HLSLMacro/Common.h"
 
 static float3 lightDirection = { 0.0f, -1.0f, -1.0f };
 
 LambertVsOut main( LambertVsIn VsIn_ ) 
 {
+	// ÉJÉÅÉâ
+	CBuffer<Camera> camera = GetResourceDH[ResourceIndex.mCamera];
+	// É{Å[Éì
+	CBuffer<Bone> bone = GetResourceDH[ResourceIndex.mNode];
+
 	LambertVsOut vsOut;
-#if 0
 	float3 p = { 0, 0, 0 };
 	float3 n = { 0, 0, 0 };
 	for (int i = 0; i < 4; i++)
 	{
-		p += (boneWeights[i] * mul(position, boneTransforms[boneIndices[i]])).xyz;
-		n += (boneWeights[i] * mul(float4(normal.xyz, 0), boneTransforms[boneIndices[i]])).xyz;
+		p += (VsIn_.BornWeight[i] * mul(float4(VsIn_.Position, 1.0), bone.mBoneTransforms[VsIn_.BoneIndices[i]])).xyz;
+		n += (VsIn_.BornWeight[i] * mul(float4(VsIn_.Normal.xyz, 0), bone.mBoneTransforms[VsIn_.BoneIndices[i]])).xyz;
 	}
-#else
-	float3 p = VsIn_.Position.xyz;
-	float3 n = VsIn_.Normal;
-#endif
-	vsOut.Position = mul(float4(p, 1.0f), World);
-	vsOut.Position = mul(vsOut.Position, ViewMatrix);
-	vsOut.Position = mul(vsOut.Position, ProjMatrix);
+	vsOut.Position = mul(float4(p, 1.0f), camera.ViewMatrix);
+	vsOut.Position = mul(vsOut.Position, camera.ProjMatrix);
 
 	float3 N = normalize(n);
 	float3 L = normalize(lightDirection.xyz);

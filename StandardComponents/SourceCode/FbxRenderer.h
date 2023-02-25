@@ -10,11 +10,6 @@ namespace Component
 
     class FbxRenderer :public Renderer
     {
-        // ------------------------------- 定数バッファ ------------------------------
-        struct alignas(256) CbData
-        {
-            Math::Matrix mWorld{};
-        };
     public:
         FbxRenderer();
         ~FbxRenderer() override;
@@ -24,7 +19,13 @@ namespace Component
     private:
         void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) override;
         std::weak_ptr<FbxMesh> mpFbxMesh{};
-        std::weak_ptr<Transform> mpTransform{};
-        CbData* mCb{};
+    private:
+        // リソースのインデックスを管理する構造体
+        struct ResourceIndex
+        {
+            uint32_t mCamera{};
+            uint32_t mNode{};
+        };
+        ResourceIndex mResourceIndex{};
     };
 }

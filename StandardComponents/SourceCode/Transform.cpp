@@ -42,6 +42,12 @@ void Component::Transform::GuiMenu(float Dt_)
     {
         ImGui::DragFloat3("Position", &mPosition.x, 0.1f);
         ImGui::DragFloat3("Scale", &mScale.x);
+        ImGui::SameLine();
+        if (ImGui::Button("All"))
+        {
+            mScale.y = mScale.z = mScale.x;
+        }
+
         ImGui::DragFloat4("Orientation", &mOrientation.x);
 
         ImGui::Checkbox("IsGlobal", &mIsGlobal);

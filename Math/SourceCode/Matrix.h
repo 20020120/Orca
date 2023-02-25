@@ -17,6 +17,7 @@ namespace Math
         // ------------------------------- ヘルパー関数 ------------------------------
         [[nodiscard]] Matrix Transpose()const;
 
+        void Clear(); // デフォルト行列にする
         // -------------------------------- 静的関数 -------------------------------
         static Matrix CreateWorld(const Vector3& Position_, const Vector3& Scale_, const Quaternion& Orientation_);
 

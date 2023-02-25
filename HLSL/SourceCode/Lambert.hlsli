@@ -21,12 +21,20 @@ struct LambertVsOut
 	float4 Color : COLOR;
 };
 
-// ----------------------------------- 定数バッファ ----------------------------------
-cbuffer Lambert : register(b1)
+static const uint MaxBones = 128;
+struct Bone
 {
-	float4x4 World;
-}
+	matrix mBoneTransforms[MaxBones];
+};
 
+
+// ----------------------------------- 定数バッファ ----------------------------------
+struct ResourceIndex
+{
+	uint mCamera;
+	uint mNode;
+};
+ConstantBuffer<ResourceIndex> ResourceIndex : register(b0);
 
 #endif
 
