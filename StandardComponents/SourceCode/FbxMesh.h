@@ -27,10 +27,6 @@ namespace Component
         void OnStart() override;
         void Update(float Dt_) override;
         void GuiMenu(float Dt_) override;
-
-        void StackGraphicsCmd(ID3D12GraphicsCommandList* pCmdList_);
-
-        [[nodiscard]] uint32_t GetDescriptorIndex()const;
         // ------------------------------- 描画リソース ------------------------------
         struct Node
         {
@@ -44,9 +40,22 @@ namespace Component
 
             std::vector<Node*>	mChildren;
         };
+        // ----------------------------- 描画用の定数バッファ ----------------------------
+        static constexpr uint32_t MaxBones = 128;
+        struct alignas(256) CbMesh
+        {
+            Math::Matrix mBoneTransforms[MaxBones];
+        };
+        struct Mesh
+        {
+            const Model::ModelResource::Mesh* mpMesh{};
+            std::unique_ptr<OrcaGraphics::Resource::ConstantBuffer> mpCb{};
+            CbMesh* mpCbData{};
+        };
     private:
         Model::FbxModelResource mResource{};
         std::vector<Node>	    mNodes{};
+        std::vector<Mesh>	    mMeshes{};
         std::vector<std::tuple<std::string, Node*>> mNodeNames{};
         Node* mpSelectedNode{};
     private:
@@ -56,21 +65,22 @@ namespace Component
         void GuiMenu_Materials(std::vector<Model::FbxModelResource::Material>& Materials_) const;
         void GuiMenu_Animations(const std::vector<Model::FbxModelResource::Animation>& Animations_) const;
 
-        // 位置を更新する
-        void UpdateTransform();
+        
+        void UpdateTransform(); // 位置を更新する
 
+        // --------------------------- アニメーションに関する機能 ---------------------------
+    private:
+        int								mCurrentAnimation = -1;
+        float							mCurrentSeconds = 0.0f;
+        bool							mLoopAnimation = false;
+        bool							mEndAnimation = false;
+
+        void UpdateAnimation(float Dt_);    // アニメーションを更新する
+        bool IsPlayAnimation()const;
+        void PlayAnimation(int Index_, bool IsLoop = false);
+        void StopAnimation();
     private:
         // キャッシュするコンポ―ンネント
         std::weak_ptr<Transform> mpTransform{};
-
-        // ----------------------------- 描画用の定数バッファ ----------------------------
-        static constexpr uint32_t MaxBones = 128;
-        struct alignas(256) CbMesh
-        {
-            Math::Matrix mBoneTransforms[MaxBones];
-        };
-        std::unique_ptr<OrcaGraphics::Resource::ConstantBuffer> mpCb{};
-    public:
-        CbMesh* mpCbData{};
     };
 }

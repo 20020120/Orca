@@ -14,6 +14,8 @@ namespace Math
         [[nodiscard]] Vector3 Front()const;
         [[nodiscard]] Vector3 Up() const;
         [[nodiscard]] Vector3 Right() const;
+
+        [[nodiscard]] static Quaternion Lerp(const Quaternion& A_, const Quaternion& B_, float Threshold_);
     };
 }
 

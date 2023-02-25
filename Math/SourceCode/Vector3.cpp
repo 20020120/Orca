@@ -39,6 +39,16 @@ Math::Vector3 Math::Vector3::Cross(const Vector3& A_, const Vector3& B_)
     return ans;
 }
 
+Math::Vector3 Math::Vector3::Lerp(const Vector3& A_, const Vector3& B_, float Threshold_)
+{
+    const auto v0 = DirectX::XMLoadFloat3(&A_);
+    const auto v1 = DirectX::XMLoadFloat3(&B_);
+    const auto v = DirectX::XMVectorLerp(v0, v1, Threshold_);
+    Vector3 ans;
+    DirectX::XMStoreFloat3(&ans, v);
+    return ans;
+}
+
 Math::Vector3 Math::Vector3::operator+(const Vector3& RHS_) const
 {
     const auto v0 = DirectX::XMLoadFloat3(this);

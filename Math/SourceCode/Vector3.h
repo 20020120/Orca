@@ -14,6 +14,7 @@ namespace Math
 
         // ------------------------------ 静的ヘルパー関数 -----------------------------
         [[nodiscard]] static Vector3 Cross(const Vector3& A_, const Vector3& B_);
+        [[nodiscard]] static Vector3 Lerp(const Vector3& A_, const Vector3& B_, float Threshold_);
 
         // ------------------------------- オペレーター ------------------------------
         Vector3 operator+(const Vector3& RHS_)const;

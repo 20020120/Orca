@@ -7,9 +7,10 @@
 Component::FbxMesh::FbxMesh(const char* FileName_)
 {
 	mResource.Load(FileName_);
-	// ノード
-	const std::vector<Model::ModelResource::Node>& resNodes = mResource.GetNodes();
+	mResource.AddAnimation("../Resource/Model/Jammo/Animations/Attack.fbx");
 
+ // ------------------------------------ ノード -----------------------------------
+	const std::vector<Model::ModelResource::Node>& resNodes = mResource.GetNodes();
 	mNodes.resize(resNodes.size());
 	mNodeNames.reserve(resNodes.size());
 	for (size_t nodeIndex = 0; nodeIndex < mNodes.size(); ++nodeIndex)
@@ -29,14 +30,25 @@ Component::FbxMesh::FbxMesh(const char* FileName_)
 		}
 		mNodeNames.emplace_back(std::make_tuple(src.mName, &dst));
 	}
+    // ----------------------------------- メッシュ -----------------------------------
+	// メッシュ
+	const std::vector<Model::ModelResource::Mesh>& resMesh = mResource.GetMeshes();
+	mMeshes.resize(resMesh.size());
+	for (auto i = 0; i < resMesh.size(); ++i)
+	{
+		auto&& src = resMesh.at(i);
+		auto&& mesh = mMeshes.at(i);
+		mesh.mpCb = std::make_unique<OrcaGraphics::Resource::ConstantBuffer>(&mesh.mpCbData);
+		mesh.mpMesh = &src;
+	}
+
 	// ----------------------------- 描画用のDx12のリソースを作成 -----------------------------
 	for (auto& mesh : mResource.mMeshes)
 	{
 		mesh.mVertexBuffer.Create(mesh.mVertices);
 		mesh.mIndexBuffer.Create(mesh.mIndices);
 	}
-	// 定数バッファを作成
-	mpCb = std::make_unique<OrcaGraphics::Resource::ConstantBuffer>(&mpCbData);
+	
 }
 
 Component::FbxMesh::~FbxMesh()
@@ -46,13 +58,14 @@ void Component::FbxMesh::OnStart()
 {
 	// コンポーネントをキャッシュ
 	mpTransform = mpGameObject.lock()->GetComponent<Transform>();
+	UpdateTransform();
 }
 
 void Component::FbxMesh::Update(float Dt_)
 {
 	// ----------------------------------- 更新関数 -----------------------------------
 	UpdateTransform();
-	
+	UpdateAnimation(Dt_);
 }
 
 void Component::FbxMesh::GuiMenu(float Dt_)
@@ -64,46 +77,31 @@ void Component::FbxMesh::GuiMenu(float Dt_)
 		GuiMenu_Animations(mResource.mAnimations);
 		ImGui::TreePop();
 	}
-}
-
-void Component::FbxMesh::StackGraphicsCmd(ID3D12GraphicsCommandList* pCmdList_)
-{
-	for (auto& mesh : mResource.mMeshes)
+	if(ImGui::TreeNode("Animation"))
 	{
-		// メッシュ用定数バッファ更新
-		for (auto& tra : mpCbData->mBoneTransforms)
+		if (ImGui::TreeNode("LoadAnimation"))
 		{
-			tra.Clear();
+
+			ImGui::TreePop();
 		}
 
-		if (mesh.mNodeIndices.size() > 0)
+		if (ImGui::TreeNode("Player"))
 		{
-			for (size_t i = 0; i < mesh.mNodeIndices.size(); ++i)
+
+			int i = 0;
+			for (auto& anim : mResource.mAnimations)
 			{
-				const auto& a = mNodes.at(mesh.mNodeIndices.at(i)).mWorldTransform;
-				const auto& b = mesh.mOffsetTransforms.at(i);
-				const auto boneTransform = b * a;
-				mpCbData->mBoneTransforms[i] = boneTransform;
+				if (ImGui::Button(anim.mName.c_str()))
+				{
+					PlayAnimation(i);
+				}
+				++i;
 			}
+			ImGui::TreePop();
 		}
-		else
-		{
-			mpCbData->mBoneTransforms[0] = mNodes.at(mesh.mNodeIndex).mWorldTransform;
-		}
-		pCmdList_->IASetVertexBuffers(0, 1, &mesh.mVertexBuffer.mVbView);
-		pCmdList_->IASetIndexBuffer(&mesh.mIndexBuffer.mIbView);
-		pCmdList_->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-		for (const auto& subset : mesh.mSubsets)
-		{
-			pCmdList_->DrawIndexedInstanced(subset.mIndexCount, 1, subset.mStartIndex, 0, 0);
-		}
+		ImGui::TreePop();
 	}
-}
 
-uint32_t Component::FbxMesh::GetDescriptorIndex() const
-{
-	return mpCb->GetDescriptorIndex();
 }
 
 void Component::FbxMesh::GuiMenu_Nodes()
@@ -197,7 +195,7 @@ void Component::FbxMesh::UpdateTransform()
 {
  // ---------------------------------- 位置を更新する ---------------------------------
 	auto transform = mpTransform.lock()->mTransform;
-	for (Node& node : mNodes)
+	for (auto& node : mNodes)
 	{
 		// ローカル行列算出
 		auto S = Math::Matrix::ComputeScaleMatrix(node.mScale);
@@ -218,4 +216,102 @@ void Component::FbxMesh::UpdateTransform()
 		node.mLocalTransform = LocalTransform;
 		node.mWorldTransform = LocalTransform * ParentTransform;
 	}
+
+	for (auto& mesh : mMeshes)
+	{
+		const auto* res_mesh = mesh.mpMesh;
+		if (res_mesh->mNodeIndices.size() > 0)
+		{
+			for (size_t i = 0; i < res_mesh->mNodeIndices.size(); ++i)
+			{
+				auto w = mNodes.at(res_mesh->mNodeIndices.at(i)).mWorldTransform;
+				auto o = res_mesh->mOffsetTransforms.at(i);
+				auto res = o * w;
+			    mesh.mpCbData->mBoneTransforms[i] = res;
+			}
+		}
+		else
+		{
+			mesh.mpCbData->mBoneTransforms[0] = mNodes.at(res_mesh->mNodeIndex).mWorldTransform;
+		}
+	}
+}
+
+void Component::FbxMesh::UpdateAnimation(float Dt_)
+{
+	if (mCurrentAnimation < 0||mResource.GetAnimations().empty())
+	{
+		return;
+	}
+
+	const auto& animation = mResource.GetAnimations().at(mCurrentAnimation);
+
+	const auto& keyframes = animation.mKeyframes;
+	const int keyCount = static_cast<int>(keyframes.size());
+	for (int keyIndex = 0; keyIndex < keyCount - 1; ++keyIndex)
+	{
+		// 現在の時間がどのキーフレームの間にいるか判定する
+		const auto& keyframe0 = keyframes.at(keyIndex);
+		const auto& keyframe1 = keyframes.at(keyIndex + 1);
+		if (mCurrentSeconds >= keyframe0.mSeconds && mCurrentSeconds < keyframe1.mSeconds)
+		{
+            const float rate = (mCurrentSeconds - keyframe0.mSeconds) / (keyframe1.mSeconds - keyframe0.mSeconds);
+			assert(mNodes.size() == keyframe0.mNodeKeys.size());
+			assert(mNodes.size() == keyframe1.mNodeKeys.size());
+            const int nodeCount = static_cast<int>(mNodes.size());
+			for (int nodeIndex = 0; nodeIndex < nodeCount; ++nodeIndex)
+			{
+				// ２つのキーフレーム間の補完計算
+				const auto& key0 = keyframe0.mNodeKeys.at(nodeIndex);
+				const auto& key1 = keyframe1.mNodeKeys.at(nodeIndex);
+
+				Node& node = mNodes[nodeIndex];
+				node.mScale = Math::Vector3::Lerp(key0.mScale, key1.mScale, rate);
+				node.mRotate = Math::Quaternion::Lerp(key0.mRotate, key1.mRotate, rate);
+				node.mTranslate = Math::Vector3::Lerp(key0.mTranslate, key1.mTranslate, rate);
+			}
+			break;
+		}
+	}
+
+	// 最終フレーム処理
+	if (mEndAnimation)
+	{
+		mEndAnimation = false;
+		mCurrentAnimation = -1;
+		return;
+	}
+
+	// 時間経過
+	mCurrentSeconds += Dt_;
+	if (mCurrentSeconds >= animation.mSecondsLength)
+	{
+		if (mLoopAnimation)
+		{
+			mCurrentSeconds -= animation.mSecondsLength;
+		}
+		else
+		{
+			mCurrentSeconds = animation.mSecondsLength;
+			mEndAnimation = true;
+		}
+	}
+}
+
+bool Component::FbxMesh::IsPlayAnimation() const
+{
+	return mCurrentAnimation != -1;
+}
+
+void Component::FbxMesh::PlayAnimation(const int Index_, const bool IsLoop)
+{
+	mCurrentAnimation = Index_;
+	mLoopAnimation = IsLoop;
+	mEndAnimation = false;
+	mCurrentSeconds = 0.0f;
+}
+
+void Component::FbxMesh::StopAnimation()
+{
+	mCurrentAnimation = -1;
 }

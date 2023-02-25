@@ -23,7 +23,6 @@ void Component::FbxRenderer::OnStart()
 	mpFbxMesh = mpGameObject.lock()->GetComponent<FbxMesh>();
 
     // ---------------------------------- ƒŠƒ\[ƒXID ----------------------------------
-	mResourceIndex.mNode = mpFbxMesh.lock()->GetDescriptorIndex();
 	mResourceIndex.mCamera = OrcaGraphics::Camera::Instance().GetDescriptorIndex();
 
 	Renderer::OnStart();
@@ -51,8 +50,18 @@ void Component::FbxRenderer::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12Graph
 	if(mpFbxMesh.expired())
 		return;
 
-    pCmdList_->SetGraphicsRoot32BitConstants(0, 2, &mResourceIndex, 0);
-    // --------------------------------- Fbx‚Ì•`‰æ --------------------------------
-	const auto fbxMesh = mpFbxMesh.lock();
-    fbxMesh->StackGraphicsCmd(pCmdList_.Get());
+	const auto& fbxResource = mpFbxMesh.lock()->mMeshes;
+	for (auto& mesh : fbxResource)
+	{
+		mResourceIndex.mNode = mesh.mpCb->GetDescriptorIndex();
+		pCmdList_->SetGraphicsRoot32BitConstants(0, 2, &mResourceIndex, 0);
+		pCmdList_->IASetVertexBuffers(0, 1, &mesh.mpMesh->mVertexBuffer.mVbView);
+		pCmdList_->IASetIndexBuffer(&mesh.mpMesh->mIndexBuffer.mIbView);
+		pCmdList_->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+		for (const auto& subset : mesh.mpMesh->mSubsets)
+		{
+			pCmdList_->DrawIndexedInstanced(subset.mIndexCount, 1, subset.mStartIndex, 0, 0);
+		}
+	}
 }

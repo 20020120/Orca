@@ -39,3 +39,13 @@ Math::Vector3 Math::Quaternion::Right() const
     XMStoreFloat3(&right, R.r[0]);
     return right;
 }
+
+Math::Quaternion Math::Quaternion::Lerp(const Quaternion& A_, const Quaternion& B_, float Threshold_)
+{
+    const auto v0 = DirectX::XMLoadFloat4(&A_);
+    const auto v1 = DirectX::XMLoadFloat4(&B_);
+    const auto v = DirectX::XMVectorLerp(v0, v1, Threshold_);
+    Quaternion ans;
+    DirectX::XMStoreFloat4(&ans, v);
+    return ans;
+}
