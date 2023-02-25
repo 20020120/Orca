@@ -19,9 +19,7 @@ LambertVsOut main( LambertVsIn VsIn_ )
 		p += (VsIn_.BornWeight[i] * mul(float4(VsIn_.Position, 1.0), bone.mBoneTransforms[VsIn_.BoneIndices[i]])).xyz;
 		n += (VsIn_.BornWeight[i] * mul(float4(VsIn_.Normal.xyz, 0), bone.mBoneTransforms[VsIn_.BoneIndices[i]])).xyz;
 	}
-	vsOut.Position = mul(float4(p, 1.0f), camera.ViewMatrix);
-	vsOut.Position = mul(vsOut.Position, camera.ProjMatrix);
-
+	vsOut.Position = mul(float4(p, 1.0f), mul(camera.ViewMatrix, camera.ProjMatrix));
 	float3 N = normalize(n);
 	float3 L = normalize(lightDirection.xyz);
 	float d = dot(L, N);
@@ -29,6 +27,5 @@ LambertVsOut main( LambertVsIn VsIn_ )
 	vsOut.Color.rgb = power;
 	vsOut.Color.a = 1.0f;
 	vsOut.Uv = VsIn_.Uv;
-
 	return vsOut;
 }

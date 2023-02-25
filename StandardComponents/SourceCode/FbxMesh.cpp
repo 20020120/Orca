@@ -52,7 +52,7 @@ void Component::FbxMesh::Update(float Dt_)
 {
 	// ----------------------------------- XVŠÖ” -----------------------------------
 	UpdateTransform();
-
+	
 }
 
 void Component::FbxMesh::GuiMenu(float Dt_)
@@ -82,7 +82,7 @@ void Component::FbxMesh::StackGraphicsCmd(ID3D12GraphicsCommandList* pCmdList_)
 			{
 				const auto& a = mNodes.at(mesh.mNodeIndices.at(i)).mWorldTransform;
 				const auto& b = mesh.mOffsetTransforms.at(i);
-                const auto boneTransform = a * b;
+				const auto boneTransform = b * a;
 				mpCbData->mBoneTransforms[i] = boneTransform;
 			}
 		}
