@@ -1,6 +1,5 @@
 #include"Renderer.h"
 #include"RendererSystem.h"
-#include"Dx12ResourceHolder.h"
 Component::Renderer::Renderer(const OrcaGraphics::Shader::ShaderType& ShaderType_)
     :Component(0)
     , mShaderType(ShaderType_)

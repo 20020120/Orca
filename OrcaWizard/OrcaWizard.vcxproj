@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\FbxSdk\include;..\Model\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\ImGui\SourceCode;..\ConsoleLogWindow\SourceCode;..\Shader\SourceCode;..\Graphics\SourceCode;..\StandardComponents\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Cereal\include;..\FbxSdk\include;..\Model\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\ImGui\SourceCode;..\ConsoleLogWindow\SourceCode;..\Shader\SourceCode;..\Graphics\SourceCode;..\StandardComponents\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -132,7 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\FbxSdk\include;..\Model\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\ImGui\SourceCode;..\ConsoleLogWindow\SourceCode;..\Shader\SourceCode;..\Graphics\SourceCode;..\StandardComponents\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Cereal\include;..\FbxSdk\include;..\Model\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\ImGui\SourceCode;..\ConsoleLogWindow\SourceCode;..\Shader\SourceCode;..\Graphics\SourceCode;..\StandardComponents\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>

@@ -32,6 +32,13 @@ namespace Math
 
         Vector3& operator*=(float RHS_);
         Vector3& operator/=(float RHS_);
+
+        // ------------------------------- アーカイブ -------------------------------
+        template<class Archive>
+        void serialize(Archive& archive, int version)
+        {
+            archive(x, y, z);
+        }
     };
 }
 

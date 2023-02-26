@@ -1,6 +1,5 @@
 #include"FbxRenderer.h"
 
-#include "Dx12ResourceHolder.h"
 #include "GameObject.h"
 #include"Transform.h"
 #include"FbxMesh.h"

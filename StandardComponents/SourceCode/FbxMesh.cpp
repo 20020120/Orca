@@ -102,6 +102,12 @@ void Component::FbxMesh::GuiMenu(float Dt_)
 
 }
 
+void Component::FbxMesh::EditorGuiMenu(float Dt_)
+{
+	ImGui::Begin("aaa");
+	ImGui::End();
+}
+
 void Component::FbxMesh::GuiMenu_Nodes()
 {
 #if 0

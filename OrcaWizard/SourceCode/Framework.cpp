@@ -9,13 +9,11 @@
 
 // -------------------------------- システムをインクルード --------------------------------
 #include"RendererSystem.h"
-#include "Dx12ResourceHolder.h"
 
 #include"ImGuiSetting.h"
 #include"../Imgui/imgui.h"
-
 #include<sstream>
-
+#include"FbxMesh.h"
 FrameWork::FrameWork(HWND Hwnd_)
     :mHwnd(Hwnd_)
 {}
@@ -117,7 +115,9 @@ bool FrameWork::Initialize()
 
     OrcaGraphics::Camera::Instance().Initialize();
 
-    OrcaWizard::CharacterBuilder(mGameObjects);
+    mpGameObject = std::make_shared<ComponentSystem::GameObject>("character");
+    OrcaWizard::CharacterBuilder(mpGameObject, "../Resource/Model/HunterGun1004.fbx");
+    mpGameObject->OnStart();
     return true;
 }
 
@@ -129,7 +129,7 @@ void FrameWork::Update(float Dt_)
     // カメラ行列を更新
     OrcaGraphics::Camera::Instance().Update(Dt_);
 
-    mGameObjects.Update(Dt_);
+    mpGameObject->Update(Dt_);
 
     // -------------------------------- システムを更新 --------------------------------
     System::RenderSystem::Instance().Update(Dt_);
@@ -140,7 +140,11 @@ void FrameWork::Update(float Dt_)
 
 void FrameWork::GuiMenu(float Dt_)
 {
-    mGameObjects.GuiMenu(Dt_);
+    auto com = mpGameObject->GetComponent<Component::FbxMesh>();
+    if(com)
+    {
+        com->EditorGuiMenu(Dt_);
+    }
 }
 
 void FrameWork::Render(float Dt_)
@@ -169,7 +173,7 @@ void FrameWork::Render(float Dt_)
 bool FrameWork::Finalize()
 {
     OrcaGraphics::Camera::Instance().Finalize();
-    mGameObjects.Finalize();
+    mpGameObject.reset();
     ImGuiSetting::Renderer::Cleanup();
     System::RenderSystem::Instance().Finalize();
     OrcaGraphics::GraphicsForGameLoop::Finalize();

@@ -37,9 +37,6 @@
     <Filter Include="GraphicsLogger">
       <UniqueIdentifier>{266fda4a-12b8-4131-a7e2-33b46eba8c0f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Dx12ResourceHolder">
-      <UniqueIdentifier>{eb875729-5cd3-4d7d-9b46-4ed93a0ca2ae}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Dx12ResourceInfoCreator">
       <UniqueIdentifier>{299d9997-2a3b-421d-9deb-8abe765d3c4e}</UniqueIdentifier>
     </Filter>
@@ -77,9 +74,6 @@
     </ClCompile>
     <ClCompile Include="SourceCode\Dx12Resource.cpp">
       <Filter>Dx12Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\Dx12ResourceHolder.cpp">
-      <Filter>Dx12ResourceHolder</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\Dx12ResourceInfo.cpp">
       <Filter>Dx12ResourceInfo</Filter>
@@ -134,9 +128,6 @@
     <ClInclude Include="SourceCode\GraphicsMacro.h" />
     <ClInclude Include="SourceCode\Dx12Resource.h">
       <Filter>Dx12Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceCode\Dx12ResourceHolder.h">
-      <Filter>Dx12ResourceHolder</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\Dx12ResourceInfo.h">
       <Filter>Dx12ResourceInfo</Filter>

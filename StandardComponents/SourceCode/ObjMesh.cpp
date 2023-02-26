@@ -1,5 +1,4 @@
 #include"ObjMesh.h"
-#include "Dx12ResourceHolder.h"
 #include "GameObject.h"
 #include"Obj.h"
 #include"Transform.h"

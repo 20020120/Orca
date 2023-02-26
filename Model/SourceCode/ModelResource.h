@@ -7,10 +7,13 @@
 #include "Dx12VertexBuffer.h"
 #include "Dx12IndexBuffer.h"
 
+
 #include <string>
 #include <vector>
 #include <DirectXMath.h>
 
+#include<cereal/types/vector.hpp>
+#include<cereal/types/string.hpp>
 struct ID3D12GraphicsCommandList;
 
 // -------------------------------- モデルのリソースデータ --------------------------------
@@ -32,8 +35,11 @@ namespace Model
 			Math::Quaternion	mRotate;
 			Math::Vector3	mTranslate;
 
-			//template<class Archive>
-			//void serialize(Archive& archive, int version);
+			template<class Archive>
+			void serialize(Archive& archive, int version)
+			{
+				archive(mId, mName, mPath, mParentIndex, mScale, mRotate, mTranslate);
+			}
 		};
 
 		struct Material
@@ -41,12 +47,12 @@ namespace Model
 			std::string			mName;
 			std::string			mTextureFileName;
 			Math::Vector4	mColor = { 0.8f, 0.8f, 0.8f, 1.0f };
-
-			//Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> shaderResourceView;
-			//void LoadTexture(ID3D11Device* device, const char* filename);
-
-			//template<class Archive>
-			//void serialize(Archive& archive, int version);
+			
+			template<class Archive>
+			void serialize(Archive& archive, int version)
+			{
+				archive(mName, mTextureFileName, mColor);
+			}
 		};
 
 		struct Subset
@@ -57,8 +63,11 @@ namespace Model
 
 			Material* material = nullptr;
 
-			//template<class Archive>
-			//void serialize(Archive& archive, int version);
+			template<class Archive>
+			void serialize(Archive& archive, int version)
+			{
+				archive(mStartIndex, mIndexCount, mMaterialIndex);
+			}
 		};
 
 		struct Vertex
@@ -71,8 +80,11 @@ namespace Model
 			Math::Vector4	mBoneWeight = { 1, 0, 0, 0 };
 			DirectX::XMUINT4	mBoneIndex = { 0, 0, 0, 0 };
 
-			//template<class Archive>
-			//void serialize(Archive& archive, int version);
+			template<class Archive>
+			void serialize(Archive& archive, int version)
+			{
+				archive(mPosition, mNormal, mTangent, mUv, mColor, mBoneWeight);
+			}
 		};
 
 		struct Mesh
@@ -93,8 +105,14 @@ namespace Model
 
 			void StackGraphicsCmd(ID3D12GraphicsCommandList* pCmdList_)const;
 
-			//template<class Archive>
-			//void serialize(Archive& archive, int version);
+			template<class Archive>
+			void serialize(Archive& archive, int version)
+			{
+				archive(mVertices, mIndices,
+					mSubsets, mNodeIndex,
+					mNodeIndices, mOffsetTransforms,
+					mBoundsMin, mBoundsMax);
+			}
 		};
 
 		struct NodeKeyData
@@ -103,8 +121,11 @@ namespace Model
 			Math::Quaternion 	mRotate;
 			Math::Vector3	mTranslate;
 
-			//template<class Archive>
-			//void serialize(Archive& archive, int version);
+			template<class Archive>
+			void serialize(Archive& archive, int version)
+			{
+				archive(mScale, mRotate, mTranslate);
+			}
 		};
 
 		struct Keyframe
@@ -112,8 +133,11 @@ namespace Model
 			float						mSeconds;
 			std::vector<NodeKeyData>	mNodeKeys;
 
-			//template<class Archive>
-			//void serialize(Archive& archive, int version);
+			template<class Archive>
+			void serialize(Archive& archive, int version)
+			{
+				archive(mSeconds, mNodeKeys);
+			}
 		};
 		struct Animation
 		{
@@ -121,8 +145,11 @@ namespace Model
 			float						mSecondsLength;
 			std::vector<Keyframe>		mKeyframes;
 
-			//template<class Archive>
-			//void serialize(Archive& archive, int version);
+			template<class Archive>
+			void serialize(Archive& archive, int version)
+			{
+				archive(mName, mSecondsLength, mKeyframes);
+			}
 		};
 
 		// 読み込み
@@ -139,10 +166,10 @@ namespace Model
 		//void BuildModel(ID3D12Device* device, const char* dirname);
 
 		// シリアライズ
-		//void Serialize(const char* filename);
+		void Serialize(const char* filename);
 
 		// デシリアライズ
-		//void Deserialize(const char* filename);
+		void Deserialize(const char* filename);
 
 		// ノードインデックスを取得する
 		int FindNodeIndex(NodeId nodeId) const;

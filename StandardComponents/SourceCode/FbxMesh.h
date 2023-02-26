@@ -2,14 +2,8 @@
 #include"Component.h"
 #include"FbxModelResource.h"
 #include<tuple>
+#include"ConstantBuffer.h"
 
-namespace OrcaGraphics
-{
-    namespace Resource
-    {
-        class ConstantBuffer;
-    }
-}
 struct ID3D12GraphicsCommandList;
 namespace Component
 {
@@ -27,6 +21,7 @@ namespace Component
         void OnStart() override;
         void Update(float Dt_) override;
         void GuiMenu(float Dt_) override;
+        void EditorGuiMenu(float Dt_);
         // ------------------------------- ï`âÊÉäÉ\Å[ÉX ------------------------------
         struct Node
         {

@@ -37,7 +37,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SourceCode\Dx12Resource.cpp" />
-    <ClCompile Include="SourceCode\Dx12ResourceHolder.cpp" />
     <ClCompile Include="SourceCode\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -60,7 +59,6 @@
     <ClInclude Include="SourceCode\pch.h" />
     <ClInclude Include="SourceCode\Pool.h" />
     <ClInclude Include="SourceCode\Dx12Resource.h" />
-    <ClInclude Include="SourceCode\Dx12ResourceHolder.h" />
     <ClInclude Include="SourceCode\Texture.h" />
   </ItemGroup>
   <ItemGroup>

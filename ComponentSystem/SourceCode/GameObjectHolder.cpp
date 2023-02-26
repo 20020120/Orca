@@ -14,7 +14,7 @@ void ComponentSystem::GameObjectHolder::Update(float Dt_)
     // ----------------------------- Å‰‚ÌƒtƒŒ[ƒ€‚Å‰Šú‰»‚·‚é -----------------------------
     for(const auto& obj: mInitializer)
     {
-        obj->Start();
+        obj->OnStart();
         mHolder.emplace_back(obj);
     }
     mInitializer.clear();

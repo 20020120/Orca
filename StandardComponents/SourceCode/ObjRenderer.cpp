@@ -4,7 +4,6 @@
 #include"ObjMesh.h"
 
 #include"RendererSystem.h"
-#include"Dx12ResourceHolder.h"
 #include"Camera.h"
 #include"GuiInclude.h"
 

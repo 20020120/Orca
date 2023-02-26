@@ -24,6 +24,18 @@ namespace Math
         static Matrix ComputeTranslateMatrix(const Vector3& Position_);
         static Matrix ComputeScaleMatrix(const Vector3& Scale_);
         static Matrix ComputeRotationMatrix(const Quaternion& Orientation_);
+
+        // ------------------------------- アーカイブ -------------------------------
+        template<class Archive>
+        void serialize(Archive& archive, int version)
+        {
+            archive(
+                _11, _12, _13, _14,
+                _21, _22, _23, _24,
+                _31, _32, _33, _34,
+                _41, _42, _43, _44
+            );
+        }
     };
 }
 

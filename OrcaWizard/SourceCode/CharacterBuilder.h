@@ -1,13 +1,13 @@
 #pragma once
-#include "GameObjectHolder.h"
-
+#include<memory>
+#include <string>
 // ------------------------------------ ‘O•ûéŒ¾ -----------------------------------
 namespace ComponentSystem
 {
-    class GameObjectHolder;
+    class GameObject;
 }
 
 namespace OrcaWizard
 {
-    void CharacterBuilder(ComponentSystem::GameObjectHolder& Holder_);
+    void CharacterBuilder(std::shared_ptr<ComponentSystem::GameObject> pGameObject_, std::string FilePath_);
 }

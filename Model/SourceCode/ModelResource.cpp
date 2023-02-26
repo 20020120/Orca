@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "ModelResource.h"
 
+#include<fstream>
+#include<cereal/cereal.hpp>
+#include<cereal/archives/binary.hpp>
+#include<cereal/types/vector.hpp>
 
 Model::ModelResource::ModelResource() = default;
 Model::ModelResource::~ModelResource() = default;
@@ -24,4 +28,35 @@ int Model::ModelResource::FindNodeIndex(NodeId nodeId) const
 		}
 	}
 	return -1;
+}
+
+// シリアライズ
+void Model::ModelResource::Serialize(const char* filename)
+{
+    if (std::ofstream ofs(filename, std::ios::binary); ofs.is_open())
+	{
+		cereal::BinaryOutputArchive archive(ofs);
+
+		archive(
+			CEREAL_NVP(mNodes),
+			CEREAL_NVP(mMaterials),
+			CEREAL_NVP(mMeshes),
+			CEREAL_NVP(mAnimations)
+		);
+	}
+}
+
+void Model::ModelResource::Deserialize(const char* filename)
+{
+	if (std::ifstream ifs(filename, std::ios::binary); ifs.is_open())
+	{
+		cereal::BinaryInputArchive archive(ifs);
+
+		archive(
+			CEREAL_NVP(mNodes),
+			CEREAL_NVP(mMaterials),
+			CEREAL_NVP(mMeshes),
+			CEREAL_NVP(mAnimations)
+		);
+	}
 }

@@ -25,6 +25,10 @@ namespace OrcaGraphics
 	class Graphics;
 }
 
+namespace ComponentSystem
+{
+	class GameObject;
+}
 
 class FrameWork
 {
@@ -56,7 +60,8 @@ private:
 	uint32_t mFrames{ 0 };
 	float mDeltaTime{ 0.0f };
 	int hConsole = 0;
-	ComponentSystem::GameObjectHolder mGameObjects{};
+	std::shared_ptr<ComponentSystem::GameObject> mpGameObject{};
+	
 
 	void CalculateFrameStats();
 

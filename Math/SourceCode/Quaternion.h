@@ -16,6 +16,13 @@ namespace Math
         [[nodiscard]] Vector3 Right() const;
 
         [[nodiscard]] static Quaternion Lerp(const Quaternion& A_, const Quaternion& B_, float Threshold_);
+
+        // ------------------------------- アーカイブ -------------------------------
+        template<class Archive>
+        void serialize(Archive& archive, int version)
+        {
+            archive(x, y, z, w);
+        }
     };
 }
 
