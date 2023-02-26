@@ -104,7 +104,12 @@ void Component::FbxMesh::GuiMenu(float Dt_)
 
 void Component::FbxMesh::EditorGuiMenu(float Dt_)
 {
-	ImGui::Begin("aaa");
+	ImGui::Begin("Transform");
+	mpTransform.lock()->GuiMenu(Dt_);
+	ImGui::End();
+
+	ImGui::Begin("Materials");
+
 	ImGui::End();
 }
 

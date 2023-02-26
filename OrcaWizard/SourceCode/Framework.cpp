@@ -115,9 +115,7 @@ bool FrameWork::Initialize()
 
     OrcaGraphics::Camera::Instance().Initialize();
 
-    mpGameObject = std::make_shared<ComponentSystem::GameObject>("character");
-    OrcaWizard::CharacterBuilder(mpGameObject, "../Resource/Model/HunterGun1004.fbx");
-    mpGameObject->OnStart();
+    CreateGameObject("../Resource/Model/HunterGun1004.fbx");
     return true;
 }
 
@@ -128,9 +126,10 @@ void FrameWork::Update(float Dt_)
 
     // カメラ行列を更新
     OrcaGraphics::Camera::Instance().Update(Dt_);
-
-    mpGameObject->Update(Dt_);
-
+    if (mpGameObject)
+    {
+        mpGameObject->Update(Dt_);
+    }
     // -------------------------------- システムを更新 --------------------------------
     System::RenderSystem::Instance().Update(Dt_);
 
@@ -140,10 +139,20 @@ void FrameWork::Update(float Dt_)
 
 void FrameWork::GuiMenu(float Dt_)
 {
-    auto com = mpGameObject->GetComponent<Component::FbxMesh>();
-    if(com)
+    ImGui::Begin("MainMenu");
+    if (ImGui::Button("LoadModel"))
     {
-        com->EditorGuiMenu(Dt_);
+        CreateGameObject("../Resource/Model/HunterGun1004.fbx");
+    }
+    ImGui::End();
+
+    if (mpGameObject)
+    {
+        auto com = mpGameObject->GetComponent<Component::FbxMesh>();
+        if (com)
+        {
+            com->EditorGuiMenu(Dt_);
+        }
     }
 }
 
@@ -196,4 +205,13 @@ void FrameWork::CalculateFrameStats()
         mDeltaTime += 1.0f;
 
     }
+}
+
+void FrameWork::CreateGameObject(std::string FilePath_)
+{
+    mpGameObject.reset();
+    mpGameObject = std::make_shared<ComponentSystem::GameObject>("character");
+    OrcaWizard::CharacterBuilder(mpGameObject, FilePath_);
+    mpGameObject->OnStart();
+    
 }

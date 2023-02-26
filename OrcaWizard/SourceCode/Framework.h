@@ -62,8 +62,8 @@ private:
 	int hConsole = 0;
 	std::shared_ptr<ComponentSystem::GameObject> mpGameObject{};
 	
-
-	void CalculateFrameStats();
+	void CreateGameObject(std::string FilePath_);
+    void CalculateFrameStats();
 
 };
 
