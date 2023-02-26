@@ -144,7 +144,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\Cereal\include;..\Shader\SourceCode;..\FbxSdk\include;..\Graphics\SourceCode;..\Model\SourceCode;..\ImGui\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\WinApi\SourceCode;..\Cereal\include;..\Shader\SourceCode;..\FbxSdk\include;..\Graphics\SourceCode;..\Model\SourceCode;..\ImGui\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -164,7 +164,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\Cereal\include;..\Shader\SourceCode;..\FbxSdk\include;..\Graphics\SourceCode;..\Model\SourceCode;..\ImGui\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\WinApi\SourceCode;..\Cereal\include;..\Shader\SourceCode;..\FbxSdk\include;..\Graphics\SourceCode;..\Model\SourceCode;..\ImGui\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>

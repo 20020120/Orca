@@ -28,6 +28,7 @@
     <ClInclude Include="SourceCode\OrcaException.h" />
     <ClInclude Include="SourceCode\ScreenConstants.h" />
     <ClInclude Include="SourceCode\ShaderType.h" />
+    <ClInclude Include="SourceCode\StringUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -35,6 +36,7 @@
   <ItemGroup>
     <ClCompile Include="SourceCode\Binary.cpp" />
     <ClCompile Include="SourceCode\Encoding.cpp" />
+    <ClCompile Include="SourceCode\StringUtil.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -3,7 +3,7 @@
 #include"Transform.h"
 #include "GuiInclude.h"
 #include"ConstantBuffer.h"
-#include<d3d12.h>
+#include"WinFileDialog.h"
 Component::FbxMesh::FbxMesh(const char* FileName_)
 {
 	mResource.Load(FileName_);
@@ -110,6 +110,18 @@ void Component::FbxMesh::EditorGuiMenu(float Dt_)
 
 	ImGui::Begin("Materials");
 
+	ImGui::End();
+
+	ImGui::Begin("Export");
+	if (ImGui::Button("Export"))
+	{
+		std::string fileName{};
+		if (WinApi::FileDialog::GetFolderNameA(fileName))
+		{
+			fileName += "\\aa.sss";
+			mResource.Export(fileName.c_str());
+		}
+	}
 	ImGui::End();
 }
 

@@ -143,6 +143,11 @@ void Model::FbxModelResource::Load(const char* FileName_, const char* IgnoreRoot
 	//BuildModel(device, dirname);
 }
 
+void Model::FbxModelResource::Export(const char* FileName_)
+{
+	Serialize(FileName_);
+}
+
 void Model::FbxModelResource::AddAnimation(const char* FileName_)
 {// FBXのファイルパスはUTF-8にする必要がある
 	char fbxFilename[256];

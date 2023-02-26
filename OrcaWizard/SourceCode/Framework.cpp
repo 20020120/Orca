@@ -14,6 +14,7 @@
 #include"../Imgui/imgui.h"
 #include<sstream>
 #include"FbxMesh.h"
+#include"WinFileDialog.h"
 FrameWork::FrameWork(HWND Hwnd_)
     :mHwnd(Hwnd_)
 {}
@@ -115,7 +116,6 @@ bool FrameWork::Initialize()
 
     OrcaGraphics::Camera::Instance().Initialize();
 
-    CreateGameObject("../Resource/Model/HunterGun1004.fbx");
     return true;
 }
 
@@ -142,7 +142,12 @@ void FrameWork::GuiMenu(float Dt_)
     ImGui::Begin("MainMenu");
     if (ImGui::Button("LoadModel"))
     {
-        CreateGameObject("../Resource/Model/HunterGun1004.fbx");
+        char* fileName_ = new char[MAX_PATH]();
+        if(WinApi::FileDialog::OpenFileNameA(fileName_, MAX_PATH, nullptr, "fbxƒtƒ@ƒCƒ‹(*.fbx)\0*.fbx"))
+        {
+            CreateGameObject(fileName_);
+        }
+        delete[] fileName_;
     }
     ImGui::End();
 

@@ -104,14 +104,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\Cereal\include;..\FbxSdk\include;..\Model\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\ImGui\SourceCode;..\ConsoleLogWindow\SourceCode;..\Shader\SourceCode;..\Graphics\SourceCode;..\StandardComponents\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\WinApi\SourceCode;..\Cereal\include;..\FbxSdk\include;..\Model\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\ImGui\SourceCode;..\ConsoleLogWindow\SourceCode;..\Shader\SourceCode;..\Graphics\SourceCode;..\StandardComponents\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ConsoleLogWindow.lib;Graphics.lib;Model.lib;Math.lib;Shader.lib;ComponentSystem.lib;StandardComponents.lib;OrcaCommon.lib;ImGui.lib;d3d12.lib;dxgi.lib;dxguid.lib;dxcompiler.lib;d3dcompiler.lib;libfbxsdk-md.lib</AdditionalDependencies>
+      <AdditionalDependencies>ConsoleLogWindow.lib;Graphics.lib;Model.lib;Math.lib;Shader.lib;ComponentSystem.lib;WinApi.lib;StandardComponents.lib;OrcaCommon.lib;ImGui.lib;d3d12.lib;dxgi.lib;dxguid.lib;dxcompiler.lib;d3dcompiler.lib;libfbxsdk-md.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EntryPointSymbol>
       </EntryPointSymbol>
@@ -132,7 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\Cereal\include;..\FbxSdk\include;..\Model\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\ImGui\SourceCode;..\ConsoleLogWindow\SourceCode;..\Shader\SourceCode;..\Graphics\SourceCode;..\StandardComponents\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\WinApi\SourceCode;..\Cereal\include;..\FbxSdk\include;..\Model\SourceCode;..\Math\SourceCode;..\ComponentSystem\SourceCode;..\ImGui\SourceCode;..\ConsoleLogWindow\SourceCode;..\Shader\SourceCode;..\Graphics\SourceCode;..\StandardComponents\SourceCode;..\OrcaCommon\SourceCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -141,7 +141,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ConsoleLogWindow.lib;Graphics.lib;Model.lib;Math.lib;Shader.lib;ComponentSystem.lib;StandardComponents.lib;OrcaCommon.lib;ImGui.lib;d3d12.lib;dxgi.lib;dxguid.lib;dxcompiler.lib;d3dcompiler.lib;libfbxsdk-md.lib</AdditionalDependencies>
+      <AdditionalDependencies>ConsoleLogWindow.lib;Graphics.lib;Model.lib;Math.lib;Shader.lib;ComponentSystem.lib;WinApi.lib;StandardComponents.lib;OrcaCommon.lib;ImGui.lib;d3d12.lib;dxgi.lib;dxguid.lib;dxcompiler.lib;d3dcompiler.lib;libfbxsdk-md.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EntryPointSymbol>
       </EntryPointSymbol>

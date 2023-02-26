@@ -14,6 +14,9 @@
     <ClInclude Include="SourceCode\Binary.h">
       <Filter>Binary</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\StringUtil.h">
+      <Filter>StrUtil</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -25,6 +28,9 @@
     <Filter Include="Binary">
       <UniqueIdentifier>{2ff0661f-5151-4791-b0b2-16d2581f8ca6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="StrUtil">
+      <UniqueIdentifier>{66552cbc-3a1f-4e7f-938f-9b95d3e6b02b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\Encoding.cpp">
@@ -32,6 +38,9 @@
     </ClCompile>
     <ClCompile Include="SourceCode\Binary.cpp">
       <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\StringUtil.cpp">
+      <Filter>StrUtil</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
