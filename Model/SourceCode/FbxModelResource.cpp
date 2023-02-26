@@ -133,7 +133,7 @@ void Model::FbxModelResource::Load(const char* FileName_, const char* IgnoreRoot
 	else
 	{
 		// デシリアライズ
-		//Deserialize(FileName_);
+		Deserialize(FileName_);
 
 		// 無視するモーションノードを検索
 		SetupIgnoreMotionNode(IgnoreRootMotionNodeName_);
