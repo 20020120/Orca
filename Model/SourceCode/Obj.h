@@ -11,7 +11,7 @@
 #include"GraphicsMacro.h"
 
 // ëOï˚êÈåæ
-namespace OrcaGraphics
+namespace Graphics
 {
     class DescriptorPool;
 }
@@ -38,7 +38,7 @@ namespace Model
             std::wstring& TextureName_);
         void CreateVertexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const std::vector<VertexData>& Vertices_);
         void CreateIndexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const std::vector<uint32_t>& Indices_);
-        void CreateTexture(OrcaComPtr(ID3D12Device) pDevice_, OrcaGraphics::DescriptorPool* pPool_,
+        void CreateTexture(OrcaComPtr(ID3D12Device) pDevice_, Graphics::DescriptorPool* pPool_,
             OrcaComPtr(ID3D12CommandQueue) pCommandQueue_, std::wstring TexturePath_);
     private:
         // ------------------------------- í∏ì_ì«Ç›çûÇ› ------------------------------

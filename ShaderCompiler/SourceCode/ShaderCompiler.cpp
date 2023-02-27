@@ -26,14 +26,13 @@ void ShaderCompiler::AllCompile(const char* HLSLDir_, const char* OutDir_, const
         char dummyStr{ 'a' };
         std::ofstream fOut;
         fOut.open(settingPath, std::ios::out | std::ios::binary | std::ios::trunc);
-        fOut.write(&dummyStr, 1);
+        fOut.write(&dummyStr, 2);
         fOut.close();
     }
-    std::cout << lastCompileTime << std::endl;
 
     const std::string folderPath = HLSLDir_;
-    const std::wstring outDir = Util::Strings::StringToWString(OutDir_);
-
+    const std::wstring outDir = Util::Strings::StringToWString(std::string(OutDir_));
+    
     std::wcout << outDir.c_str() << std::endl;
     // ---------------------------- ファイルの場所が存在しなかったら ---------------------------
     if (!std::filesystem::exists(folderPath))
@@ -70,7 +69,7 @@ void ShaderCompiler::AllCompile(const char* HLSLDir_, const char* OutDir_, const
     Microsoft::WRL::ComPtr<IDxcCompiler3> pCompiler;
     DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&pUtils));
     DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&pCompiler));
-
+    
     // デフォルトインクルードハンドラを作成
     Microsoft::WRL::ComPtr < IDxcIncludeHandler> pIncludeHandler;
     pUtils->CreateDefaultIncludeHandler(&pIncludeHandler);

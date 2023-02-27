@@ -4,7 +4,7 @@
 #include <d3dcommon.h>
 #include <dxgiformat.h>
 
-namespace OrcaGraphics
+namespace Graphics
 {
     // ---------------------------------- ‘O•ûéŒ¾ ---------------------------------
     namespace InputLayout

@@ -15,7 +15,7 @@ struct ID3D12RootSignature;
 struct ID3D12PipelineState;
 
 // -------------------------------- 描画用シェーダークラス --------------------------------
-namespace OrcaGraphics
+namespace Graphics
 {
     namespace Shader
     {

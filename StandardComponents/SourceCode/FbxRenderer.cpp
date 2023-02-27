@@ -8,7 +8,7 @@
 #include"GuiInclude.h"
 #include"Camera.h"
 Component::FbxRenderer::FbxRenderer()
-    :Renderer(OrcaGraphics::Shader::ShaderType::Lambert)
+    :Renderer(Graphics::Shader::ShaderType::Lambert)
 {}
 
 Component::FbxRenderer::~FbxRenderer() = default;
@@ -22,7 +22,7 @@ void Component::FbxRenderer::OnStart()
 	mpFbxMesh = mpGameObject.lock()->GetComponent<FbxMesh>();
 
     // ---------------------------------- ÉäÉ\Å[ÉXID ----------------------------------
-	mResourceIndex.mCamera = OrcaGraphics::Camera::Instance().GetDescriptorIndex();
+	mResourceIndex.mCamera = Graphics::Camera::Instance().GetDescriptorIndex();
 
 	Renderer::OnStart();
 }

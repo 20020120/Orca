@@ -2,7 +2,7 @@
 #include<d3d12.h>
 
 
-Component::MeshRenderer::MeshRenderer(const OrcaGraphics::Shader::ShaderType& ShaderType_)
+Component::MeshRenderer::MeshRenderer(const Graphics::Shader::ShaderType& ShaderType_)
     :Renderer(ShaderType_)
 {
 }

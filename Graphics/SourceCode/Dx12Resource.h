@@ -4,7 +4,7 @@
 struct ID3D12GraphicsCommandList;
 struct ID3D12Resource;
 
-namespace OrcaGraphics
+namespace Graphics
 {
     // ---------------------------------- ‘O•ûéŒ¾ ---------------------------------
     class DescriptorPool;

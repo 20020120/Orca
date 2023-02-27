@@ -3,7 +3,7 @@
 #include"GraphicsMacro.h"
 #include"Dx12Resource.h"
 #include"Graphics.h"
-namespace OrcaGraphics
+namespace Graphics
 {
     // ‘O•ûéŒ¾
     class DescriptorPool;

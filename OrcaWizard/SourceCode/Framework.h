@@ -20,7 +20,7 @@ extern LRESULT ImGui_ImplWin32_WndProcHandler(
 CONST LPCWSTR APPLICATION_NAME{ L"Orc" };
 
 // ---------------------------------- ƒNƒ‰ƒX‚Ì‘O•ûéŒ¾ ---------------------------------
-namespace OrcaGraphics
+namespace Graphics
 {
 	class Graphics;
 }

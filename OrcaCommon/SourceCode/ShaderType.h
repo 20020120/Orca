@@ -1,6 +1,6 @@
 #pragma once
 // --------------------------------- どんなシェーダーか ---------------------------------
-namespace OrcaGraphics
+namespace Graphics
 {
     namespace Shader
     {

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include"DescriptorPool.h"
 
-bool OrcaGraphics::DescriptorPool::Create(ID3D12Device* pDevice, const D3D12_DESCRIPTOR_HEAP_DESC* pDesc,
+bool Graphics::DescriptorPool::Create(ID3D12Device* pDevice, const D3D12_DESCRIPTOR_HEAP_DESC* pDesc,
     DescriptorPool** ppPool)
 {
     // 引数チェック.
@@ -47,12 +47,12 @@ bool OrcaGraphics::DescriptorPool::Create(ID3D12Device* pDevice, const D3D12_DES
     return true;
 }
 
-void OrcaGraphics::DescriptorPool::AddRef()
+void Graphics::DescriptorPool::AddRef()
 {
     ++m_RefCount;
 }
 
-void OrcaGraphics::DescriptorPool::Release()
+void Graphics::DescriptorPool::Release()
 {
     --m_RefCount;
     if (m_RefCount == 0)
@@ -61,12 +61,12 @@ void OrcaGraphics::DescriptorPool::Release()
     }
 }
 
-uint32_t OrcaGraphics::DescriptorPool::GetCount() const
+uint32_t Graphics::DescriptorPool::GetCount() const
 {
     return m_RefCount;
 }
 
-OrcaGraphics::DescriptorHandle* OrcaGraphics::DescriptorPool::AllocHandle()
+Graphics::DescriptorHandle* Graphics::DescriptorPool::AllocHandle()
 {
     // 初期化関数です.
     auto func = [&](uint32_t count,uint32_t index, DescriptorHandle* pHandle)
@@ -86,7 +86,7 @@ OrcaGraphics::DescriptorHandle* OrcaGraphics::DescriptorPool::AllocHandle()
     return m_Pool.Alloc(func);
 }
 
-void OrcaGraphics::DescriptorPool::FreeHandle(DescriptorHandle*& pHandle)
+void Graphics::DescriptorPool::FreeHandle(DescriptorHandle*& pHandle)
 {
     if (pHandle != nullptr)
     {
@@ -97,34 +97,34 @@ void OrcaGraphics::DescriptorPool::FreeHandle(DescriptorHandle*& pHandle)
     }
 }
 
-uint32_t OrcaGraphics::DescriptorPool::GetAvailableHandleCount() const
+uint32_t Graphics::DescriptorPool::GetAvailableHandleCount() const
 {
     return m_Pool.GetAvailableCount();
 }
 
-uint32_t OrcaGraphics::DescriptorPool::GetAllocatedHandleCount() const
+uint32_t Graphics::DescriptorPool::GetAllocatedHandleCount() const
 {
     return m_Pool.GetUsedCount();
 }
 
-uint32_t OrcaGraphics::DescriptorPool::GetHandleCount() const
+uint32_t Graphics::DescriptorPool::GetHandleCount() const
 {
     return m_Pool.GetSize();
 }
 
-ID3D12DescriptorHeap* const OrcaGraphics::DescriptorPool::GetHeap() const
+ID3D12DescriptorHeap* const Graphics::DescriptorPool::GetHeap() const
 {
     return m_pHeap.Get();
 }
 
-OrcaGraphics::DescriptorPool::DescriptorPool()
+Graphics::DescriptorPool::DescriptorPool()
     : m_RefCount(1)
     , m_Pool()
     , m_pHeap()
     , m_DescriptorSize(0)
 {}
 
-OrcaGraphics::DescriptorPool::~DescriptorPool()
+Graphics::DescriptorPool::~DescriptorPool()
 {
     m_Pool.Finalize();
     m_pHeap.Reset();

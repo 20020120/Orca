@@ -19,7 +19,7 @@ namespace Component
     {
         friend class System::RenderSystem;
     public:
-        explicit MeshRenderer(const OrcaGraphics::Shader::ShaderType& ShaderType_);
+        explicit MeshRenderer(const Graphics::Shader::ShaderType& ShaderType_);
         ~MeshRenderer() override = default;
         void OnStart() override;
     private:

@@ -9,7 +9,7 @@
 
 #include "Dx12ResourceInfo.h"
 
-namespace OrcaGraphics
+namespace Graphics
 {
     // ‘O•ûéŒ¾
     class DescriptorPool;

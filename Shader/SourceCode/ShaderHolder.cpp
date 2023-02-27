@@ -6,7 +6,7 @@
 #include<d3d12.h>
 #include <dxcapi.h>
 
-void OrcaGraphics::ShaderHolder::Set(const Shader::ShaderType& Type_,
+void Graphics::ShaderHolder::Set(const Shader::ShaderType& Type_,
                                              ID3D12GraphicsCommandList* pCmdList_) const
 {
     if (mCurrentShaderType == Type_)
@@ -15,7 +15,7 @@ void OrcaGraphics::ShaderHolder::Set(const Shader::ShaderType& Type_,
     pPipeLine->Set(pCmdList_);
 }
 
-OrcaGraphics::ShaderHolder::ShaderHolder()
+Graphics::ShaderHolder::ShaderHolder()
 {
     // コンパイラとユーティリティを生成
     OrcaComPtr(IDxcUtils) pUtils;

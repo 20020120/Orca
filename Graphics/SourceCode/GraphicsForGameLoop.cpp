@@ -4,28 +4,28 @@
 #include"GraphicsForGameLoop.h"
 #include"GraphicsImpl.h"
 
-void OrcaGraphics::GraphicsForGameLoop::Initialize(HWND Hwnd_)
+void Graphics::GraphicsForGameLoop::Initialize(HWND Hwnd_)
 {
     mpImpl = std::make_unique<GraphicsImpl>();
     mpImpl->Initialize(Hwnd_);
 }
 
-void OrcaGraphics::GraphicsForGameLoop::Finalize()
+void Graphics::GraphicsForGameLoop::Finalize()
 {
     mpImpl->Finalize();
 }
 
-void OrcaGraphics::GraphicsForGameLoop::OpenCmdList()
+void Graphics::GraphicsForGameLoop::OpenCmdList()
 {
     mpImpl->OpenCmdList();
 }
 
-void OrcaGraphics::GraphicsForGameLoop::CloseCmdList()
+void Graphics::GraphicsForGameLoop::CloseCmdList()
 {
     mpImpl->CloseCmdList();
 }
 
-void OrcaGraphics::GraphicsForGameLoop::StackCmdList()
+void Graphics::GraphicsForGameLoop::StackCmdList()
 {
     mpImpl->StackCmdList();
 }

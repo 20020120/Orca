@@ -1,6 +1,6 @@
 #include"BlendStates.h"
 #include"OrcaException.h"
-D3D12_BLEND_DESC OrcaGraphics::PipelineObject::BlendStates::GetBlendDesc(const Shader::ShaderDesc& ShaderDesc_)
+D3D12_BLEND_DESC Graphics::PipelineObject::BlendStates::GetBlendDesc(const Shader::ShaderDesc& ShaderDesc_)
 {
     // ------------------------------ ブレンドステートを取得 ------------------------------
     switch (ShaderDesc_.m_BlendState)
@@ -13,7 +13,7 @@ D3D12_BLEND_DESC OrcaGraphics::PipelineObject::BlendStates::GetBlendDesc(const S
     Orca_Unimplemented
 }
 
-D3D12_BLEND_DESC OrcaGraphics::PipelineObject::BlendStates::GetSampleBlendState()
+D3D12_BLEND_DESC Graphics::PipelineObject::BlendStates::GetSampleBlendState()
 {
     // ブレンドステートの設定.
     D3D12_BLEND_DESC descBS;

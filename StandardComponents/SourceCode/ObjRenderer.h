@@ -1,7 +1,7 @@
 #pragma once
 #include"Renderer.h"
 // ---------------------------- ObjMesh‚ğ•`‰æ‚·‚é‚½‚ß‚ÌƒŒƒ“ƒ_ƒ‰[ ---------------------------
-namespace OrcaGraphics
+namespace Graphics
 {
     namespace Resource
     {

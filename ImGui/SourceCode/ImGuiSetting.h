@@ -5,7 +5,7 @@ struct ID3D12Device;
 struct ID3D12DescriptorHeap;
 struct ID3D12GraphicsCommandList;
 
-namespace OrcaGraphics
+namespace Graphics
 {
     class DescriptorPool;
     class DescriptorHandle;
@@ -19,7 +19,7 @@ namespace ImGuiSetting
     class Renderer
     {
     public:
-        static void CreateImGui(HWND Hwnd_, ID3D12Device* pDevice_, OrcaGraphics::DescriptorPool* pDescriptorPool_);
+        static void CreateImGui(HWND Hwnd_, ID3D12Device* pDevice_, Graphics::DescriptorPool* pDescriptorPool_);
         static void IOSettings(HWND Hwnd_);
         static void NewFrame();// 毎フレーム呼び出す関数
         static void Render();// 描画
@@ -27,7 +27,7 @@ namespace ImGuiSetting
         static void Cleanup();// 終了
 
     private:
-        static OrcaGraphics::DescriptorPool* mpDescriptorPool;
-        static OrcaGraphics::DescriptorHandle* mpDescriptorHandle;
+        static Graphics::DescriptorPool* mpDescriptorPool;
+        static Graphics::DescriptorHandle* mpDescriptorHandle;
     };
 }

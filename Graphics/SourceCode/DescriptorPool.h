@@ -6,7 +6,7 @@
 #include"Pool.h"
 #include"DescriptorHandle.h"
 
-namespace OrcaGraphics
+namespace Graphics
 {
 
     class DescriptorPool

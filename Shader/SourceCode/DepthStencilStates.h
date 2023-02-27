@@ -1,7 +1,7 @@
 #pragma once
 #include"ShaderDesc.h"
 #include<d3d12.h>
-namespace OrcaGraphics
+namespace Graphics
 {
     namespace Shader
     {

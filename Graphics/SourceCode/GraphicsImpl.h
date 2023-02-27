@@ -9,14 +9,14 @@
 #include<DirectXMath.h>
 
 // ------------------------------------ 前方宣言 -----------------------------------
-namespace OrcaGraphics
+namespace Graphics
 {
     class DescriptorPool;
 }
 struct ID3D12CommandQueue;
 
 // ---------------------------- Dx12のグラフィックスクラスの実装部分 ---------------------------
-namespace OrcaGraphics
+namespace Graphics
 {
     class GraphicsImpl
     {

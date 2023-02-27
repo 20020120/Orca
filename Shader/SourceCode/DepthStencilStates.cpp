@@ -1,7 +1,7 @@
 #include"DepthStencilStates.h"
 
 #include "OrcaException.h"
-D3D12_DEPTH_STENCIL_DESC OrcaGraphics::PipelineObject::DepthStencilStates::GetDepthStencilState(
+D3D12_DEPTH_STENCIL_DESC Graphics::PipelineObject::DepthStencilStates::GetDepthStencilState(
     const Shader::ShaderDesc& ShaderDesc_)
 {
     switch (ShaderDesc_.m_DepthStencilState)
@@ -13,7 +13,7 @@ D3D12_DEPTH_STENCIL_DESC OrcaGraphics::PipelineObject::DepthStencilStates::GetDe
     return {};
 }
 
-D3D12_DEPTH_STENCIL_DESC OrcaGraphics::PipelineObject::DepthStencilStates::GetSampleDepthStencilState()
+D3D12_DEPTH_STENCIL_DESC Graphics::PipelineObject::DepthStencilStates::GetSampleDepthStencilState()
 {
     D3D12_DEPTH_STENCIL_DESC descDSS{};
     descDSS.DepthEnable = TRUE;

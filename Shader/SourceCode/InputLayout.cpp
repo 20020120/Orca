@@ -2,7 +2,7 @@
 #include "ReflectionHelpers.h"
 
 #include <d3d12shader.h>
-std::vector<D3D12_INPUT_ELEMENT_DESC> OrcaGraphics::InputLayout::InputLayout::CreateInputElementDesc(
+std::vector<D3D12_INPUT_ELEMENT_DESC> Graphics::InputLayout::InputLayout::CreateInputElementDesc(
     const Shader::ShaderBuilder& ShaderBuilder_)
 {
     std::vector<D3D12_INPUT_ELEMENT_DESC> inputElementDescs{};
@@ -35,7 +35,7 @@ std::vector<D3D12_INPUT_ELEMENT_DESC> OrcaGraphics::InputLayout::InputLayout::Cr
     return inputElementDescs;
 }
 
-std::vector<D3D12_INPUT_ELEMENT_DESC> OrcaGraphics::InputLayout::InputLayout::CreateInputElementDesc(
+std::vector<D3D12_INPUT_ELEMENT_DESC> Graphics::InputLayout::InputLayout::CreateInputElementDesc(
     ID3D12ShaderReflection** pReflector_, const D3D12_SHADER_DESC& Desc_)
 {
     std::vector<D3D12_INPUT_ELEMENT_DESC> inputElementDescs{};
@@ -49,7 +49,7 @@ std::vector<D3D12_INPUT_ELEMENT_DESC> OrcaGraphics::InputLayout::InputLayout::Cr
         pReflector->GetInputParameterDesc(i, &sigDesc);
 
         //フォーマットを取得
-        const auto format = OrcaGraphics::Shader::ReflectionHelpers::GetDxgiFormat(sigDesc.ComponentType, sigDesc.Mask);
+        const auto format = Graphics::Shader::ReflectionHelpers::GetDxgiFormat(sigDesc.ComponentType, sigDesc.Mask);
         D3D12_INPUT_ELEMENT_DESC elementDesc;
         const int semanticsLen = { static_cast<int>(std::strlen(sigDesc.SemanticName) + 1) };
         const auto pTmp = new char[semanticsLen]();

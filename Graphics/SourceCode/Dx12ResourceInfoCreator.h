@@ -12,7 +12,7 @@
 struct ID3D12ShaderReflection;
 ;
 
-namespace OrcaGraphics
+namespace Graphics
 {
     namespace Resource
     {

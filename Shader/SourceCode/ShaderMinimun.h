@@ -1,7 +1,7 @@
 #pragma once
 // ------------------------ シェーダープロジェクトで高頻度で使用する定数・マクロなど -----------------------
 
-namespace OrcaGraphics
+namespace Graphics
 {
     namespace Shader
     {

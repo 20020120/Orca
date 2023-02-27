@@ -19,7 +19,7 @@
 #include "Graphics.h"
 #include "RasterizerStates.h"
 
-OrcaGraphics::Shader::Shader::Data::~Data()
+Graphics::Shader::Shader::Data::~Data()
 {
     if (m_pBin)
     {
@@ -32,7 +32,7 @@ OrcaGraphics::Shader::Shader::Data::~Data()
         m_pRef = nullptr;
     }
 }
-OrcaGraphics::Shader::Shader::Shader(IDxcUtils* pUtils_, const ShaderDesc& ShaderDesc_)
+Graphics::Shader::Shader::Shader(IDxcUtils* pUtils_, const ShaderDesc& ShaderDesc_)
     :m_ShaderType(ShaderDesc_.m_ShaderType)
 {
     {
@@ -51,18 +51,18 @@ OrcaGraphics::Shader::Shader::Shader(IDxcUtils* pUtils_, const ShaderDesc& Shade
     CreateRootRootSignature(pUtils_, ShaderDesc_);
 }
 
-OrcaGraphics::Shader::Shader::~Shader()
+Graphics::Shader::Shader::~Shader()
 {
    
 }
 
-void OrcaGraphics::Shader::Shader::Set(ID3D12GraphicsCommandList* pCmdList_)
+void Graphics::Shader::Shader::Set(ID3D12GraphicsCommandList* pCmdList_)
 {
     pCmdList_->SetGraphicsRootSignature(mpRootSignature.Get());
     pCmdList_->SetPipelineState(mpPipelineState.Get());
 }
 
-void OrcaGraphics::Shader::Shader::CreateRootRootSignature(IDxcUtils* pUtils_, const ShaderDesc& Desc_)
+void Graphics::Shader::Shader::CreateRootRootSignature(IDxcUtils* pUtils_, const ShaderDesc& Desc_)
 {
     std::vector<D3D12_ROOT_PARAMETER> rootParameters{};
     SamplerInfo samplersInfo{};

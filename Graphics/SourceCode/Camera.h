@@ -6,7 +6,7 @@
 
 #include <wrl.h>
 #include <memory>
-namespace OrcaGraphics
+namespace Graphics
 {
     // ƒJƒƒ‰‚ğ§Œä‚·‚é
     class Camera

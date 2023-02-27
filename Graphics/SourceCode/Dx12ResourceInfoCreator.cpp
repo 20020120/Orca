@@ -5,7 +5,7 @@
 
 #include <d3d12shader.h>
 
-void OrcaGraphics::Resource::Dx12ResourceInfoCreator::AddResourceInfo(const Shader::ShaderType& ShaderType_,
+void Graphics::Resource::Dx12ResourceInfoCreator::AddResourceInfo(const Shader::ShaderType& ShaderType_,
 Microsoft::WRL::ComPtr<ID3D12ShaderReflection> pReflector_,uint32_t MaxResources_,uint32_t& StartIndex_)
 {
     HRESULT hr;
@@ -42,12 +42,12 @@ Microsoft::WRL::ComPtr<ID3D12ShaderReflection> pReflector_,uint32_t MaxResources
     }
 }
 
-const OrcaGraphics::Resource::Dx12ResourceInfoCreator::ResourcesType& OrcaGraphics::Resource::Dx12ResourceInfoCreator::GetResourceMap(const Shader::ShaderType& ShaderType_)
+const Graphics::Resource::Dx12ResourceInfoCreator::ResourcesType& Graphics::Resource::Dx12ResourceInfoCreator::GetResourceMap(const Shader::ShaderType& ShaderType_)
 {
     return mHolder[ShaderType_];
 }
 
-OrcaGraphics::Resource::ResourceType OrcaGraphics::Resource::Dx12ResourceInfoCreator::GetResourceType(
+Graphics::Resource::ResourceType Graphics::Resource::Dx12ResourceInfoCreator::GetResourceType(
     const D3D_SHADER_INPUT_TYPE& InputType_)
 {
     switch (InputType_)

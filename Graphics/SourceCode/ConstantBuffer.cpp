@@ -6,14 +6,14 @@
 #include"GraphicsLogger.h"
 #include"GraphicsMacro.h"
 
-void OrcaGraphics::Resource::ConstantBuffer::Mapping(void** Ptr_) const
+void Graphics::Resource::ConstantBuffer::Mapping(void** Ptr_) const
 {
     // メモリマッピングしておきます.
     const auto hr = mpResource->Map(0, nullptr, Ptr_);
     OrcaDebug::GraphicsLog("定数バッファ：メモリマッピング", hr);
 }
 
-void OrcaGraphics::Resource::ConstantBuffer::Initialize(OrcaComPtr(ID3D12Device) pDevice_, 
+void Graphics::Resource::ConstantBuffer::Initialize(OrcaComPtr(ID3D12Device) pDevice_, 
     const DescriptorPool* pPool_,size_t Size_)
 {
     Orca_NullException(pDevice_);

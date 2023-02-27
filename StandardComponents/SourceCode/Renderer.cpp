@@ -1,6 +1,6 @@
 #include"Renderer.h"
 #include"RendererSystem.h"
-Component::Renderer::Renderer(const OrcaGraphics::Shader::ShaderType& ShaderType_)
+Component::Renderer::Renderer(const Graphics::Shader::ShaderType& ShaderType_)
     :Component(0)
     , mShaderType(ShaderType_)
 {}

@@ -2,7 +2,7 @@
 #include<d3d12.h>
 #include<vector>
 #include"ShaderBuilder.h"
-namespace OrcaGraphics
+namespace Graphics
 {
     namespace Shader
     {

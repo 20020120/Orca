@@ -10,11 +10,11 @@
 #include"../ImGui/imgui.h"
 #include<d3d12.h>
 
-OrcaGraphics::DescriptorPool* ImGuiSetting::Renderer::mpDescriptorPool = {};
-OrcaGraphics::DescriptorHandle* ImGuiSetting::Renderer::mpDescriptorHandle = {};
+Graphics::DescriptorPool* ImGuiSetting::Renderer::mpDescriptorPool = {};
+Graphics::DescriptorHandle* ImGuiSetting::Renderer::mpDescriptorHandle = {};
 
 void ImGuiSetting::Renderer::CreateImGui(HWND Hwnd_, ID3D12Device* pDevice_,
-    OrcaGraphics::DescriptorPool* pDescriptorPool_)
+    Graphics::DescriptorPool* pDescriptorPool_)
 {
     mpDescriptorPool = pDescriptorPool_;
     mpDescriptorHandle = mpDescriptorPool->AllocHandle();

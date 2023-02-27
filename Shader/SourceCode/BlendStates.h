@@ -1,7 +1,7 @@
 #pragma once
 #include"ShaderDesc.h"
 #include<d3d12.h>
-namespace OrcaGraphics
+namespace Graphics
 {
     // ------------------------------ 公開先クラスの前方宣言 ------------------------------
     namespace Shader

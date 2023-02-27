@@ -9,14 +9,14 @@
 #include"OrcaException.h"
 #include"GraphicsLogger.h"
 
-OrcaGraphics::Resource::Texture::Texture(DirectX::ResourceUploadBatch& Batch_, const wchar_t* FileName_)
+Graphics::Resource::Texture::Texture(DirectX::ResourceUploadBatch& Batch_, const wchar_t* FileName_)
     :Dx12Resource(Graphics::GetDescriptorPool(POOL_TYPE_RES))
 {
     Load(FileName_, Batch_);
 }
 
 
-bool OrcaGraphics::Resource::Texture::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_,
+bool Graphics::Resource::Texture::Initialize(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, DescriptorPool* pPool_,
     const D3D12_RESOURCE_DESC* pDesc_, bool IsCube_)
 {
     // 引数チェック
@@ -56,13 +56,13 @@ bool OrcaGraphics::Resource::Texture::Initialize(Microsoft::WRL::ComPtr<ID3D12De
     return true;
 }
 
-void OrcaGraphics::Resource::Texture::Load(const wchar_t* FileName_, DirectX::ResourceUploadBatch& Batch_)
+void Graphics::Resource::Texture::Load(const wchar_t* FileName_, DirectX::ResourceUploadBatch& Batch_)
 {
     // テクスチャをロードする
     LoadTextureFromFile(Graphics::GetDevice(), FileName_, Batch_);
 }
 
-void OrcaGraphics::Resource::Texture::LoadTextureFromFile(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* FileName_,
+void Graphics::Resource::Texture::LoadTextureFromFile(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* FileName_,
     DirectX::ResourceUploadBatch& Batch_)
 {
     // ----------------------------- テクスチャの種類を判定する -----------------------------
@@ -84,7 +84,7 @@ void OrcaGraphics::Resource::Texture::LoadTextureFromFile(Microsoft::WRL::ComPtr
 
 }
 
-void OrcaGraphics::Resource::Texture::DDSLoadTexture(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* FileName_,
+void Graphics::Resource::Texture::DDSLoadTexture(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* FileName_,
     DirectX::ResourceUploadBatch& Batch_)
 {
     // ---------------------------- DDSファイルをロードする関数 ----------------------------
@@ -106,7 +106,7 @@ void OrcaGraphics::Resource::Texture::DDSLoadTexture(Microsoft::WRL::ComPtr<ID3D
     pDevice_->CreateShaderResourceView(mpResource.Get(), &viewDesc, mpHandle->HandleCPU);
 }
 
-void OrcaGraphics::Resource::Texture::WICLoadTexture(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* FileName_,
+void Graphics::Resource::Texture::WICLoadTexture(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const wchar_t* FileName_,
     DirectX::ResourceUploadBatch& Batch_)
 {
     // ---------------------------- DDSファイル以外をロードする関数 ----------------------------
@@ -129,7 +129,7 @@ void OrcaGraphics::Resource::Texture::WICLoadTexture(Microsoft::WRL::ComPtr<ID3D
     pDevice_->CreateShaderResourceView(mpResource.Get(), &srvDesc, mpHandle->HandleCPU);
 }
 
-D3D12_SHADER_RESOURCE_VIEW_DESC OrcaGraphics::Resource::Texture::GetViewDesc(bool IsCube_) const
+D3D12_SHADER_RESOURCE_VIEW_DESC Graphics::Resource::Texture::GetViewDesc(bool IsCube_) const
 {
 
     auto desc = mpResource->GetDesc();

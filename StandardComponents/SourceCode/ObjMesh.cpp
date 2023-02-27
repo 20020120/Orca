@@ -13,7 +13,7 @@ Component::ObjMesh::ObjMesh(const std::wstring& FilePath_)
     mFilePath = move(FilePath_);
     mObjResource.Initialize(mFilePath.c_str());
     // ------------------------------- 定数バッファを初期化 ------------------------------
-    mpConstantBuffer = std::make_unique<OrcaGraphics::Resource::ConstantBuffer>(&mpCbData);
+    mpConstantBuffer = std::make_unique<Graphics::Resource::ConstantBuffer>(&mpCbData);
 }
 // ----------------------------------- デストラクタ ----------------------------------
 Component::ObjMesh::~ObjMesh() = default;

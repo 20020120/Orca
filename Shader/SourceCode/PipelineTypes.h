@@ -1,7 +1,7 @@
 #pragma once
 
 // パイプラインステートの種類
-namespace OrcaGraphics
+namespace Graphics
 {
     namespace PipelineTypes
     {

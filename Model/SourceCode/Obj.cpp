@@ -23,12 +23,12 @@ void Model::Obj::Initialize(const wchar_t* ObjPath_)
     std::vector<uint32_t> indices{};
     std::wstring textureName{};
 
-    const auto pDevice = OrcaGraphics::Graphics::GetDevice();
+    const auto pDevice = Graphics::Graphics::GetDevice();
 
     // パスからデータをパースする
     Parse(ObjPath_, vertices, indices, textureName);
     // 頂点バッファを作成する
-    CreateVertexBuffer(OrcaGraphics::Graphics::GetDevice(), vertices);
+    CreateVertexBuffer(Graphics::Graphics::GetDevice(), vertices);
     // インデックスバッファを作成する
     CreateIndexBuffer(pDevice, indices);
     mTextureName = textureName;
@@ -265,14 +265,14 @@ void Model::Obj::CreateIndexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_
 }
 
 
-void Model::Obj::CreateTexture(OrcaComPtr(ID3D12Device) pDevice_, OrcaGraphics::DescriptorPool* pPool_,
+void Model::Obj::CreateTexture(OrcaComPtr(ID3D12Device) pDevice_, Graphics::DescriptorPool* pPool_,
     OrcaComPtr(ID3D12CommandQueue) pCommandQueue_, std::wstring TexturePath_)
 {
    // // テクスチャを作成
    // DirectX::ResourceUploadBatch batch(pDevice_.Get());
    // batch.Begin();
    // // リソースを生成
-   // mTexture = std::make_unique<OrcaGraphics::Resource::Texture>(2);
+   // mTexture = std::make_unique<Graphics::Resource::Texture>(2);
    // mTexture->Load(TexturePath_.c_str(), batch);
    // // コマンドを実行
    // const auto future = batch.End(pCommandQueue_.Get());

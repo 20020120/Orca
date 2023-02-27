@@ -4,7 +4,7 @@
 //#include<unordered_map>
 //#include<memory>
 //// ------------------------------------ 前方宣言 -----------------------------------
-//namespace OrcaGraphics
+//namespace Graphics
 //{
 //    namespace Resource
 //    {
@@ -15,7 +15,7 @@
 //}
 //
 //// -------------------------------- リソースを生成するクラス -------------------------------
-//namespace OrcaGraphics
+//namespace Graphics
 //{
 //    namespace Resource
 //    {

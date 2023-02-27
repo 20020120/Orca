@@ -5,7 +5,7 @@
 #include"PipelineTypes.h"
 
 #include<string>
-namespace OrcaGraphics
+namespace Graphics
 {
     namespace Shader
     {

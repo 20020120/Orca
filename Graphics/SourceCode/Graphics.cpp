@@ -5,24 +5,24 @@
 #include"GraphicsImpl.h"
 
 // Staticƒƒ“ƒo‚Ì‰Šú‰»
-std::unique_ptr<OrcaGraphics::GraphicsImpl> OrcaGraphics::Graphics::mpImpl{};
+std::unique_ptr<Graphics::GraphicsImpl> Graphics::Graphics::mpImpl{};
 
-Microsoft::WRL::ComPtr<ID3D12Device> OrcaGraphics::Graphics::GetDevice()
+Microsoft::WRL::ComPtr<ID3D12Device> Graphics::Graphics::GetDevice()
 {
     return mpImpl->GetDevice();
 }
 
-Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> OrcaGraphics::Graphics::GetCmdList()
+Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> Graphics::Graphics::GetCmdList()
 {
     return mpImpl->GetCmdList();
 }
 
-OrcaGraphics::DescriptorPool* OrcaGraphics::Graphics::GetDescriptorPool(POOL_TYPE Type_)
+Graphics::DescriptorPool* Graphics::Graphics::GetDescriptorPool(POOL_TYPE Type_)
 {
     return mpImpl->GetDescriptorPool(Type_);
 }
 
-Microsoft::WRL::ComPtr<ID3D12CommandQueue> OrcaGraphics::Graphics::GetCommandQueue()
+Microsoft::WRL::ComPtr<ID3D12CommandQueue> Graphics::Graphics::GetCommandQueue()
 {
     return mpImpl->GetCommandQueue();
 }

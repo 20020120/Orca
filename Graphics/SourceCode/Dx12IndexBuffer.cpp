@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Dx12IndexBuffer.h"
 #include"GraphicsLogger.h"
-bool OrcaGraphics::Resource::IndexBuffer::Create(const std::vector<uint32_t>& Indices_)
+bool Graphics::Resource::IndexBuffer::Create(const std::vector<uint32_t>& Indices_)
 {
     const auto pDevice = Graphics::GetDevice();
 

@@ -3,7 +3,7 @@
 #include"Graphics.h"
 
 #include<Windows.h>
-namespace OrcaGraphics
+namespace Graphics
 {
     class GraphicsForGameLoop final :public Graphics
     {

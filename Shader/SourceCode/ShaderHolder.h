@@ -10,7 +10,7 @@ namespace System
 {
     class RenderSystem;
 }
-namespace OrcaGraphics
+namespace Graphics
 {
     class ShaderHolder
     {

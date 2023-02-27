@@ -3,7 +3,7 @@
 #include <d3dcompiler.h>
 #include<filesystem>
 
-void OrcaGraphics::Shader::ShaderBuilder::Build(const wchar_t* FileName_,
+void Graphics::Shader::ShaderBuilder::Build(const wchar_t* FileName_,
     ShaderStage ShaderStage_)
 {
     // --------------------------------- •Ï”‚ğ‰Šú‰» --------------------------------
@@ -23,22 +23,22 @@ void OrcaGraphics::Shader::ShaderBuilder::Build(const wchar_t* FileName_,
     OrcaDebug::GraphicsLog("D3D12_SHADER_DESC‚ğæ“¾", hr);
 }
 
-OrcaComPtr(ID3D12ShaderReflection) OrcaGraphics::Shader::ShaderBuilder::GetReflector()const
+OrcaComPtr(ID3D12ShaderReflection) Graphics::Shader::ShaderBuilder::GetReflector()const
 {
     return mpReflector;
 }
 
-D3D12_SHADER_DESC OrcaGraphics::Shader::ShaderBuilder::GetShaderDesc() const
+D3D12_SHADER_DESC Graphics::Shader::ShaderBuilder::GetShaderDesc() const
 {
     return mShaderDesc;
 }
 
-OrcaGraphics::Shader::ShaderStage OrcaGraphics::Shader::ShaderBuilder::GetShaderStage() const
+Graphics::Shader::ShaderStage Graphics::Shader::ShaderBuilder::GetShaderStage() const
 {
     return mShaderStage;
 }
 
-Microsoft::WRL::ComPtr<ID3DBlob> OrcaGraphics::Shader::ShaderBuilder::GetBlob() const
+Microsoft::WRL::ComPtr<ID3DBlob> Graphics::Shader::ShaderBuilder::GetBlob() const
 {
     return mpBlob;
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include<string>
 // ---------------------------- シェーダーのリソースを生成するための情報 ---------------------------
-namespace OrcaGraphics
+namespace Graphics
 {
     namespace Resource
     {

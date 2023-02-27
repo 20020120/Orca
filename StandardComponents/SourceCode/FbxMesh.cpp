@@ -36,7 +36,7 @@ Component::FbxMesh::FbxMesh(const char* FileName_)
 	{
 		auto&& src = resMesh.at(i);
 		auto&& mesh = mMeshes.at(i);
-		mesh.mpCb = std::make_unique<OrcaGraphics::Resource::ConstantBuffer>(&mesh.mpCbData);
+		mesh.mpCb = std::make_unique<Graphics::Resource::ConstantBuffer>(&mesh.mpCbData);
 		mesh.mpMesh = &src;
 	}
 

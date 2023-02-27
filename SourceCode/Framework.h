@@ -22,7 +22,7 @@ extern LRESULT ImGui_ImplWin32_WndProcHandler(
 CONST LPCWSTR APPLICATION_NAME{ L"Orc" };
 
 // ---------------------------------- ÉNÉâÉXÇÃëOï˚êÈåæ ---------------------------------
-namespace OrcaGraphics
+namespace Graphics
 {
 	class Graphics;
 	class Camera;
@@ -59,7 +59,7 @@ private:
 	uint32_t mFrames{ 0 };
 	float mDeltaTime{ 0.0f };
 	int hConsole = 0;
-	std::unique_ptr<OrcaGraphics::RenderPipeline> mpPipeline{};
+	std::unique_ptr<Graphics::RenderPipeline> mpPipeline{};
 	ComponentSystem::GameObjectHolder mGameObjects{};
 
 	void CalculateFrameStats();

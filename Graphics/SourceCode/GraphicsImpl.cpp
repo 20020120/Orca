@@ -10,7 +10,7 @@
 #include"ScreenConstants.h"
 #include"OrcaException.h"
 
-void OrcaGraphics::GraphicsImpl::Initialize(HWND hWnd_)
+void Graphics::GraphicsImpl::Initialize(HWND hWnd_)
 {
     AddDebugFlag();
 
@@ -30,7 +30,7 @@ void OrcaGraphics::GraphicsImpl::Initialize(HWND hWnd_)
     CreateScissor();
 }
 
-void OrcaGraphics::GraphicsImpl::Finalize()
+void Graphics::GraphicsImpl::Finalize()
 {
     // ---------------------------------- 終了処理 ---------------------------------
     WaitGpu();
@@ -45,7 +45,7 @@ void OrcaGraphics::GraphicsImpl::Finalize()
     }
 }
 
-void OrcaGraphics::GraphicsImpl::OpenCmdList() const
+void Graphics::GraphicsImpl::OpenCmdList() const
 {
     // ---------------------------------- 描画処理 ---------------------------------
 
@@ -73,7 +73,7 @@ void OrcaGraphics::GraphicsImpl::OpenCmdList() const
 
 }
 
-void OrcaGraphics::GraphicsImpl::CloseCmdList()
+void Graphics::GraphicsImpl::CloseCmdList()
 {
     D3D12_RESOURCE_BARRIER barrier;
     // リソースバリアの設定
@@ -97,7 +97,7 @@ void OrcaGraphics::GraphicsImpl::CloseCmdList()
     Present(1);
 }
 
-void OrcaGraphics::GraphicsImpl::StackCmdList() const
+void Graphics::GraphicsImpl::StackCmdList() const
 {
     // 描画処理
     {
@@ -113,27 +113,27 @@ void OrcaGraphics::GraphicsImpl::StackCmdList() const
 }
 
 
-Microsoft::WRL::ComPtr<ID3D12Device> OrcaGraphics::GraphicsImpl::GetDevice() const
+Microsoft::WRL::ComPtr<ID3D12Device> Graphics::GraphicsImpl::GetDevice() const
 {
     return mpDevice;
 }
 
-Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> OrcaGraphics::GraphicsImpl::GetCmdList() const
+Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> Graphics::GraphicsImpl::GetCmdList() const
 {
     return mpCommandList;
 }
 
-OrcaGraphics::DescriptorPool* OrcaGraphics::GraphicsImpl::GetDescriptorPool(POOL_TYPE Type_) const
+Graphics::DescriptorPool* Graphics::GraphicsImpl::GetDescriptorPool(POOL_TYPE Type_) const
 {
     return mpPool[Type_];
 }
 
-Microsoft::WRL::ComPtr<ID3D12CommandQueue> OrcaGraphics::GraphicsImpl::GetCommandQueue() const
+Microsoft::WRL::ComPtr<ID3D12CommandQueue> Graphics::GraphicsImpl::GetCommandQueue() const
 {
     return mpCommandQueue;
 }
 
-void OrcaGraphics::GraphicsImpl::CreateDevice()
+void Graphics::GraphicsImpl::CreateDevice()
 {
     // デバイスの初期化
     const auto hr = D3D12CreateDevice(nullptr, D3D_FEATURE_LEVEL_12_0,
@@ -142,7 +142,7 @@ void OrcaGraphics::GraphicsImpl::CreateDevice()
     OrcaDebug::GraphicsLog("デバイスを初期化", hr);
 }
 
-void OrcaGraphics::GraphicsImpl::CreateCommandQueue()
+void Graphics::GraphicsImpl::CreateCommandQueue()
 {
     // ------------------------------- コマンドキューの作成 ------------------------------
 
@@ -156,7 +156,7 @@ void OrcaGraphics::GraphicsImpl::CreateCommandQueue()
     OrcaDebug::GraphicsLog("コマンドキューを初期化", hr);
 }
 
-void OrcaGraphics::GraphicsImpl::CreateSwapChain(HWND hWnd_)
+void Graphics::GraphicsImpl::CreateSwapChain(HWND hWnd_)
 {
     IDXGIFactory4* pFactory{};
     auto hr = CreateDXGIFactory1(IID_PPV_ARGS(&pFactory));
@@ -200,7 +200,7 @@ void OrcaGraphics::GraphicsImpl::CreateSwapChain(HWND hWnd_)
 
 }
 
-void OrcaGraphics::GraphicsImpl::CreateCommandAllocator()
+void Graphics::GraphicsImpl::CreateCommandAllocator()
 {
     HRESULT hr{};
     for (int i = 0; i < Orca::FrameCount; ++i)
@@ -213,7 +213,7 @@ void OrcaGraphics::GraphicsImpl::CreateCommandAllocator()
     }
 }
 
-void OrcaGraphics::GraphicsImpl::CreateCommandList()
+void Graphics::GraphicsImpl::CreateCommandList()
 {
     const auto hr = mpDevice->CreateCommandList(
         0,
@@ -226,7 +226,7 @@ void OrcaGraphics::GraphicsImpl::CreateCommandList()
     OrcaDebug::GraphicsLog("コマンドリストを作成", hr);
 }
 
-void OrcaGraphics::GraphicsImpl::CreateRenderTargetView()
+void Graphics::GraphicsImpl::CreateRenderTargetView()
 {
     // ディスクリプタヒープの設定
     D3D12_DESCRIPTOR_HEAP_DESC desc{};
@@ -264,7 +264,7 @@ void OrcaGraphics::GraphicsImpl::CreateRenderTargetView()
 
 }
 
-void OrcaGraphics::GraphicsImpl::CreateFence()
+void Graphics::GraphicsImpl::CreateFence()
 {
     // フェンスオブジェクトを作成
     const auto hr = mpDevice->CreateFence(
@@ -281,7 +281,7 @@ void OrcaGraphics::GraphicsImpl::CreateFence()
 
 }
 
-void OrcaGraphics::GraphicsImpl::CreateDepthBuffer()
+void Graphics::GraphicsImpl::CreateDepthBuffer()
 {
     // ヒーププロパティを設定
     D3D12_HEAP_PROPERTIES prp{};
@@ -344,7 +344,7 @@ void OrcaGraphics::GraphicsImpl::CreateDepthBuffer()
     mHandleDsV = handle;
 }
 
-void OrcaGraphics::GraphicsImpl::Present(uint32_t Interval_)
+void Graphics::GraphicsImpl::Present(uint32_t Interval_)
 {
     // 画面に表示
     mpSwapChain->Present(Interval_, 0);
@@ -367,7 +367,7 @@ void OrcaGraphics::GraphicsImpl::Present(uint32_t Interval_)
     mFenceCounter[mFrameIndex] = currentValue + 1;
 }
 
-void OrcaGraphics::GraphicsImpl::WaitGpu()
+void Graphics::GraphicsImpl::WaitGpu()
 {
     Orca_NullException(mpCommandQueue)
         Orca_NullException(mpFence)
@@ -385,7 +385,7 @@ void OrcaGraphics::GraphicsImpl::WaitGpu()
 
 }
 
-void OrcaGraphics::GraphicsImpl::AddDebugFlag() const
+void Graphics::GraphicsImpl::AddDebugFlag() const
 {
     // デバッグモードのみこの関数を有効にする
 #if defined(DEBUG)||defined(_DEBUG)
@@ -401,7 +401,7 @@ void OrcaGraphics::GraphicsImpl::AddDebugFlag() const
 }
 
 
-bool OrcaGraphics::GraphicsImpl::CreateDescriptorPool()
+bool Graphics::GraphicsImpl::CreateDescriptorPool()
 {
     // ディスクリプタプールの生成.
     {
@@ -443,7 +443,7 @@ bool OrcaGraphics::GraphicsImpl::CreateDescriptorPool()
     return true;
 }
 
-void OrcaGraphics::GraphicsImpl::CreateViewport()
+void Graphics::GraphicsImpl::CreateViewport()
 {
     // ビューポートを作成する
     mViewPort.TopLeftX = 0.0f;
@@ -454,7 +454,7 @@ void OrcaGraphics::GraphicsImpl::CreateViewport()
     mViewPort.MaxDepth = 1.0f;
 }
 
-void OrcaGraphics::GraphicsImpl::CreateScissor()
+void Graphics::GraphicsImpl::CreateScissor()
 {
     // シザー矩形を作成
     mScissor.left = 0;

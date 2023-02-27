@@ -23,6 +23,6 @@ namespace System
         void Begin(const Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& pCmdList_) const;
         void Render(const Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& pCmdList_) const;
     private:
-        std::unique_ptr<OrcaGraphics::ShaderHolder> mpShaderHolder{};
+        std::unique_ptr<Graphics::ShaderHolder> mpShaderHolder{};
     };
 }

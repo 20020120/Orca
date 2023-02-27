@@ -3,17 +3,17 @@
 #include"VectorOperator.h"
 #include"Quaternion.h"
 #include "ScreenConstants.h"
-OrcaGraphics::Camera::~Camera()
+Graphics::Camera::~Camera()
 {
 }
 
-void OrcaGraphics::Camera::Initialize()
+void Graphics::Camera::Initialize()
 {
     // 定数バッファを初期化
     mCb = std::make_unique<Resource::ConstantBuffer>(&mCbData);
 }
 
-void OrcaGraphics::Camera::Update(float Dt_)
+void Graphics::Camera::Update(float Dt_)
 {
     // 姿勢を更新
     InputMove(Dt_);
@@ -33,18 +33,18 @@ void OrcaGraphics::Camera::Update(float Dt_)
     DirectX::XMStoreFloat4x4(&mCbData->Proj, DirectX::XMMatrixTranspose(P));
 }
 
-uint32_t OrcaGraphics::Camera::GetDescriptorIndex() const
+uint32_t Graphics::Camera::GetDescriptorIndex() const
 {
     return mCb->GetDescriptorIndex();
 }
 
 
-void OrcaGraphics::Camera::Finalize()
+void Graphics::Camera::Finalize()
 {
     mCb.reset();
 }
 
-void OrcaGraphics::Camera::InputMove(float Dt_)
+void Graphics::Camera::InputMove(float Dt_)
 {
     // 入力からカメラを移動させる関数
     const auto front = mOrientation.Front();  // 前方向
@@ -78,7 +78,7 @@ void OrcaGraphics::Camera::InputMove(float Dt_)
     mTarget += MoveVec * mMoveSpeed * Dt_;
 }
 
-void OrcaGraphics::Camera::InputRot(float Dt_)
+void Graphics::Camera::InputRot(float Dt_)
 {
     // ----------------------------------- 回転 ----------------------------------
     auto axis = DirectX::XMFLOAT2();

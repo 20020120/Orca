@@ -4,7 +4,7 @@
 #include "OrcaException.h"
 #include"DescriptorPool.h"
 
-OrcaGraphics::Resource::Dx12Resource::Dx12Resource(DescriptorPool* pDescriptorPool_)
+Graphics::Resource::Dx12Resource::Dx12Resource(DescriptorPool* pDescriptorPool_)
 {
     Orca_NotNullException(mpPool);
     Orca_NotNullException(mpHandle);
@@ -15,7 +15,7 @@ OrcaGraphics::Resource::Dx12Resource::Dx12Resource(DescriptorPool* pDescriptorPo
     Orca_NullException(mpHandle);
 }
 
-OrcaGraphics::Resource::Dx12Resource::~Dx12Resource()
+Graphics::Resource::Dx12Resource::~Dx12Resource()
 {
     // メモリマッピングを解除して，定数バッファを解放します.
     if (mpResource != nullptr)
@@ -37,12 +37,12 @@ OrcaGraphics::Resource::Dx12Resource::~Dx12Resource()
     }
 }
 
-uint32_t OrcaGraphics::Resource::Dx12Resource::GetDescriptorIndex() const
+uint32_t Graphics::Resource::Dx12Resource::GetDescriptorIndex() const
 {
     return mpHandle->DescriptorIndex;
 }
 
-D3D12_GPU_DESCRIPTOR_HANDLE OrcaGraphics::Resource::Dx12Resource::GetGpuHandle() const
+D3D12_GPU_DESCRIPTOR_HANDLE Graphics::Resource::Dx12Resource::GetGpuHandle() const
 {
     return mpHandle->HandleGPU;
 }

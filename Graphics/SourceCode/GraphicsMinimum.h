@@ -1,6 +1,6 @@
 #pragma once
 
-namespace OrcaGraphics
+namespace Graphics
 {
     enum POOL_TYPE
     {

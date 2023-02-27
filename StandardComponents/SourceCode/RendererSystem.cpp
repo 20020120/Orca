@@ -21,7 +21,7 @@ void System::RenderSystem::Update(float Dt_)
 
 void System::RenderSystem::Begin(const Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& pCmdList_) const
 {
-    mpShaderHolder->Set(OrcaGraphics::Shader::ShaderType::Sample, pCmdList_.Get());
+    mpShaderHolder->Set(Graphics::Shader::ShaderType::Sample, pCmdList_.Get());
 }
 
 void System::RenderSystem::Render(const Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>& pCmdList_) const

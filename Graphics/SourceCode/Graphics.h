@@ -4,7 +4,7 @@
 #include"GraphicsMinimum.h"
 #include<memory>
 // ------------------------------------ ‘O•ûéŒ¾ -----------------------------------
-namespace OrcaGraphics
+namespace Graphics
 {
     class GraphicsImpl;
     class DescriptorPool;
@@ -14,7 +14,7 @@ struct ID3D12Device;
 struct ID3D12GraphicsCommandList;
 struct ID3D12CommandQueue;
 
-namespace OrcaGraphics
+namespace Graphics
 {
     // DirectX12‚Ì•`‰æƒNƒ‰ƒX
     class Graphics

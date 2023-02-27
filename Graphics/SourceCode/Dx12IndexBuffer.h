@@ -4,7 +4,7 @@
 #include<wrl.h>
 
 // ------------------------------- インデックスバッファを作成 -------------------------------
-namespace OrcaGraphics
+namespace Graphics
 {
     namespace Resource
     {

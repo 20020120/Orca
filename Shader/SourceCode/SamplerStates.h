@@ -3,7 +3,7 @@
 #include<vector>
 #include<map>
 #include<string>
-namespace OrcaGraphics
+namespace Graphics
 {
     namespace Shader
     {

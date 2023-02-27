@@ -4,7 +4,7 @@
 #include<unordered_map>
 #include"ShaderType.h"
 #include"Dx12ResourceInfo.h"
-namespace OrcaGraphics
+namespace Graphics
 {
     class Dx12ResourceGetter
     {

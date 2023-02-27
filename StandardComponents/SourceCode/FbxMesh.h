@@ -44,7 +44,7 @@ namespace Component
         struct Mesh
         {
             const Model::ModelResource::Mesh* mpMesh{};
-            std::unique_ptr<OrcaGraphics::Resource::ConstantBuffer> mpCb{};
+            std::unique_ptr<Graphics::Resource::ConstantBuffer> mpCb{};
             CbMesh* mpCbData{};
         };
     private:

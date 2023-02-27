@@ -5,7 +5,7 @@
 #include"Matrix.h"
 #include<string>
 #include<memory>
-namespace OrcaGraphics
+namespace Graphics
 {
     namespace Resource
     {
@@ -36,12 +36,12 @@ namespace Component
         [[nodiscard]] Model::Obj& GetResource();
     private:
         // ----------------------------- 描画に必要なリソース ----------------------------
-        std::unique_ptr<OrcaGraphics::Resource::ConstantBuffer> mpConstantBuffer{};
+        std::unique_ptr<Graphics::Resource::ConstantBuffer> mpConstantBuffer{};
         CbData* mpCbData{};
         Model::Obj mObjResource{};
         // ------------------------------ オプション変数 ------------------------------
         std::wstring mFilePath{};
-        OrcaGraphics::Shader::ShaderType mShaderType{};
+        Graphics::Shader::ShaderType mShaderType{};
         // --------------------------- キャッシュするコンポーネント --------------------------
         std::weak_ptr<Transform> mpTransform{};
     };

@@ -100,8 +100,8 @@ namespace Model
 			Math::Vector3						mBoundsMin;
 			Math::Vector3						mBoundsMax;
 
-			OrcaGraphics::Resource::VertexBuffer mVertexBuffer{};
-			OrcaGraphics::Resource::IndexBuffer mIndexBuffer{};
+			Graphics::Resource::VertexBuffer mVertexBuffer{};
+			Graphics::Resource::IndexBuffer mIndexBuffer{};
 
 			void StackGraphicsCmd(ID3D12GraphicsCommandList* pCmdList_)const;
 

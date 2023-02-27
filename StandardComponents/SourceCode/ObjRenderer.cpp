@@ -8,7 +8,7 @@
 #include"GuiInclude.h"
 
 Component::ObjRenderer::ObjRenderer()
-    :Renderer(OrcaGraphics::Shader::ShaderType::Sample)
+    :Renderer(Graphics::Shader::ShaderType::Sample)
 {}
 
 void Component::ObjRenderer::OnStart()
@@ -17,7 +17,7 @@ void Component::ObjRenderer::OnStart()
     mpObjMesh = mpGameObject.lock()->GetComponent<ObjMesh>();
     // ----------------------------- リソース情報をマッピングする ----------------------------
     mpCbData.ObjectCBufferIndex = mpObjMesh.lock()->GetDescriptorIndex();
-    mpCbData.CameraCBufferIndex = OrcaGraphics::Camera::Instance().GetDescriptorIndex();
+    mpCbData.CameraCBufferIndex = Graphics::Camera::Instance().GetDescriptorIndex();
 }
 
 void Component::ObjRenderer::GuiMenu(float Dt_)

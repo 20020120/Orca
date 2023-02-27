@@ -19,13 +19,13 @@ namespace Component
     {
         friend class System::RenderSystem;
     public:
-        explicit Renderer(const OrcaGraphics::Shader::ShaderType& ShaderType_);
+        explicit Renderer(const Graphics::Shader::ShaderType& ShaderType_);
         ~Renderer() override = default;
         void OnStart() override;
     private:
         virtual void StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) = 0;
     protected:
-        OrcaGraphics::Shader::ShaderType mShaderType;
+        Graphics::Shader::ShaderType mShaderType;
         uint64_t mResourceHandle{};
     };
 }

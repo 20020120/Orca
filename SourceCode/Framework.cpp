@@ -110,11 +110,11 @@ bool FrameWork::Initialize()
     // コンソールウィンドを開く
     OrcaDebug::LogWindow::OpenWindow();
     // ------------------------------ 以下、初期化関数を呼ぶ ------------------------------
-    OrcaGraphics::GraphicsForGameLoop::Initialize(mHwnd);
+    Graphics::GraphicsForGameLoop::Initialize(mHwnd);
 
     // ------------------------------- ImGuiを初期化 -------------------------------
-    ImGuiSetting::Renderer::CreateImGui(mHwnd, OrcaGraphics::GraphicsForGameLoop::GetDevice().Get(),
-        OrcaGraphics::GraphicsForGameLoop::GetDescriptorPool(OrcaGraphics::POOL_TYPE_RES));
+    ImGuiSetting::Renderer::CreateImGui(mHwnd, Graphics::GraphicsForGameLoop::GetDevice().Get(),
+        Graphics::GraphicsForGameLoop::GetDescriptorPool(Graphics::POOL_TYPE_RES));
 
     mpCamera->Initialize();
     
@@ -129,14 +129,14 @@ bool FrameWork::Initialize()
     child->AddComponent<Component::ObjMesh>(L"../Resource/Obj/Bison/Bison.obj");
     child->AddComponent<Component::ObjRenderer>();
 
-    OrcaGraphics::Shader::ShaderDesc shaderDesc{};
+    Graphics::Shader::ShaderDesc shaderDesc{};
     shaderDesc.mVsFileName = L"../Resource/Shader/ObjVs.cso";
     shaderDesc.mPsFileName = L"../Resource/Shader/ObjPs.cso";
-    shaderDesc.mShaderType = OrcaGraphics::Shader::ShaderType::Sample;
-    shaderDesc.mBlendState = OrcaGraphics::PipelineTypes::BlendState::Sample;
-    shaderDesc.mRasterizerState = OrcaGraphics::PipelineTypes::RasterizerState::Sample;
-    shaderDesc.mDepthStencilState = OrcaGraphics::PipelineTypes::DepthStencilState::Sample;
-    mpPipeline = std::make_unique<OrcaGraphics::RenderPipeline>(shaderDesc);
+    shaderDesc.mShaderType = Graphics::Shader::ShaderType::Sample;
+    shaderDesc.mBlendState = Graphics::PipelineTypes::BlendState::Sample;
+    shaderDesc.mRasterizerState = Graphics::PipelineTypes::RasterizerState::Sample;
+    shaderDesc.mDepthStencilState = Graphics::PipelineTypes::DepthStencilState::Sample;
+    mpPipeline = std::make_unique<Graphics::RenderPipeline>(shaderDesc);
     return true;
 }
 
@@ -164,12 +164,12 @@ void FrameWork::GuiMenu(float Dt_)
 void FrameWork::Render(float Dt_)
 {
     // コマンドリストを取得
-    const auto cmdList = OrcaGraphics::Graphics::GetCmdList();
+    const auto cmdList = Graphics::Graphics::GetCmdList();
 
     // コマンドリスト開放
-    OrcaGraphics::GraphicsForGameLoop::OpenCmdList();
+    Graphics::GraphicsForGameLoop::OpenCmdList();
     // コマンドリストにテストコマンドを積む
-    OrcaGraphics::GraphicsForGameLoop::StackCmdList();
+    Graphics::GraphicsForGameLoop::StackCmdList();
     ImGuiSetting::Renderer::Render();
 
     // シェーダーをセットする
@@ -181,7 +181,7 @@ void FrameWork::Render(float Dt_)
     // ImGuiはコマンドの最後に積むこと！
     ImGuiSetting::Renderer::RenderDrawData(cmdList.Get());
     // コマンドリストを閉じる
-    OrcaGraphics::GraphicsForGameLoop::CloseCmdList();
+    Graphics::GraphicsForGameLoop::CloseCmdList();
 }
 
 bool FrameWork::Finalize()
@@ -189,7 +189,7 @@ bool FrameWork::Finalize()
     mpCamera.reset();
     mGameObjects.Finalize();
     ImGuiSetting::Renderer::Cleanup();
-    OrcaGraphics::GraphicsForGameLoop::Finalize();
+    Graphics::GraphicsForGameLoop::Finalize();
     return true;
 }
 

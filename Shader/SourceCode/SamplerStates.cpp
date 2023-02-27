@@ -2,7 +2,7 @@
 #include"SamplerStateNames.h"
 #include"OrcaException.h"
 
-std::vector<D3D12_STATIC_SAMPLER_DESC> OrcaGraphics::PipelineObject::SamplerStates::GetStaticSamplerForReflection(
+std::vector<D3D12_STATIC_SAMPLER_DESC> Graphics::PipelineObject::SamplerStates::GetStaticSamplerForReflection(
     const std::map<std::string, UINT>& reflectionData_)
 {
     std::vector<D3D12_STATIC_SAMPLER_DESC> samplers{};
@@ -19,7 +19,7 @@ std::vector<D3D12_STATIC_SAMPLER_DESC> OrcaGraphics::PipelineObject::SamplerStat
     return samplers;
 }
 
-D3D12_STATIC_SAMPLER_DESC OrcaGraphics::PipelineObject::SamplerStates::GetStaticSampler_Sample()
+D3D12_STATIC_SAMPLER_DESC Graphics::PipelineObject::SamplerStates::GetStaticSampler_Sample()
 {
     // スタティックサンプラーの設定
     D3D12_STATIC_SAMPLER_DESC descSSD;
@@ -40,7 +40,7 @@ D3D12_STATIC_SAMPLER_DESC OrcaGraphics::PipelineObject::SamplerStates::GetStatic
     return descSSD;
 }
 
-D3D12_STATIC_SAMPLER_DESC OrcaGraphics::PipelineObject::SamplerStates::GetStaticSampler_LinerClamp(UINT Slot_)
+D3D12_STATIC_SAMPLER_DESC Graphics::PipelineObject::SamplerStates::GetStaticSampler_LinerClamp(UINT Slot_)
 {
     // スタティックサンプラーの設定
     D3D12_STATIC_SAMPLER_DESC descSSD;

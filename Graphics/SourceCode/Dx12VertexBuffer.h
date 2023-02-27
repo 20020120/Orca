@@ -6,7 +6,7 @@
 #include<wrl.h>
 
 // ----------------------------------- 頂点バッファ ----------------------------------
-namespace OrcaGraphics
+namespace Graphics
 {
     namespace Resource
     {
@@ -24,7 +24,7 @@ namespace OrcaGraphics
 }
 
 template <class Vertex>
-bool OrcaGraphics::Resource::VertexBuffer::Create(const std::vector<Vertex>& Vertices_)
+bool Graphics::Resource::VertexBuffer::Create(const std::vector<Vertex>& Vertices_)
 {
     const auto pDevice = Graphics::GetDevice();
 

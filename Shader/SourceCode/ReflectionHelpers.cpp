@@ -2,7 +2,7 @@
 #include"OrcaException.h"
 
 
-DXGI_FORMAT OrcaGraphics::Shader::ReflectionHelpers::GetDxgiFormat(D3D_REGISTER_COMPONENT_TYPE type, BYTE mask)
+DXGI_FORMAT Graphics::Shader::ReflectionHelpers::GetDxgiFormat(D3D_REGISTER_COMPONENT_TYPE type, BYTE mask)
 {
     if (mask <= 1)
     {
@@ -68,7 +68,7 @@ DXGI_FORMAT OrcaGraphics::Shader::ReflectionHelpers::GetDxgiFormat(D3D_REGISTER_
 }
 
 
-D3D12_DESCRIPTOR_RANGE_TYPE OrcaGraphics::Shader::ReflectionHelpers::GetDescriptorRangeType(D3D_SHADER_INPUT_TYPE Type_, D3D_SRV_DIMENSION Dimension_)
+D3D12_DESCRIPTOR_RANGE_TYPE Graphics::Shader::ReflectionHelpers::GetDescriptorRangeType(D3D_SHADER_INPUT_TYPE Type_, D3D_SRV_DIMENSION Dimension_)
 {
     switch (Type_) {
     case D3D_SIT_CBUFFER:
@@ -105,7 +105,7 @@ D3D12_DESCRIPTOR_RANGE_TYPE OrcaGraphics::Shader::ReflectionHelpers::GetDescript
     return D3D12_DESCRIPTOR_RANGE_TYPE();
 }
 
-D3D12_DESCRIPTOR_RANGE OrcaGraphics::Shader::ReflectionHelpers::GetDescriptorRange(D3D12_SHADER_INPUT_BIND_DESC BindDesc_)
+D3D12_DESCRIPTOR_RANGE Graphics::Shader::ReflectionHelpers::GetDescriptorRange(D3D12_SHADER_INPUT_BIND_DESC BindDesc_)
 {
     // ディスクリプタレンジを作成
     D3D12_DESCRIPTOR_RANGE descriptorRange;

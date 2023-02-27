@@ -107,14 +107,14 @@ bool FrameWork::Initialize()
     // コンソールウィンドを開く
     OrcaDebug::LogWindow::OpenWindow();
     // ------------------------------ 以下、初期化関数を呼ぶ ------------------------------
-    OrcaGraphics::GraphicsForGameLoop::Initialize(mHwnd);
+    Graphics::GraphicsForGameLoop::Initialize(mHwnd);
     System::RenderSystem::Instance().OnAwake();
 
     // ------------------------------- ImGuiを初期化 -------------------------------
-    ImGuiSetting::Renderer::CreateImGui(mHwnd, OrcaGraphics::GraphicsForGameLoop::GetDevice().Get(),
-        OrcaGraphics::GraphicsForGameLoop::GetDescriptorPool(OrcaGraphics::POOL_TYPE_RES));
+    ImGuiSetting::Renderer::CreateImGui(mHwnd, Graphics::GraphicsForGameLoop::GetDevice().Get(),
+        Graphics::GraphicsForGameLoop::GetDescriptorPool(Graphics::POOL_TYPE_RES));
 
-    OrcaGraphics::Camera::Instance().Initialize();
+    Graphics::Camera::Instance().Initialize();
 
     return true;
 }
@@ -125,7 +125,7 @@ void FrameWork::Update(float Dt_)
     ImGuiSetting::Renderer::NewFrame();
 
     // カメラ行列を更新
-    OrcaGraphics::Camera::Instance().Update(Dt_);
+    Graphics::Camera::Instance().Update(Dt_);
     if (mpGameObject)
     {
         mpGameObject->Update(Dt_);
@@ -164,12 +164,12 @@ void FrameWork::GuiMenu(float Dt_)
 void FrameWork::Render(float Dt_)
 {
     // コマンドリストを取得
-    const auto cmdList = OrcaGraphics::Graphics::GetCmdList();
+    const auto cmdList = Graphics::Graphics::GetCmdList();
 
     // コマンドリスト開放
-    OrcaGraphics::GraphicsForGameLoop::OpenCmdList();
+    Graphics::GraphicsForGameLoop::OpenCmdList();
     
-    OrcaGraphics::GraphicsForGameLoop::StackCmdList();
+    Graphics::GraphicsForGameLoop::StackCmdList();
     ImGuiSetting::Renderer::Render();
 
     // シェーダーをセットする
@@ -180,17 +180,17 @@ void FrameWork::Render(float Dt_)
     // ImGuiはコマンドの最後に積むこと！
     ImGuiSetting::Renderer::RenderDrawData(cmdList.Get());
     // コマンドリストを閉じる
-    OrcaGraphics::GraphicsForGameLoop::CloseCmdList();
+    Graphics::GraphicsForGameLoop::CloseCmdList();
 
 }
 
 bool FrameWork::Finalize()
 {
-    OrcaGraphics::Camera::Instance().Finalize();
+    Graphics::Camera::Instance().Finalize();
     mpGameObject.reset();
     ImGuiSetting::Renderer::Cleanup();
     System::RenderSystem::Instance().Finalize();
-    OrcaGraphics::GraphicsForGameLoop::Finalize();
+    Graphics::GraphicsForGameLoop::Finalize();
     return true;
 }
 

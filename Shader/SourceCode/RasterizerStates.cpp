@@ -1,6 +1,6 @@
 #include"RasterizerStates.h"
 #include "OrcaException.h"
-D3D12_RASTERIZER_DESC OrcaGraphics::PipelineObject::RasterizerStates::GetRasterizerDesc(
+D3D12_RASTERIZER_DESC Graphics::PipelineObject::RasterizerStates::GetRasterizerDesc(
     const Shader::ShaderDesc& ShaderDesc_)
 {
     // ----------------------------- ラスタライザステートを取得 -----------------------------
@@ -14,7 +14,7 @@ D3D12_RASTERIZER_DESC OrcaGraphics::PipelineObject::RasterizerStates::GetRasteri
     return {};
 }
 
-D3D12_RASTERIZER_DESC OrcaGraphics::PipelineObject::RasterizerStates::GetSampleRasterizerState()
+D3D12_RASTERIZER_DESC Graphics::PipelineObject::RasterizerStates::GetSampleRasterizerState()
 {
     D3D12_RASTERIZER_DESC descRS{};
     descRS.FillMode = D3D12_FILL_MODE_SOLID;
