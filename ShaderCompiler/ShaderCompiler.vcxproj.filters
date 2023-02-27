@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="DXC">
+      <UniqueIdentifier>{404a4b22-3122-40e4-aed4-a5d95e828ff2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShaderCompiler">
+      <UniqueIdentifier>{d39b9e43-a649-4c47-8cf1-b5a5321ecc6b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SourceCode\DXC.cpp">
+      <Filter>DXC</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\ShaderCompiler.cpp">
+      <Filter>ShaderCompiler</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SourceCode\DXC.h">
+      <Filter>DXC</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\ShaderCompiler.h">
+      <Filter>ShaderCompiler</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -25,6 +25,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Math", "Math\Math.vcxproj", "{4B8069ED-4A98-4CFF-AD35-800A61002434}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shader", "Shader\Shader.vcxproj", "{6C961994-CA5B-42DB-AE87-822AC7CE7093}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8E3109E2-3803-4061-9389-EC5ECB7A210C} = {8E3109E2-3803-4061-9389-EC5ECB7A210C}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ComponentSystem", "ComponentSystem\ComponentSystem.vcxproj", "{943E8EA8-5A7C-4F46-A13F-9847E0466748}"
 EndProject
@@ -59,6 +62,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinApi", "WinApi\WinApi.vcx
 	ProjectSection(ProjectDependencies) = postProject
 		{3D8D75D9-633A-44F6-A94D-86DF709164A9} = {3D8D75D9-633A-44F6-A94D-86DF709164A9}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShaderCompiler", "ShaderCompiler\ShaderCompiler.vcxproj", "{8E3109E2-3803-4061-9389-EC5ECB7A210C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -172,6 +177,14 @@ Global
 		{B076D53D-2D90-4936-9521-E06EAA10568A}.Release|x64.Build.0 = Release|x64
 		{B076D53D-2D90-4936-9521-E06EAA10568A}.Release|x86.ActiveCfg = Release|Win32
 		{B076D53D-2D90-4936-9521-E06EAA10568A}.Release|x86.Build.0 = Release|Win32
+		{8E3109E2-3803-4061-9389-EC5ECB7A210C}.Debug|x64.ActiveCfg = Debug|x64
+		{8E3109E2-3803-4061-9389-EC5ECB7A210C}.Debug|x64.Build.0 = Debug|x64
+		{8E3109E2-3803-4061-9389-EC5ECB7A210C}.Debug|x86.ActiveCfg = Debug|Win32
+		{8E3109E2-3803-4061-9389-EC5ECB7A210C}.Debug|x86.Build.0 = Debug|Win32
+		{8E3109E2-3803-4061-9389-EC5ECB7A210C}.Release|x64.ActiveCfg = Release|x64
+		{8E3109E2-3803-4061-9389-EC5ECB7A210C}.Release|x64.Build.0 = Release|x64
+		{8E3109E2-3803-4061-9389-EC5ECB7A210C}.Release|x86.ActiveCfg = Release|Win32
+		{8E3109E2-3803-4061-9389-EC5ECB7A210C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

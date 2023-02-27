@@ -2,6 +2,7 @@
 #include"MacroMemory.h"
 
 #include"Shader.h"
+#include"ShaderCompiler.h"
 #include<d3d12.h>
 #include <dxcapi.h>
 
@@ -20,7 +21,10 @@ OrcaGraphics::ShaderHolder::ShaderHolder()
     OrcaComPtr(IDxcUtils) pUtils;
     DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&pUtils));
 
-
+    // デバッグ時のみシェーダーをコンパイル
+#ifdef _DEBUG
+    ShaderCompiler::AllCompile("../HLSL/SourceCode/", "../Resource/Shader/", "../Resource/Settings/Setting.txt");
+#endif
     // ---------------------------------- 初期化 ----------------------------------
     {
         Shader::ShaderDesc shaderDesc{};
