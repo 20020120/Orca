@@ -4,7 +4,7 @@
 
 #include"fbxsdk.h"
 
-namespace Model
+namespace Resource
 {
 	struct FbxModelResource final :ModelResource
 	{

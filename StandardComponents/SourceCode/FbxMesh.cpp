@@ -7,8 +7,8 @@
 Component::FbxMesh::FbxMesh(const char* FileName_)
 {
 	mResource.Load(FileName_);
- // ------------------------------------ ノード -----------------------------------
-	const std::vector<Model::ModelResource::Node>& resNodes = mResource.GetNodes();
+    // ------------------------------------ ノード -----------------------------------
+	const std::vector<Resource::ModelResource::Node>& resNodes = mResource.GetNodes();
 	mNodes.resize(resNodes.size());
 	mNodeNames.reserve(resNodes.size());
 	for (size_t nodeIndex = 0; nodeIndex < mNodes.size(); ++nodeIndex)
@@ -30,7 +30,7 @@ Component::FbxMesh::FbxMesh(const char* FileName_)
 	}
     // ----------------------------------- メッシュ -----------------------------------
 	// メッシュ
-	const std::vector<Model::ModelResource::Mesh>& resMesh = mResource.GetMeshes();
+	const std::vector<Resource::ModelResource::Mesh>& resMesh = mResource.GetMeshes();
 	mMeshes.resize(resMesh.size());
 	for (auto i = 0; i < resMesh.size(); ++i)
 	{
@@ -179,7 +179,7 @@ void Component::FbxMesh::GuiMenu_Node(const Node* pNode_)
 	}
 }
 
-void Component::FbxMesh::GuiMenu_Materials(std::vector<Model::FbxModelResource::Material>& Materials_) const
+void Component::FbxMesh::GuiMenu_Materials(std::vector<Resource::FbxModelResource::Material>& Materials_) const
 {
 	// 矢印をクリック、またはノードをダブルクリックで階層を開く
     constexpr ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow;
@@ -198,7 +198,7 @@ void Component::FbxMesh::GuiMenu_Materials(std::vector<Model::FbxModelResource::
 	}
 }
 
-void Component::FbxMesh::GuiMenu_Animations(const std::vector<Model::FbxModelResource::Animation>& Animations_) const
+void Component::FbxMesh::GuiMenu_Animations(const std::vector<Resource::FbxModelResource::Animation>& Animations_) const
 {
 	// 矢印をクリック、またはノードをダブルクリックで階層を開く
 	constexpr ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow;
@@ -214,7 +214,7 @@ void Component::FbxMesh::GuiMenu_Animations(const std::vector<Model::FbxModelRes
 
 void Component::FbxMesh::UpdateTransform()
 {
- // ---------------------------------- 位置を更新する ---------------------------------
+    // ---------------------------------- 位置を更新する ---------------------------------
 	auto transform = mpTransform.lock()->mTransform;
 	for (auto& node : mNodes)
 	{

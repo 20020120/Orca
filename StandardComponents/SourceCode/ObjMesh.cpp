@@ -38,7 +38,7 @@ void Component::ObjMesh::Update(float Dt_)
 }
 
 // ---------------------------------- ƒŠƒ\[ƒX‚ğæ“¾ ----------------------------------
-Model::Obj& Component::ObjMesh::GetResource() 
+Resource::Obj& Component::ObjMesh::GetResource() 
 {
     return mObjResource;
 }

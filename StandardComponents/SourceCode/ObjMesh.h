@@ -33,12 +33,12 @@ namespace Component
 
         // -------------------------------- ゲッター -------------------------------
         [[nodiscard]] uint32_t GetDescriptorIndex()const;
-        [[nodiscard]] Model::Obj& GetResource();
+        [[nodiscard]] Resource::Obj& GetResource();
     private:
         // ----------------------------- 描画に必要なリソース ----------------------------
         std::unique_ptr<Graphics::Resource::ConstantBuffer> mpConstantBuffer{};
         CbData* mpCbData{};
-        Model::Obj mObjResource{};
+        Resource::Obj mObjResource{};
         // ------------------------------ オプション変数 ------------------------------
         std::wstring mFilePath{};
         Graphics::Shader::ShaderType mShaderType{};

@@ -70,7 +70,7 @@ inline Math::Matrix FbxAMatrixToFloat4x4(const FbxAMatrix& fbxValue)
 }
 
 
-void Model::FbxModelResource::Load(const char* FileName_, const char* IgnoreRootMotionNodeName_)
+void Resource::FbxModelResource::Load(const char* FileName_, const char* IgnoreRootMotionNodeName_)
 {
 	// ディレクトリパス取得
 	char drive[32], dir[256], dirname[256];
@@ -143,12 +143,12 @@ void Model::FbxModelResource::Load(const char* FileName_, const char* IgnoreRoot
 	//BuildModel(device, dirname);
 }
 
-void Model::FbxModelResource::Export(const char* FileName_)
+void Resource::FbxModelResource::Export(const char* FileName_)
 {
 	Serialize(FileName_);
 }
 
-void Model::FbxModelResource::AddAnimation(const char* FileName_)
+void Resource::FbxModelResource::AddAnimation(const char* FileName_)
 {// FBXのファイルパスはUTF-8にする必要がある
 	char fbxFilename[256];
 	Encoding::StringToUTF8(FileName_, fbxFilename, sizeof(fbxFilename));
@@ -189,7 +189,7 @@ void Model::FbxModelResource::AddAnimation(const char* FileName_)
 	fbxManager->Destroy();		// 関連するすべてのオブジェクトが解放される
 }
 
-void Model::FbxModelResource::LoadNodes(FbxNode* pFbxNode_, int ParentNodeIndex_)
+void Resource::FbxModelResource::LoadNodes(FbxNode* pFbxNode_, int ParentNodeIndex_)
 {
 	const FbxNodeAttribute* fbxNodeAttribute = pFbxNode_->GetNodeAttribute();
 	FbxNodeAttribute::EType fbxNodeAttributeType = FbxNodeAttribute::EType::eUnknown;
@@ -219,7 +219,7 @@ void Model::FbxModelResource::LoadNodes(FbxNode* pFbxNode_, int ParentNodeIndex_
 	}
 }
 
-void Model::FbxModelResource::LoadNode(FbxNode* pFbxNode_, int ParentNodeIndex_)
+void Resource::FbxModelResource::LoadNode(FbxNode* pFbxNode_, int ParentNodeIndex_)
 {
     const FbxAMatrix& fbxLocalTransform = pFbxNode_->EvaluateLocalTransform();
 
@@ -239,7 +239,7 @@ void Model::FbxModelResource::LoadNode(FbxNode* pFbxNode_, int ParentNodeIndex_)
 	mNodes.emplace_back(node);
 }
 
-void Model::FbxModelResource::LoadMeshes(FbxNode* pFbxNode_)
+void Resource::FbxModelResource::LoadMeshes(FbxNode* pFbxNode_)
 {
 	FbxNodeAttribute* fbxNodeAttribute = pFbxNode_->GetNodeAttribute();
 	FbxNodeAttribute::EType fbxNodeAttributeType = FbxNodeAttribute::EType::eUnknown;
@@ -264,7 +264,7 @@ void Model::FbxModelResource::LoadMeshes(FbxNode* pFbxNode_)
 	}
 }
 
-void Model::FbxModelResource::LoadMesh(FbxNode* pFbxNode_, FbxMesh* pFbxMesh_)
+void Resource::FbxModelResource::LoadMesh(FbxNode* pFbxNode_, FbxMesh* pFbxMesh_)
 {
 	int fbxControlPointsCount = pFbxMesh_->GetControlPointsCount();
 	//int fbxPolygonVertexCount = fbxMesh->GetPolygonVertexCount();
@@ -610,7 +610,7 @@ void Model::FbxModelResource::LoadMesh(FbxNode* pFbxNode_, FbxMesh* pFbxMesh_)
 	ConvertIndexBufferFromRHtoLH(mesh.mIndices);
 }
 
-void Model::FbxModelResource::LoadMaterials(const char* DirName_, FbxScene* pFbxScene)
+void Resource::FbxModelResource::LoadMaterials(const char* DirName_, FbxScene* pFbxScene)
 {
 	int fbxMaterialCount = pFbxScene->GetMaterialCount();
 
@@ -632,7 +632,7 @@ void Model::FbxModelResource::LoadMaterials(const char* DirName_, FbxScene* pFbx
 	}
 }
 
-void Model::FbxModelResource::LoadMaterial(const char* DirName_,
+void Resource::FbxModelResource::LoadMaterial(const char* DirName_,
     FbxSurfaceMaterial* fbxSurfaceMaterial)
 {
 	bool ret = false;
@@ -697,7 +697,7 @@ void Model::FbxModelResource::LoadMaterial(const char* DirName_,
 	mMaterials.emplace_back(material);
 }
 
-void Model::FbxModelResource::LoadAnimations(FbxScene* pFbxScene, const char* name, bool append)
+void Resource::FbxModelResource::LoadAnimations(FbxScene* pFbxScene, const char* name, bool append)
 {
 	// すべてのアニメーション名を取得
 	FbxArray<FbxString*> fbxAnimStackNames;
@@ -842,7 +842,7 @@ void Model::FbxModelResource::LoadAnimations(FbxScene* pFbxScene, const char* na
 	}
 }
 
-void Model::FbxModelResource::ConvertAxisSystemFromRHtoLH()
+void Resource::FbxModelResource::ConvertAxisSystemFromRHtoLH()
 {
 
 #if 0
@@ -896,7 +896,7 @@ void Model::FbxModelResource::ConvertAxisSystemFromRHtoLH()
 #endif
 }
 
-std::string Model::FbxModelResource::GetNodePath(FbxNode* pFbxNode_) const
+std::string Resource::FbxModelResource::GetNodePath(FbxNode* pFbxNode_) const
 {
 	std::string parentNodeName;
 
@@ -910,12 +910,12 @@ std::string Model::FbxModelResource::GetNodePath(FbxNode* pFbxNode_) const
 	return pFbxNode_->GetName();
 }
 
-Model::ModelResource::NodeId Model::FbxModelResource::GetNodeId(FbxNode* pFbxNode_)
+Resource::ModelResource::NodeId Resource::FbxModelResource::GetNodeId(FbxNode* pFbxNode_)
 {
 	return reinterpret_cast<NodeId>(pFbxNode_);
 }
 
-int Model::FbxModelResource::FindMaterialIndex(FbxScene* pFbxScene, 
+int Resource::FbxModelResource::FindMaterialIndex(FbxScene* pFbxScene, 
 	const FbxSurfaceMaterial* pFbxSurfaceMaterial_)
 {
 	int fbxMaterialCount = pFbxScene->GetMaterialCount();
@@ -930,7 +930,7 @@ int Model::FbxModelResource::FindMaterialIndex(FbxScene* pFbxScene,
 	return -1;
 }
 
-void Model::FbxModelResource::SetupIgnoreMotionNode(const char* IgnoreRootMotionNodeName_)
+void Resource::FbxModelResource::SetupIgnoreMotionNode(const char* IgnoreRootMotionNodeName_)
 {
 	// 無視するルートモーションを検索
 	if (IgnoreRootMotionNodeName_ != nullptr)
@@ -947,18 +947,18 @@ void Model::FbxModelResource::SetupIgnoreMotionNode(const char* IgnoreRootMotion
 	}
 }
 
-void Model::FbxModelResource::ConvertTranslationFromRHtoLH(Math::Vector3& translate)
+void Resource::FbxModelResource::ConvertTranslationFromRHtoLH(Math::Vector3& translate)
 {
 	translate.x = -translate.x;
 }
 
-void Model::FbxModelResource::ConvertRotationFromRHtoLH(Math::Quaternion& rotate)
+void Resource::FbxModelResource::ConvertRotationFromRHtoLH(Math::Quaternion& rotate)
 {
 	rotate.x = -rotate.x;
 	rotate.w = -rotate.w;
 }
 
-void Model::FbxModelResource::ConvertMatrixFromRHtoLH(Math::Matrix& matrix)
+void Resource::FbxModelResource::ConvertMatrixFromRHtoLH(Math::Matrix& matrix)
 {
 #if 0
 	DirectX::XMFLOAT4X4 temp = matrix;
@@ -1002,7 +1002,7 @@ matrix._41 = -matrix._41;
 #endif
 }
 
-void Model::FbxModelResource::ConvertIndexBufferFromRHtoLH(std::vector<UINT>& indices)
+void Resource::FbxModelResource::ConvertIndexBufferFromRHtoLH(std::vector<UINT>& indices)
 {
 	size_t size = indices.size();
 	UINT* p = indices.data();

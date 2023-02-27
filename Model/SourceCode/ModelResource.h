@@ -17,7 +17,7 @@
 struct ID3D12GraphicsCommandList;
 
 // -------------------------------- モデルのリソースデータ --------------------------------
-namespace Model
+namespace Resource
 {
     struct ModelResource
     {
@@ -161,10 +161,7 @@ namespace Model
 		[[nodiscard]]const std::vector<Animation>& GetAnimations() const { return mAnimations; }
 		[[nodiscard]]const std::vector<Material>& GetMaterials() const { return mMaterials; }
 
-	protected:
-		// モデルセットアップ
-		//void BuildModel(ID3D12Device* device, const char* dirname);
-
+    public:
 		// シリアライズ
 		void Serialize(const char* filename);
 
@@ -174,7 +171,6 @@ namespace Model
 		// ノードインデックスを取得する
 		int FindNodeIndex(NodeId nodeId) const;
 
-    public:
 		std::vector<Node>		mNodes;
 		std::vector<Material>	mMaterials;
 		std::vector<Mesh>		mMeshes;

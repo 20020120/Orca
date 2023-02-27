@@ -16,7 +16,7 @@ namespace Graphics
     class DescriptorPool;
 }
 
-namespace Model
+namespace Resource
 {
     // Objファイルのクラス
     class Obj

@@ -43,12 +43,12 @@ namespace Component
         };
         struct Mesh
         {
-            const Model::ModelResource::Mesh* mpMesh{};
+            const Resource::ModelResource::Mesh* mpMesh{};
             std::unique_ptr<Graphics::Resource::ConstantBuffer> mpCb{};
             CbMesh* mpCbData{};
         };
     private:
-        Model::FbxModelResource mResource{};
+        Resource::FbxModelResource mResource{};
         std::vector<Node>	    mNodes{};
         std::vector<Mesh>	    mMeshes{};
         std::vector<std::tuple<std::string, Node*>> mNodeNames{};
@@ -57,8 +57,8 @@ namespace Component
         // ----------------------------- Guiの表示メニュー ----------------------------
         void GuiMenu_Nodes();
         void GuiMenu_Node(const Node* pNode_);
-        void GuiMenu_Materials(std::vector<Model::FbxModelResource::Material>& Materials_) const;
-        void GuiMenu_Animations(const std::vector<Model::FbxModelResource::Animation>& Animations_) const;
+        void GuiMenu_Materials(std::vector<Resource::FbxModelResource::Material>& Materials_) const;
+        void GuiMenu_Animations(const std::vector<Resource::FbxModelResource::Animation>& Animations_) const;
 
         
         void UpdateTransform(); // 位置を更新する

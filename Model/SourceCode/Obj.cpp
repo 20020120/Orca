@@ -12,12 +12,12 @@
 #include"Graphics.h"
 #include"MacroMemory.h"
 
-Model::Obj::~Obj()
+Resource::Obj::~Obj()
 {
     
 }
 
-void Model::Obj::Initialize(const wchar_t* ObjPath_)
+void Resource::Obj::Initialize(const wchar_t* ObjPath_)
 {
     std::vector<VertexData> vertices{};
     std::vector<uint32_t> indices{};
@@ -37,7 +37,7 @@ void Model::Obj::Initialize(const wchar_t* ObjPath_)
     m_VertexCounts = static_cast<UINT>(vertices.size());
 }
 
-void Model::Obj::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) const
+void Resource::Obj::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> pCmdList_) const
 {
     // -------------------------------- コマンドを積む --------------------------------
     pCmdList_->IASetVertexBuffers(0, 1, &mVbView);
@@ -45,7 +45,7 @@ void Model::Obj::StackGraphicsCmd(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandLi
     pCmdList_->DrawIndexedInstanced(m_VertexCounts, 1, 0, 0, 0);
 }
 
-void Model::Obj::Parse(const wchar_t* ObjPath_, std::vector<VertexData>& Vertices_, std::vector<uint32_t>& Indices_, 
+void Resource::Obj::Parse(const wchar_t* ObjPath_, std::vector<VertexData>& Vertices_, std::vector<uint32_t>& Indices_, 
     std::wstring& TextureName_)
 {
     // Objファイルから頂点データをパースする
@@ -161,7 +161,7 @@ void Model::Obj::Parse(const wchar_t* ObjPath_, std::vector<VertexData>& Vertice
     fin.close();
 }
 
-void Model::Obj::CreateVertexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_,
+void Resource::Obj::CreateVertexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_,
     const std::vector<VertexData>& Vertices_)
 {
     // ------------------------------ 頂点バッファを作成する ------------------------------
@@ -216,7 +216,7 @@ void Model::Obj::CreateVertexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice
 
 }
 
-void Model::Obj::CreateIndexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const std::vector<uint32_t>& Indices_)
+void Resource::Obj::CreateIndexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_, const std::vector<uint32_t>& Indices_)
 {
     // ヒーププロパティを設定
     D3D12_HEAP_PROPERTIES prp{};
@@ -265,7 +265,7 @@ void Model::Obj::CreateIndexBuffer(Microsoft::WRL::ComPtr<ID3D12Device> pDevice_
 }
 
 
-void Model::Obj::CreateTexture(OrcaComPtr(ID3D12Device) pDevice_, Graphics::DescriptorPool* pPool_,
+void Resource::Obj::CreateTexture(OrcaComPtr(ID3D12Device) pDevice_, Graphics::DescriptorPool* pPool_,
     OrcaComPtr(ID3D12CommandQueue) pCommandQueue_, std::wstring TexturePath_)
 {
    // // テクスチャを作成
@@ -278,7 +278,7 @@ void Model::Obj::CreateTexture(OrcaComPtr(ID3D12Device) pDevice_, Graphics::Desc
    // const auto future = batch.End(pCommandQueue_.Get());
    // future.wait();
 }
-std::wstring Model::Obj::GetTextureName() const
+std::wstring Resource::Obj::GetTextureName() const
 {
     return mTextureName;
 }

@@ -43,6 +43,9 @@
     <Filter Include="FbxRemderer">
       <UniqueIdentifier>{059f4fd0-72b5-4bd1-ba40-427cd352bd31}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model">
+      <UniqueIdentifier>{fc3d76a3-5aaf-4171-a6d9-00cee24837b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceCode\Transform.h">
@@ -72,6 +75,9 @@
     <ClInclude Include="SourceCode\FbxRenderer.h">
       <Filter>FbxRemderer</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\Model.h">
+      <Filter>Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\Transform.cpp">
@@ -97,6 +103,9 @@
     </ClCompile>
     <ClCompile Include="SourceCode\FbxRenderer.cpp">
       <Filter>FbxRemderer</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Model.cpp">
+      <Filter>Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

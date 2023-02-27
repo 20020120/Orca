@@ -22,6 +22,7 @@
     <ClInclude Include="SourceCode\FbxMesh.h" />
     <ClInclude Include="SourceCode\FbxRenderer.h" />
     <ClInclude Include="SourceCode\MeshRenderer.h" />
+    <ClInclude Include="SourceCode\Model.h" />
     <ClInclude Include="SourceCode\ObjMesh.h" />
     <ClInclude Include="SourceCode\ObjRenderer.h" />
     <ClInclude Include="SourceCode\Renderer.h" />
@@ -38,6 +39,7 @@
     <ClCompile Include="SourceCode\Renderer.cpp" />
     <ClCompile Include="SourceCode\RendererSystem.cpp" />
     <ClCompile Include="SourceCode\Transform.cpp" />
+    <ClCompile Include="SourceCode\Model.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
